@@ -16,7 +16,8 @@
     "web-vitals": "^2.1.4"
   },
   "devDependencies": {
-    "react-scripts": "5.0.1"
+    "react-scripts": "5.0.1",
+    "sass": "^1.56.1"
   },
   "scripts": {
     "dev": "npm run start",
