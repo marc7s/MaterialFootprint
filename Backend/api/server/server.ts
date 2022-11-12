@@ -5,19 +5,10 @@ dotenv.config({path: __dirname + '/../.env'});
 import express, { Application, Request, Response, NextFunction } from 'express';
 
 import { ErrorMessage, NotFoundError, ApiRequestMalformedError } from './errors';
+import { log, logError } from '@shared/utils';
 
 const app: Application = express();
 const cors = require('cors');
-
-export function log(message: string) {
-    console.log(`[${new Date().toLocaleString()}] ${message}`);
-}
-
-export function logError(errorMessage: string, error?: any) {
-    console.error(`[${new Date().toLocaleString()}] ${errorMessage}`);
-    if(error)
-        console.error(error);
-}
 
 app.use(cors({
     origin: `http://localhost:${process.env.FRONTEND_PORT}`

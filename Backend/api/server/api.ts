@@ -1,8 +1,8 @@
+import { log } from '@shared/utils';
 import * as dotenv from 'dotenv';
 dotenv.config({path: __dirname + '../.env'});
 
 import express, { Response, NextFunction, Router } from 'express';
-import { log } from './server';
 
 const router: Router = express.Router();
 
