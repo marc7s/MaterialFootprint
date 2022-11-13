@@ -22,6 +22,6 @@
     "typescript": "^4.4.2"
   },
   "_moduleAliases": {
-    "@shared": "dist/shared"
+    "@shared": "shared"
   }
 }
