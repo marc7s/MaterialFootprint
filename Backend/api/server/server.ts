@@ -38,7 +38,7 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
 });
 
 app.listen(process.env.port, () => {
-    log(`Running on port ${process.env.port}. Environment: ${app.get('env')}`);
+    log(`Running on http://localhost:${process.env.port}. Environment: ${app.get('env')}`);
 });
 
 function sendError(res: Response, statusCode: number, message: string, errorDetails?: Error) {
