@@ -1,3 +1,4 @@
+import { Emission } from "../shared/interfaces";
 import { Model, ModelPart } from "./interfaces";
 
 export interface ModelPartProp {
@@ -19,3 +20,12 @@ export interface ModelConfiguratorProp {
     model: Model;
     onPartMaterialChange: (partID: string, materialID: number) => void;
 }
+
+export interface WidgetProp {
+    currentModel: Model;
+}
+
+export interface EmissionProp {
+    emission: Emission;
+}
+
