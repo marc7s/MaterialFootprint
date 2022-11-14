@@ -8,7 +8,7 @@ import { validateEmissionsInput } from './validator';
 
 const router: Router = express.Router();
 
-// input: {clientId: number, area: number, volume: number, material: number, surfaceTreatment: String}
+// input: {clientID: number, area: number, volume: number, materialID: number, surfaceTreatmentID: [number]}
 router.post('/emissions', validateEmissionsInput, (req: any, res: Response, next: NextFunction) => {
     log('Getting emissions...');
     // temporarily returns empty json
