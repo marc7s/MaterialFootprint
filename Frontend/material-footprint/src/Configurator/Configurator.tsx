@@ -12,12 +12,13 @@ import { getMaterials, getModels } from '../API';
 /* Shared */
 import { uniqueID } from '../shared/utils';
 import { Material } from '../shared/interfaces';
+import Widget from './Widget/Widget';
 
 function Configurator() {
   const [models, setModels] = useState([] as Model[]);
   const [materials, setMaterials] = useState([] as Material[]);
   const [currentModel, setCurrentModel] = useState(null as Model | null);
-  
+
   // Load models from API on first render
   useEffect(() => {
     async function loadModels() {
@@ -92,6 +93,10 @@ function Configurator() {
           currentModel && <ModelConfiguratorComponent model={currentModel} onPartMaterialChange={onPartMaterialChange}></ModelConfiguratorComponent>
         }
       </div>
+      {
+        currentModel && <Widget currentModel={currentModel}></Widget>
+      }
+      
     </>
   );
 }
