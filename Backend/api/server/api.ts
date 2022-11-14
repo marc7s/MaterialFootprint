@@ -1,4 +1,5 @@
 import { log } from '@shared/utils';
+import { connectToDb } from './db';
 import * as dotenv from 'dotenv';
 dotenv.config({path: __dirname + '../.env'});
 
@@ -19,10 +20,27 @@ router.post('/emissions', validateEmissionsInput, (req: any, res: Response, next
 
 });
 
-router.get('/materials', async (req: any, res: Response, next: NextFunction) => {
-  log('Getting materials...');
-  res.json(await getMaterials()
-    .catch((err) => {next(err)}));
+router.get('/connect', (req: any, res: Response) => {
+  log('Connecting to database...');
+  connectToDb();
+});
+
+router.get('/materials', (req: any, res: Response) => {
+    log('Getting materials...');
+    // temporary mock data
+    const materials: Material[] = [
+      {
+        id: 1,
+        name: 'Plastic',
+        color: 'yellow'
+      },
+      {
+        id: 2,
+        name: 'Leather',
+        color: 'brown'
+      }
+    ];
+    res.json(materials);
 });
 
 router.get('/models', (req: any, res: Response, next: NextFunction) => {
