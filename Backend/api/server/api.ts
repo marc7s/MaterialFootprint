@@ -1,7 +1,6 @@
 import { log } from '@shared/utils';
-import { connectToDb, init } from './db';
 import * as dotenv from 'dotenv';
-dotenv.config({path: __dirname + '../.env'});
+dotenv.config({path: __dirname + '/../.env'});
 
 import express, { Response, NextFunction, Router } from 'express';
 import { Material, Emission } from '@shared/interfaces';
@@ -18,13 +17,6 @@ router.post('/emissions', validateEmissionsInput, (req: any, res: Response, next
 
     //res.json(calculateEmissions(req, next));
 
-});
-
-router.get('/connect', (req: any, res: Response) => {
-  log('Connecting to database...');
-  const db = connectToDb();
-  if(!db) return
-  init(db);
 });
 
 router.get('/materials', (req: any, res: Response) => {
