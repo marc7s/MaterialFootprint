@@ -7,29 +7,7 @@ import { Material, Emission } from '@shared/interfaces';
 
 const router: Router = express.Router();
 
-router.get('/ping', (req: any, res: Response) => {
-    log('Pinged, responding with pong...');
-    res.send('Pong!');
-});
-
-router.get('/materials', (req: any, res: Response) => {
-    log('Getting materials...');
-    // temporary mock data
-    const materials: Material[] = [
-      {
-        id: 1,
-        name: 'Plastic',
-        color: 'yellow'
-      },
-      {
-        id: 2,
-        name: 'Leather',
-        color: 'brown'
-      }
-    ];
-    res.json(materials);
-});
-
+// input: {clientId: number, area: number, volume: number, material: number, surfaceTreatment: String}
 router.get('/emissions', (req: any, res: Response) => {
     log('Getting emissions...');
     // temporary mock data
@@ -41,10 +19,24 @@ router.get('/emissions', (req: any, res: Response) => {
             color: 'yellow'
           },
         co2CountInKg: 1,
-        h2oCountInL: 2
+        h2oCountInL: 2,
+        priceInDollar: 3
       }
     ];
     res.json(emissions);
+
+
+
+    // validate input
+    // calculate emissions (fetch database etc)
+    // return emissions
+
 });
+
+
+async function calculateEmissions() {
+
+}
+
 
 module.exports = router;
