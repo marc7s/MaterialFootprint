@@ -3,7 +3,7 @@ import * as dotenv from 'dotenv';
 dotenv.config({path: __dirname + '../.env'});
 
 import express, { Response, NextFunction, Router } from 'express';
-import { Material, Emission, EmissionsInput } from '@shared/interfaces';
+import { Material, Emission } from '@shared/interfaces';
 import { validateEmissionsInput } from './validator';
 
 const router: Router = express.Router();
