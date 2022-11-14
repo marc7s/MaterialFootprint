@@ -34,39 +34,55 @@ function Configurator() {
     setCurrentModel(models[0]); // Set the current model to the first model
   }, [models]);
 
+  // Handle a material change for a part
   const onPartMaterialChange = (partID: string, materialID: number) => {
+    // Check that the models and materials have been loaded
     if(!currentModel) return;
     if(!materials) return;
     
+    // Create a copy of the current model to avoid mutating state
     const newModel = Object.assign({}, currentModel);
+    
+    // Find the part that had its material changed
     const part = newModel.parts.find(p => p.id === partID);
     
+    // Check that the part was found
     if (!part) return;
 
-    
+    // Change the part's material to the new material
     part.material = materials.find(m => m.id === materialID) || part.material;
+    
+    // Update the current model
     setCurrentModel(newModel);
   };
 
+  // Handle a model change
   const onModelChange = (modelID: number) => {
+    // Check that the models have been loaded
     if(!currentModel) return;
     if(!models) return;
     
+    // Find the new model
     const newModel = models.find(m => m.id === modelID);
     
+    // Check that the new model was found
     if (!newModel) return;
 
+    // Don't do anything if the current model was selected
+    if(newModel.id === currentModel.id) return;
+
+    // Update the current model
     setCurrentModel(newModel);
   };
 
   return (
     <>
-      <div className="models">
+      <div className="Configurator-models">
         {
           models.map(model => <ModelComponent key={uniqueID()} model={model} active={model.id === currentModel?.id} onModelChange={onModelChange}></ModelComponent>)
         }
       </div>
-      <div className="modelConfig">
+      <div className="Configurator-modelConfig">
         {
           currentModel && <ModelConfiguratorComponent model={currentModel} onPartMaterialChange={onPartMaterialChange}></ModelConfiguratorComponent>
         }

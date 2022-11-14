@@ -8,7 +8,7 @@ import frame from './assets/configurator/chair/Frame.png';
 import armrests from './assets/configurator/chair/Armrests.png';
 import accent from './assets/configurator/chair/Accent.png';
 
-
+// Get a list of all the materials from the API
 export async function getMaterials(): Promise<Material[]> {
     return [
         {
@@ -34,6 +34,7 @@ export async function getMaterials(): Promise<Material[]> {
     ]
 }
 
+// Get a list of all the models from the API
 export async function getModels(): Promise<Model[]> {
     const materials = await getMaterials();
     return [

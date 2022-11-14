@@ -1,6 +1,6 @@
 import React from 'react';
 import ModelPart from '../ModelPartComponent/ModelPartComponent';
-import { ModelProp } from 'src/Configurator/interfaces';
+import { ModelProp } from 'src/Configurator/props';
 import './ModelComponent.sass';
 import { uniqueID } from '../../shared/utils';
 
@@ -11,6 +11,7 @@ function ModelComponent({model, active, onModelChange}: ModelProp) {
     onModelChange(model.id);
   };
 
+  // Render a ModelPart for each part in the model
   return (
       <div className={'model' + activeClass} onClick={onModelClick}>
         {

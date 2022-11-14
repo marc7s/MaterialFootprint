@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { ConfiguratorPartProp } from 'src/Configurator/interfaces';
+import { ConfiguratorPartProp } from 'src/Configurator/props';
 import './ConfiguratorPart.sass';
 import { getMaterials } from '../../API';
 import { uniqueID } from '../../shared/utils';
@@ -17,11 +17,13 @@ function ConfiguratorPart({part, onMaterialChange}: ConfiguratorPartProp) {
     loadMaterials();
   }, []);
 
+  // Call the parent's onMaterialChange function when a material is selected
   function changeMaterial(e: React.ChangeEvent<HTMLSelectElement>): void {
     const materialID: number = parseInt(e.target.value);
     onMaterialChange(materialID);
   }
 
+  // Render an entry in the part configurator list for this part
   return (
     <div key={uniqueID()} className="entry">
       <div className="part">
