@@ -5,6 +5,7 @@ export type Material = {
 }
 
 export type Emission = {
+    partName: string;
     material: Material;
     co2CountInKg: number;
     h2oCountInL: number;
