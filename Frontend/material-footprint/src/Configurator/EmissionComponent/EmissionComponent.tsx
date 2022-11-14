@@ -1,7 +1,11 @@
 import React from 'react';
 import './EmissionComponent.sass';
 import { uniqueID } from '../../shared/utils';
-import { EmissionProp } from '../props';
+import { Emission } from 'shared/interfaces';
+
+export interface EmissionProp {
+  emission: Emission;
+}
 
 function EmissionComponent({ emission }: EmissionProp) {
 

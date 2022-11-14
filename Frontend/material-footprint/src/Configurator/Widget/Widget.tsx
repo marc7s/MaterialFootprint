@@ -4,9 +4,12 @@ import './Widget.sass';
 import { Model } from '../interfaces';
 import { getEmissions } from '../../API';
 import { Emission } from '../../shared/interfaces';
-import { WidgetProp } from '../props';
 import EmissionComponent from '../EmissionComponent/EmissionComponent';
 
+
+export interface WidgetProp {
+  currentModel: Model;
+}
 
 function Widget({ currentModel }: WidgetProp) {
   const [emissions, setEmissions] = useState([] as Emission[]);
