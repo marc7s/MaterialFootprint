@@ -6,11 +6,11 @@ import { log } from '@shared/utils';
 import { DatabaseConnectionError } from "./errors";
 
 
-export function connectToDb(): mongoDB.Db | DatabaseConnectionError {
+export function connectToDb(): mongoDB.Db | Error {
     log("Trying to connect to database...")
     const constring = process.env.DB_CONN_STRING;
     log("20%")
-    if(!constring) return new DatabaseConnectionError();
+    if(!constring) return new Error("Could not get connection");
     log("40%")
     const client = new mongoDB.MongoClient(constring);
     log("60%")

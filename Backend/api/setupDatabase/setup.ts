@@ -2,14 +2,13 @@ import 'module-alias/register';
 import * as dotenv from "dotenv";
 dotenv.config({path: __dirname + '/../.env'});
 import { connectToDb, init } from "../../api/server/db";
-import { DatabaseConnectionError } from '../server/errors';
 
 
 
 
 const db = connectToDb();
-if(db instanceof DatabaseConnectionError) {
-    throw new DatabaseConnectionError();
+if(db instanceof Error) {
+    throw new Error("Error connecting to database");
 } else {
     init(db);
 }
