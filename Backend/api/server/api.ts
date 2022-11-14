@@ -10,22 +10,8 @@ const router: Router = express.Router();
 // input: {clientId: number, area: number, volume: number, material: number, surfaceTreatment: String}
 router.get('/emissions', (req: any, res: Response) => {
     log('Getting emissions...');
-    // temporary mock data
-    const emissions: Emission[] = [
-      {
-        material: {
-            id: 1,
-            name: 'Plastic',
-            color: 'yellow'
-          },
-        co2CountInKg: 1,
-        h2oCountInL: 2,
-        priceInDollar: 3
-      }
-    ];
-    res.json(emissions);
-
-
+    // temporarily returns empty json
+    res.json({});
 
     // validate input
     // calculate emissions (fetch database etc)
@@ -33,8 +19,36 @@ router.get('/emissions', (req: any, res: Response) => {
 
 });
 
+router.get('/materials', (req: any, res: Response) => {
+  log('Getting emissions...');
+  // temporarily returns empty json
+  res.json({});
+
+  // validate input
+  // fetch materials from database
+  // return materials
+
+});
+
+router.get('/models', (req: any, res: Response) => {
+  log('Getting emissions...');
+  // temporarily returns empty json
+  res.json({});
+
+  // validate input
+  // fetch models from database
+  // return models
+
+});
 
 async function calculateEmissions() {
+
+}
+
+async function getMaterials() {
+}
+
+async function getModels() {
 
 }
 
