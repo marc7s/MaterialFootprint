@@ -13,34 +13,26 @@ router.post('/emissions', validateEmissionsInput, (req: any, res: Response, next
     log('Getting emissions...');
     // temporarily returns empty json
     res.json({})
-    res.json(calculateEmissions(req, next));
- 
-    // validate input
-    // calculate emissions (fetch database etc)
-    // return emissions
+    
+    //res.json(calculateEmissions(req, next));
 
 });
 
-router.post('/materials', validateMaterialsInput, (req: any, res: Response, next: NextFunction) => {
+router.get('/materials', validateMaterialsInput, (req: any, res: Response, next: NextFunction) => {
   log('Getting materials...');
   // temporarily returns empty json
   res.json({});
-  res.json(getMaterials(req, next));
 
-  // validate input
-  // fetch materials from database
-  // return materials
+  //res.json(getMaterials(req, next));
 
 });
 
-router.post('/models', validateModelsInput, (req: any, res: Response, next: NextFunction) => {
+router.get('/models', validateModelsInput, (req: any, res: Response, next: NextFunction) => {
   log('Getting models...');
   // temporarily returns empty json
   res.json({});
-  res.json(getModels(req, next));
-  // validate input
-  // fetch models from database
-  // return models
+
+  //res.json(getModels(req, next));
 
 });
 
