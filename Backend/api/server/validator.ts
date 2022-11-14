@@ -1,5 +1,6 @@
 import { ErrorMessage, NotFoundError, ApiRequestMalformedError } from './errors';
 import { Request, Response, NextFunction } from 'express';
+import { receiveMessageOnPort } from 'worker_threads';
 
 // validates the input for the emissions endpoint
 export function validateEmissionsInput(req: any, res: Response, next: NextFunction): void {
@@ -14,11 +15,14 @@ export function validateEmissionsInput(req: any, res: Response, next: NextFuncti
         return next(new ApiRequestMalformedError('volume must be a positive number'));
     if (req.body.materialID < 0)
         return next(new ApiRequestMalformedError('materialID must be a positive number'));
-    for (let i = 0; i < req.body.surfaceTreatmentIDs.length; i++) {
-        if (req.body.surfaceTreatmentIDs[i] < 0)
-            return next(new ApiRequestMalformedError('surfaceTreatmentIDs must be a positive number'));
-    }
-    
+
+    if (!Array.isArray(req.body.surfaceTreatmentIDs))
+        return next(new ApiRequestMalformedError('surfaceTreatmentIDs must be an array'));
+  
+    const allPositive = req.body.surfaceTreatmentIDs.every((id: number) => id >= 0); 
+    if (!allPositive) 
+        return next(new ApiRequestMalformedError('surfaceTreatmentIDs must be a list of positive numbers'));
+
     req.clientID = req.body.clientID;
     req.area = req.body.area;
     req.volume = req.body.volume;

@@ -12,7 +12,7 @@ const router: Router = express.Router();
 router.post('/emissions', validateEmissionsInput, (req: any, res: Response, next: NextFunction) => {
     log('Getting emissions...');
     // temporarily returns empty json
-    res.json({})
+    res.json([]);
 
     //res.json(calculateEmissions(req, next));
 
@@ -21,7 +21,7 @@ router.post('/emissions', validateEmissionsInput, (req: any, res: Response, next
 router.get('/materials', (req: any, res: Response) => {
   log('Getting materials...');
   // temporarily returns empty json
-  res.json({});
+  res.json([]);
 
   //res.json(getMaterials(req, next));
 
@@ -30,21 +30,23 @@ router.get('/materials', (req: any, res: Response) => {
 router.get('/models', (req: any, res: Response) => {
   log('Getting models...');
   // temporarily returns empty json
-  res.json({});
+  res.json([]);
 
   //res.json(getModels(req, next));
 
 });
 
-async function calculateEmissions(req: any, next: NextFunction) {
-  return {}
+async function calculateEmissions(req: any, next: NextFunction): Promise<Emission[]> {
+  return Promise.resolve([]);
 }
 
-async function getMaterials(req: any, next: NextFunction) {
+async function getMaterials(req: any, next: NextFunction): Promise<Material[]> {
+  return Promise.resolve([]);
 }
 
-async function getModels(req: any, next: NextFunction) {
-
+// Todo update signature to Model[]
+async function getModels(req: any, next: NextFunction): Promise<any[]> {
+  return Promise.resolve([]);
 }
 
 
