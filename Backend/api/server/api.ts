@@ -4,7 +4,7 @@ dotenv.config({path: __dirname + '../.env'});
 
 import express, { Response, NextFunction, Router } from 'express';
 import { Material, Emission, EmissionsInput } from '@shared/interfaces';
-import { validateEmissionsInput, validateMaterialsInput, validateModelsInput } from './validator';
+import { validateEmissionsInput } from './validator';
 
 const router: Router = express.Router();
 
@@ -13,12 +13,12 @@ router.post('/emissions', validateEmissionsInput, (req: any, res: Response, next
     log('Getting emissions...');
     // temporarily returns empty json
     res.json({})
-    
+
     //res.json(calculateEmissions(req, next));
 
 });
 
-router.get('/materials', validateMaterialsInput, (req: any, res: Response, next: NextFunction) => {
+router.get('/materials', (req: any, res: Response) => {
   log('Getting materials...');
   // temporarily returns empty json
   res.json({});
@@ -27,7 +27,7 @@ router.get('/materials', validateMaterialsInput, (req: any, res: Response, next:
 
 });
 
-router.get('/models', validateModelsInput, (req: any, res: Response, next: NextFunction) => {
+router.get('/models', (req: any, res: Response) => {
   log('Getting models...');
   // temporarily returns empty json
   res.json({});
