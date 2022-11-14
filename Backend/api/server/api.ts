@@ -1,5 +1,5 @@
 import { log } from '@shared/utils';
-import { connectToDb } from './db';
+import { connectToDb, init } from './db';
 import * as dotenv from 'dotenv';
 dotenv.config({path: __dirname + '../.env'});
 
@@ -22,7 +22,9 @@ router.post('/emissions', validateEmissionsInput, (req: any, res: Response, next
 
 router.get('/connect', (req: any, res: Response) => {
   log('Connecting to database...');
-  connectToDb();
+  const db = connectToDb();
+  if(!db) return
+  init(db);
 });
 
 router.get('/materials', (req: any, res: Response) => {

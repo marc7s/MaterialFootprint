@@ -5,7 +5,7 @@ dotenv.config({path: __dirname + '../.env'});
 import { log } from '@shared/utils';
 
 
-export async function connectToDb() {
+export function connectToDb() {
     log("Trying to connect to database...")
     const constring = process.env.DB_CONN_STRING;
     log("20%")
@@ -13,12 +13,15 @@ export async function connectToDb() {
     log("40%")
     const client = new mongoDB.MongoClient(constring);
     log("60%")
-    await client.connect();
+    client.connect();
     log("80%")
     const db = client.db(process.env.DB_NAME);
     log("Successfully connected to database!");
+    return db;
 }
 
-export async function test() {
-
+export function init(db: mongoDB.Db) {
+    log("Initializing database...");
+    db.createCollection("materials");
+    log("Successfully initialized database!");
 }
