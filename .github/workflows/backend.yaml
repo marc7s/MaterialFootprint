@@ -1,0 +1,33 @@
+name: Backend API CI
+
+on: 
+  push:
+  pull_request:
+
+env:
+  dir: ./Backend/api
+  frontend_dir: ./Frontend/material-footprint
+  node_version: 16.18.0
+
+jobs:
+  build-and-test:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ env.node_version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.node_version }}
+      - name: Install backend dependencies
+        working-directory: ${{ env.dir }}
+        run: npm ci
+      - name: Install frontend dependencies
+        working-directory: ${{ env.frontend_dir }}
+        run: npm ci
+      - name: Build API
+        working-directory: ${{ env.dir }}
+        run: npm run build
+      - name: Run tests
+        working-directory: ${{ env.dir }}
+        run: npm test
