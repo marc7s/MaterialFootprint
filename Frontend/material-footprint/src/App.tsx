@@ -15,7 +15,7 @@ function App() {
         <Widget></Widget>
       </div>
       <footer>
-        <a href="https://github.com/marc7s/MaterialFootprint" target="_blank">Source code</a>
+        <a href="https://github.com/marc7s/MaterialFootprint" target="_blank" rel="noopener noreferrer">Source code</a>
       </footer>
     </div>
   );
