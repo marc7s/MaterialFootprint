@@ -8,7 +8,7 @@ import { uniqueID } from '../../shared/utils';
 function ModelConfiguratorComponent({model, onPartMaterialChange}: ModelConfiguratorProp) {
   // Render a ConfiguratorPart for each part in the model
   return (
-    <div className="modelConfigurator">
+    <div className="ModelConfiguratorComponent-container">
       {
         model.parts.map(part => <ConfiguratorPart key={uniqueID()} part={part} onMaterialChange={materialID => onPartMaterialChange(part.id, materialID)}></ConfiguratorPart>)
       }

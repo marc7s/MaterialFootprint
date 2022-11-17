@@ -1,0 +1,29 @@
+name: Frontend App CI
+
+on: 
+  push:
+  pull_request:
+
+env:
+  dir: ./Frontend/material-footprint
+  node_version: 16.18.0
+
+jobs:
+  build-and-test:
+    runs-on: windows-latest
+    
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ env.node_version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.node_version }}
+      - name: Install dependencies
+        working-directory: ${{ env.dir }}
+        run: npm ci
+      - name: Build app
+        working-directory: ${{ env.dir }}
+        run: npm run build
+      - name: Run tests
+        working-directory: ${{ env.dir }}
+        run: npm test

@@ -16,7 +16,7 @@ function ModelPartComponent({part}: ModelPartProps) {
   // Render the part of the model as one image layer
   // All part images rendered on top of each other will form the final model image
   return (
-    <div className="img" key={part.id} style={styling}></div>
+    <div className="ModelPartComponent-img" key={part.id} style={styling}></div>
   );
 }
 

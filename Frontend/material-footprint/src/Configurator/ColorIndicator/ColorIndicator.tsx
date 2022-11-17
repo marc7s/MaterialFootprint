@@ -13,7 +13,7 @@ function ColorIndicator({color}: ColorIndicatorProp) {
   
   // Render a color indicator with the given color
   return (
-      <div className="color-indicator" style={styling}></div>
+      <div className="ColorIndicator-indicator" style={styling}></div>
   );
 }
 
