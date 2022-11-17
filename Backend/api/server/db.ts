@@ -1,29 +1,47 @@
-import * as mongoDB from "mongodb";
 import * as dotenv from "dotenv";
 dotenv.config({path: __dirname + '/../.env'});
-
 import { log } from '@shared/utils';
 import { DatabaseConnectionError } from "./errors";
+import mongoose from 'mongoose';
 
+const Material = require('../setupDatabase/models/Material');
+const Surface = require('../setupDatabase/models/Surface');
 
-export function connectToDb(): mongoDB.Db | Error {
+export async function connectToDb() {
     log("Trying to connect to database...")
     const constring = process.env.DB_CONN_STRING;
-    log("20%")
+    log("25%")
     if(!constring) return new Error("Could not get connection");
-    log("40%")
-    const client = new mongoDB.MongoClient(constring);
-    log("60%")
-    client.connect();
-    log("80%")
-    const db = client.db(process.env.DB_NAME);
+    log("50%");
+    mongoose.connect(constring).
+        catch(error => new DatabaseConnectionError());
+    log("75%");
     log("Successfully connected to database!");
-    return db;
 }
 
-export function init(db: mongoDB.Db) {
+const material = new Material({
+        name: "Im a material",
+        colour: "red",
+        co2CountInKg: 1,
+        h2oCountInL: 1,
+        priceInDollar: 1,
+});
+
+const surface = new Surface({
+        name: "Im a surface",
+});
+
+export async function init() {
     log("Initializing database...");
-    db.dropDatabase();
-    db.createCollection("materials");
+    Material.createCollection();
+    Surface.createCollection();
+    log("Collections initialized!");
+    await Material.deleteMany();
+    await Surface.deleteMany();
+    log("Database cleared!");
+    //--------------------------------
+    material.save();
+    //surface.save();
     log("Successfully initialized database!");
+
 }
