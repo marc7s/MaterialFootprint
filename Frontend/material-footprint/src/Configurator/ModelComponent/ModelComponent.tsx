@@ -13,7 +13,7 @@ function ModelComponent({model, active, onModelChange}: ModelProp) {
 
   // Render a ModelPart for each part in the model
   return (
-      <div className={'model' + activeClass} onClick={onModelClick}>
+      <div className={'ModelComponent-model' + activeClass} onClick={onModelClick}>
         {
           model.parts.map(part => <ModelPart key={uniqueID()} part={part}></ModelPart>)
         }
