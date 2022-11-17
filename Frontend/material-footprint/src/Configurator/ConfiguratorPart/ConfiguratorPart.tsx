@@ -25,8 +25,8 @@ function ConfiguratorPart({part, onMaterialChange}: ConfiguratorPartProp) {
 
   // Render an entry in the part configurator list for this part
   return (
-    <div key={uniqueID()} className="entry">
-      <div className="part">
+    <div key={uniqueID()} className="ConfiguratorPart-entry">
+      <div className="ConfiguratorPart-part">
         {part.name}
         <ColorIndicator color={part.material.color}></ColorIndicator>
       </div>
