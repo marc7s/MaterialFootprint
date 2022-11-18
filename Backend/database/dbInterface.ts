@@ -2,7 +2,7 @@ import { EmissionCost, Material } from '@shared/interfaces';
 // fetch all materials, return array of Materials
 async function fetchMaterials(): Promise<Material[]> {
     // temporary mock data
-    const material: Material = {id: 1, name: 'wood', color: 'brown'};
+    const material: Material[] = [{id: 1, name: 'wood', color: 'brown'}];
     return Promise.resolve(material); 
 } 
 
