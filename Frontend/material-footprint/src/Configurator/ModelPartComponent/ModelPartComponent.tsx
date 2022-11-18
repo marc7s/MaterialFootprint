@@ -1,8 +1,14 @@
 import React from 'react';
-import { ModelPart } from 'src/Configurator/interfaces';
 import './ModelPartComponent.sass';
 
-interface ModelPartProps {
+/* Components */
+
+/* Utilities */
+import { ModelPart } from 'Configurator/interfaces';
+
+/* Shared */
+
+export interface ModelPartProps {
   part: ModelPart
 }
 

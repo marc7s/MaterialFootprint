@@ -1,12 +1,16 @@
+/* Components */
+
+/* Utilities */
 import { Model } from "./Configurator/interfaces";
-import { Material } from "./shared/interfaces";
-import { uniqueID } from "./shared/utils";
-
-
 import seat from './assets/configurator/chair/Seat.png';
 import frame from './assets/configurator/chair/Frame.png';
 import armrests from './assets/configurator/chair/Armrests.png';
 import accent from './assets/configurator/chair/Accent.png';
+
+/* Shared */
+import { Material } from "./shared/interfaces";
+import { uniqueID } from "./shared/utils";
+
 
 // Get a list of all the materials from the API
 export async function getMaterials(): Promise<Material[]> {

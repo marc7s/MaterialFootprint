@@ -1,7 +1,13 @@
 import React from 'react';
 import './App.sass';
+
+/* Components */
 import Configurator from './Configurator/Configurator';
 import Widget from './Widget/Widget';
+
+/* Utilities */
+
+/* Shared */
 
 
 function App() {

@@ -1,11 +1,21 @@
 import React, { useEffect, useState } from 'react';
-
-import { ConfiguratorPartProp } from 'src/Configurator/props';
 import './ConfiguratorPart.sass';
-import { getMaterials } from '../../API';
-import { uniqueID } from '../../shared/utils';
-import ColorIndicator from '../ColorIndicator/ColorIndicator';
+
+/* Components */
+import ColorIndicator from 'Configurator/ColorIndicator/ColorIndicator';
+
+/* Utilities */
+import { ModelPart } from 'Configurator/interfaces';
+import { getMaterials } from 'API';
+
+/* Shared */
 import { Material } from '../../shared/interfaces';
+import { uniqueID } from '../../shared/utils';
+
+export interface ConfiguratorPartProp {
+  part: ModelPart;
+  onMaterialChange: (materialID: number) => void;
+}
 
 function ConfiguratorPart({part, onMaterialChange}: ConfiguratorPartProp) {
   const [materials, setMaterials] = useState([] as Material[]);
