@@ -16,7 +16,7 @@ function Widget({ currentModel }: WidgetProp) {
       getEmissions(currentModel.parts).then(m => setEmissions(m));
     }
     loadEmissions();
-  }, []);
+  });
 
   return (
     <div className="flex-box">
