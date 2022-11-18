@@ -1,11 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import './Widget.sass';
 
-import { getEmissions } from '../../API';
-import { Emission } from '../../shared/interfaces';
-import EmissionComponent from '../EmissionComponent/EmissionComponent';
-import { uniqueID } from '../../shared/utils';
+/* Components */
+import EmissionComponent from 'Configurator/EmissionComponent/EmissionComponent';
+
+/* Utilities */
+import { getEmissions } from 'API';
 import { Model } from 'Configurator/interfaces';
+
+/* Shared */
+import { Emission } from 'shared/interfaces';
+import { uniqueID } from 'shared/utils';
+
 
 
 export interface WidgetProp {

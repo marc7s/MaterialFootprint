@@ -2,13 +2,13 @@ import React from 'react';
 import './ModelComponent.sass';
 
 /* Components */
-import ModelPart from '../ModelPartComponent/ModelPartComponent';
+import ModelPart from 'Configurator/ModelPartComponent/ModelPartComponent';
 
 /* Utilities */
 import { Model } from 'Configurator/interfaces';
 
 /* Shared */
-import { uniqueID } from '../../shared/utils';
+import { uniqueID } from 'shared/utils';
 
 
 export interface ModelProp {

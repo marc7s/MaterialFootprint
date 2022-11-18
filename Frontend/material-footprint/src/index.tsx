@@ -2,7 +2,7 @@ import React from 'react';
 import './index.sass';
 
 /* Components */
-import App from './App';
+import App from 'App';
 
 /* Utilities */
 import ReactDOM from 'react-dom/client';

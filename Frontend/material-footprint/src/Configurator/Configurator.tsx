@@ -2,17 +2,17 @@ import React, { useEffect, useState } from 'react';
 import './Configurator.sass';
 
 /* Components */
-import ModelConfiguratorComponent from './ModelConfiguratorComponent/ModelConfiguratorComponent';
-import ModelComponent from './ModelComponent/ModelComponent';
+import ModelConfiguratorComponent from 'Configurator/ModelConfiguratorComponent/ModelConfiguratorComponent';
+import ModelComponent from 'Configurator/ModelComponent/ModelComponent';
+import Widget from 'Configurator/Widget/Widget';
 
 /* Utilities */
-import { Model } from './interfaces';
-import { getMaterials, getModels } from '../API';
+import { Model } from 'Configurator/interfaces';
+import { getMaterials, getModels } from 'API';
 
 /* Shared */
-import { uniqueID } from '../shared/utils';
-import { Material } from '../shared/interfaces';
-import Widget from './Widget/Widget';
+import { uniqueID } from 'shared/utils';
+import { Material } from 'shared/interfaces';
 
 function Configurator() {
   const [models, setModels] = useState([] as Model[]);

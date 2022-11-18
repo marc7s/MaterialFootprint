@@ -2,7 +2,7 @@ import React from 'react';
 import './App.sass';
 
 /* Components */
-import Configurator from './Configurator/Configurator';
+import Configurator from 'Configurator/Configurator';
 
 /* Utilities */
 
