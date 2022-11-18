@@ -15,21 +15,21 @@ export interface EmissionProp {
 function EmissionComponent({ emission }: EmissionProp) {
   // Render an EmissionComponent for each part in the model
   return (
-    <div className="component">
-      <h4>{ emission.partName }</h4>
-      <table>
+    <div>
+      <h4 className="EmissionComponent-part-name">{ emission.partName }</h4>
+      <table className="EmissionComponent-emission-table">
         <tbody>
           <tr key={ uniqueID() }>
-            <td className="string">CO<sub>2</sub>:</td>
-            <td className="number">{ emission.emissionCost.co2CostInDollar } kg</td>
+            <td className="EmissionComponent-title">CO<sub>2</sub>:</td>
+            <td className="EmissionComponent-value">{ emission.emissionCost.co2CostInDollar } kg</td>
           </tr>
           <tr key={ uniqueID() }>
-            <td className="string">Water:</td>
-            <td className="number">{ emission.emissionCost.h2oCostInDollar } L</td>
+            <td className="EmissionComponent-title">Water:</td>
+            <td className="EmissionComponent-value">{ emission.emissionCost.h2oCostInDollar } L</td>
           </tr>
           <tr key={ uniqueID() }>
-            <td className="string">Cost:</td>
-            <td className="number">{ emission.emissionCost.priceInDollar } SEK</td>
+            <td className="EmissionComponent-title">Cost:</td>
+            <td className="EmissionComponent-value">{ emission.emissionCost.priceInDollar } SEK</td>
           </tr>
         </tbody>
       </table>

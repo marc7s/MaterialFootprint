@@ -34,12 +34,12 @@ function Widget({ currentModel }: WidgetProp) {
   }
 
   return (
-    <div className="flex-box">
-      <div className="everything">
-        <h3>Everything</h3>
-        <div className="text-container"> CO<sub>2</sub>: { emissions.map(e => e.emissionCost.co2CostInDollar).reduce(sum, 0) } kg</div>
-        <div className="text-container"> Water: { emissions.map(e => e.emissionCost.h2oCostInDollar).reduce(sum, 0) } L</div>
-        <div className="text-container"> Cost: { emissions.map(e => e.emissionCost.priceInDollar).reduce(sum, 0) } SEK</div>
+    <div className="Widget-container">
+      <div className="Widget-total">
+        <h3 className="Widget-title">Model totals</h3>
+        <div className="Widget-total-value"> CO<sub>2</sub>: { emissions.map(e => e.emissionCost.co2CostInDollar).reduce(sum, 0) } kg</div>
+        <div className="Widget-total-value"> Water: { emissions.map(e => e.emissionCost.h2oCostInDollar).reduce(sum, 0) } L</div>
+        <div className="Widget-total-value"> Cost: { emissions.map(e => e.emissionCost.priceInDollar).reduce(sum, 0) } SEK</div>
       </div>
       {
         emissions.map(e => <EmissionComponent key={uniqueID()} emission={e}></EmissionComponent>)
