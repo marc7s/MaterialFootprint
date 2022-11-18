@@ -30,9 +30,12 @@ function Widget({ currentModel }: WidgetProp) {
 
   return (
     <div className="flex-box">
-      <div className="text-container"> Total CO<sub>2</sub>: {totalCo2} kg</div>
-      <div className="text-container"> Total water: {totalWater} L</div>
-      <div className="text-container"> Total cost: {totalCost} sek</div>
+      <div className="everything">
+        <h3>Everything</h3>
+        <div className="text-container"> CO<sub>2</sub>: {totalCo2} kg</div>
+        <div className="text-container"> Water: {totalWater} L</div>
+        <div className="text-container"> Cost: {totalCost} SEK</div>
+      </div>
       {
         emissions.map(e => <EmissionComponent key={uniqueID()} emission={e}></EmissionComponent>)
       }
