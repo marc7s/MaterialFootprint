@@ -29,22 +29,17 @@ function Widget({ currentModel }: WidgetProp) {
     loadEmissions();
   }, [currentModel]);
 
-  var totalCo2 = 0;
-  var totalWater = 0;
-  var totalCost = 0;
-  for (let i = 0; i < emissions.length; i++) {
-    totalCo2 += emissions[i].emissionCost.co2CostInDollar;
-    totalWater += emissions[i].emissionCost.h2oCostInDollar;
-    totalCost += emissions[i].emissionCost.priceInDollar;
+  function sum(a: number, b: number) {
+    return a + b;
   }
 
   return (
     <div className="flex-box">
       <div className="everything">
         <h3>Everything</h3>
-        <div className="text-container"> CO<sub>2</sub>: {totalCo2} kg</div>
-        <div className="text-container"> Water: {totalWater} L</div>
-        <div className="text-container"> Cost: {totalCost} SEK</div>
+        <div className="text-container"> CO<sub>2</sub>: { emissions.map(e => e.emissionCost.co2CostInDollar).reduce(sum, 0) } kg</div>
+        <div className="text-container"> Water: { emissions.map(e => e.emissionCost.h2oCostInDollar).reduce(sum, 0) } L</div>
+        <div className="text-container"> Cost: { emissions.map(e => e.emissionCost.priceInDollar).reduce(sum, 0) } SEK</div>
       </div>
       {
         emissions.map(e => <EmissionComponent key={uniqueID()} emission={e}></EmissionComponent>)
