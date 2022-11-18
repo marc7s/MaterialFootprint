@@ -2,8 +2,7 @@ import React from 'react';
 import './App.sass';
 
 /* Components */
-import Configurator from './Configurator/Configurator';
-import Widget from './Widget/Widget';
+import Configurator from 'Configurator/Configurator';
 
 /* Utilities */
 
@@ -18,7 +17,6 @@ function App() {
       </header>
       <div className="App-content">
         <Configurator></Configurator>
-        <Widget></Widget>
       </div>
       <footer>
         <a href="https://github.com/marc7s/MaterialFootprint" target="_blank" rel="noopener noreferrer">Source code</a>

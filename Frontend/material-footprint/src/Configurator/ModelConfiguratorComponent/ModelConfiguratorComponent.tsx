@@ -2,13 +2,13 @@ import React from 'react';
 import './ModelConfiguratorComponent.sass';
 
 /* Components */
-import ConfiguratorPart from '../ConfiguratorPart/ConfiguratorPart';
+import ConfiguratorPart from 'Configurator/ConfiguratorPart/ConfiguratorPart';
 
 /* Utilities */
 import { Model } from 'Configurator/interfaces';
 
 /* Shared */
-import { uniqueID } from '../../shared/utils';
+import { uniqueID } from 'shared/utils';
 
 
 
