@@ -6,12 +6,16 @@ export type Material = {
 
 export type Emission = {
     material: Material;
-    co2CountInKg: number;
-    h2oCountInL: number;
-    priceInDollar: number;
+    emissionCost: EmissionCost;
 }
 
 export type surfaceTreatment = {
     id: number;
     name: string;
+}
+
+export type EmissionCost = {
+    co2CostInDollar: number;
+    h2oCostInDollar: number;
+    priceInDollar: number;
 }
