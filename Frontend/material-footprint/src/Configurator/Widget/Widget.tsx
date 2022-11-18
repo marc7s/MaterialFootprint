@@ -5,6 +5,7 @@ import { getEmissions } from '../../API';
 import { Emission } from '../../shared/interfaces';
 import { WidgetProp } from '../props';
 import EmissionComponent from '../EmissionComponent/EmissionComponent';
+import { uniqueID } from '../../shared/utils';
 
 
 function Widget({ currentModel }: WidgetProp) {
@@ -24,16 +25,8 @@ function Widget({ currentModel }: WidgetProp) {
         Total CO<sub>2</sub> emissions: 
       </div>
       {
-        emissions.map(e => <EmissionComponent emission={e}></EmissionComponent>)
+        emissions.map(e => <EmissionComponent key={uniqueID()} emission={e}></EmissionComponent>)
       }
-      {/* <table>
-        <tr>
-          <th>Part</th><th>Material</th><th>CO<sub>2</sub></th><th>Water</th><th>Price</th>
-        </tr>
-        {
-          emissions.map(e => <EmissionComponent emission={e}></EmissionComponent>)
-        }
-      </table> */}
     </div>
   );
 }
