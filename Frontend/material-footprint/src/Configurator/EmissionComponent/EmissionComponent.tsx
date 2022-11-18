@@ -1,6 +1,11 @@
 import './EmissionComponent.sass';
 import { Emission } from 'shared/interfaces';
 
+/* Components */
+
+/* Utilities */
+
+/* Shared */
 import { uniqueID } from 'shared/utils';
 
 export interface EmissionProp {
@@ -16,15 +21,15 @@ function EmissionComponent({ emission }: EmissionProp) {
         <tbody>
           <tr key={ uniqueID() }>
             <td className="string">CO<sub>2</sub>:</td>
-            <td className="number">{ emission.co2CountInKg } kg</td>
+            <td className="number">{ emission.emissionCost.co2CostInDollar } kg</td>
           </tr>
           <tr key={ uniqueID() }>
             <td className="string">Water:</td>
-            <td className="number">{ emission.h2oCountInL } L</td>
+            <td className="number">{ emission.emissionCost.h2oCostInDollar } L</td>
           </tr>
           <tr key={ uniqueID() }>
             <td className="string">Cost:</td>
-            <td className="number">{ emission.priceInDollar } SEK</td>
+            <td className="number">{ emission.emissionCost.priceInDollar } SEK</td>
           </tr>
         </tbody>
       </table>

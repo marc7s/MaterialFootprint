@@ -9,8 +9,8 @@ import { ModelPart } from 'Configurator/interfaces';
 import { getMaterials } from 'API';
 
 /* Shared */
-import { Material } from '../../shared/interfaces';
-import { uniqueID } from '../../shared/utils';
+import { Material } from 'shared/interfaces';
+import { uniqueID } from 'shared/utils';
 
 export interface ConfiguratorPartProp {
   part: ModelPart;

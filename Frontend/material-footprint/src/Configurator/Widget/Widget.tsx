@@ -5,6 +5,7 @@ import { getEmissions } from '../../API';
 import { Emission } from '../../shared/interfaces';
 import EmissionComponent from '../EmissionComponent/EmissionComponent';
 import { uniqueID } from '../../shared/utils';
+import { Model } from 'Configurator/interfaces';
 
 
 export interface WidgetProp {
@@ -26,9 +27,9 @@ function Widget({ currentModel }: WidgetProp) {
   var totalWater = 0;
   var totalCost = 0;
   for (let i = 0; i < emissions.length; i++) {
-    totalCo2 += emissions[i].co2CountInKg;
-    totalWater += emissions[i].h2oCountInL;
-    totalCost += emissions[i].priceInDollar;
+    totalCo2 += emissions[i].emissionCost.co2CostInDollar;
+    totalWater += emissions[i].emissionCost.h2oCostInDollar;
+    totalCost += emissions[i].emissionCost.priceInDollar;
   }
 
   return (
