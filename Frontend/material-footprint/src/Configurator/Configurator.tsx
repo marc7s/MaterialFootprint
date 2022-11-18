@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import './Configurator.sass';
 
-import { Model } from './interfaces';
-import ModelComponent from './ModelComponent/ModelComponent';
+/* Components */
 import ModelConfiguratorComponent from './ModelConfiguratorComponent/ModelConfiguratorComponent';
-import { uniqueID } from '../shared/utils';
+import ModelComponent from './ModelComponent/ModelComponent';
+
+/* Utilities */
+import { Model } from './interfaces';
 import { getMaterials, getModels } from '../API';
+
+/* Shared */
+import { uniqueID } from '../shared/utils';
 import { Material } from '../shared/interfaces';
 
 function Configurator() {

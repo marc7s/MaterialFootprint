@@ -1,9 +1,21 @@
 import React from 'react';
-
-import { ModelConfiguratorProp } from 'src/Configurator/props';
 import './ModelConfiguratorComponent.sass';
+
+/* Components */
 import ConfiguratorPart from '../ConfiguratorPart/ConfiguratorPart';
+
+/* Utilities */
+import { Model } from 'Configurator/interfaces';
+
+/* Shared */
 import { uniqueID } from '../../shared/utils';
+
+
+
+export interface ModelConfiguratorProp {
+  model: Model;
+  onPartMaterialChange: (partID: string, materialID: number) => void;
+}
 
 function ModelConfiguratorComponent({model, onPartMaterialChange}: ModelConfiguratorProp) {
   // Render a ConfiguratorPart for each part in the model

@@ -1,7 +1,13 @@
 import React from 'react';
 import './ColorIndicator.sass';
 
-interface ColorIndicatorProp {
+/* Components */
+
+/* Utilities */
+
+/* Shared */
+
+export interface ColorIndicatorProp {
   color: string
 }
 

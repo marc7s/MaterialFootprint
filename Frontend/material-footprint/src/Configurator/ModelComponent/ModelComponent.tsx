@@ -1,8 +1,21 @@
 import React from 'react';
-import ModelPart from '../ModelPartComponent/ModelPartComponent';
-import { ModelProp } from 'src/Configurator/props';
 import './ModelComponent.sass';
+
+/* Components */
+import ModelPart from '../ModelPartComponent/ModelPartComponent';
+
+/* Utilities */
+import { Model } from 'Configurator/interfaces';
+
+/* Shared */
 import { uniqueID } from '../../shared/utils';
+
+
+export interface ModelProp {
+  model: Model;
+  active: boolean;
+  onModelChange: (modelID: number) => void;
+}
 
 function ModelComponent({model, active, onModelChange}: ModelProp) {
   const activeClass: string = active ? ' active' : '';
