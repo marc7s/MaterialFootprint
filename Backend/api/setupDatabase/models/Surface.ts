@@ -24,4 +24,4 @@ export const surfaceSchema = new mongoose.Schema({
     },
 });
 
-module.exports = mongoose.model('Surface', surfaceSchema);
+export const SurfaceModel = mongoose.model('Surface', surfaceSchema);

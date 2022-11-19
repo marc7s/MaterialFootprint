@@ -1,9 +1,11 @@
 import { log } from '@shared/utils';
-const Material = require('../api/setupDatabase/models/Material');
-const Surface = require('../api/setupDatabase/models/Surface');
+import { EmissionCost, Material } from '@shared/interfaces';
+
+import { MaterialModel } from 'setupDatabase/models/Material';
+import { SurfaceModel } from 'setupDatabase/models/Surface';
 
 export async function fetchMaterial(material: String) {
-    const response = await Material.find({name: material});
+    const response = await MaterialModel.find({name: material});
     return response;
 }
 
