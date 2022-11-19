@@ -12,7 +12,7 @@ import { getMaterials, getModels } from 'API';
 
 /* Shared */
 import { uniqueID } from 'shared/utils';
-import { Material } from 'shared/interfaces';
+import { Material, Size } from 'shared/interfaces';
 
 function Configurator() {
   const [models, setModels] = useState([] as Model[]);
@@ -85,10 +85,15 @@ function Configurator() {
     <>
       <div className="Configurator-models">
         {
-          models.map(model => <ModelComponent key={uniqueID()} model={model} active={model.id === currentModel?.id} onModelChange={onModelChange}></ModelComponent>)
+          models.map(model => <ModelComponent key={uniqueID()} model={model} size={Size.SMALL} active={model.id === currentModel?.id} onModelChange={onModelChange}></ModelComponent>)
         }
       </div>
-      <div className="Configurator-modelConfig">
+      <div className="Configurator-current-model">
+        {
+          currentModel && <ModelComponent model={currentModel} size={Size.LARGE}></ModelComponent>
+        }
+      </div>
+      <div className="Configurator-model-config">
         {
           currentModel && <ModelConfiguratorComponent model={currentModel} onPartMaterialChange={onPartMaterialChange}></ModelConfiguratorComponent>
         }

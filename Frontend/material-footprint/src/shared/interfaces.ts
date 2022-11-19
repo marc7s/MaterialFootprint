@@ -20,3 +20,8 @@ export type EmissionCost = {
     h2oCostInDollar: number;
     priceInDollar: number;
 }
+
+export enum Size {
+    SMALL = "small",
+    LARGE = "large"
+}

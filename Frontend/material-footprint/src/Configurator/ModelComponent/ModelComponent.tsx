@@ -9,26 +9,29 @@ import { Model } from 'Configurator/interfaces';
 
 /* Shared */
 import { uniqueID } from 'shared/utils';
+import { Size } from 'shared/interfaces';
 
 
 export interface ModelProp {
   model: Model;
-  active: boolean;
-  onModelChange: (modelID: number) => void;
+  size: Size;
+  active?: boolean;
+  onModelChange?: (modelID: number) => void;
 }
 
-function ModelComponent({model, active, onModelChange}: ModelProp) {
+function ModelComponent({model, size, active, onModelChange}: ModelProp) {
   const activeClass: string = active ? ' active' : '';
 
   const onModelClick = () => {
-    onModelChange(model.id);
+    if(onModelChange) 
+      onModelChange(model.id);
   };
 
   // Render a ModelPart for each part in the model
   return (
       <div className={'ModelComponent-model' + activeClass} onClick={onModelClick}>
         {
-          model.parts.map(part => <ModelPart key={uniqueID()} part={part}></ModelPart>)
+          model.parts.map(part => <ModelPart key={uniqueID()} size={size} part={part}></ModelPart>)
         }
       </div>
   );
