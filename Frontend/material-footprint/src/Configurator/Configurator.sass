@@ -1,3 +1,30 @@
-.Configurator-models, .Configurator-model-config
+.Configurator-model-carousel
     display: flex
     justify-content: center
+    padding-bottom: 5px
+    margin: 0 20px
+    border-bottom: 2px solid lightgrey
+
+.Configurator-model-container
+    display: flex
+    flex-direction: column
+    border: 1.5px solid lightgray
+
+.Configurator-model-container, 
+.Configurator-model-config-widget
+    border-radius: 10px
+    padding: 10px
+
+.Configurator-model-config-widget
+    display: flex
+    flex-direction: column
+    background-color: rgba(100, 100, 100, 0.1)
+    margin-left: 10px
+
+.Configurator-container
+    $models: 2fr
+    $config: 1fr
+    display: grid
+    grid-template-columns: $models $config
+    max-width: 1200px
+    margin: auto

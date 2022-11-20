@@ -1,9 +1,50 @@
 .EmissionComponent-part-name
+    display: flex
+    flex-direction: row
+    justify-content: space-between
     margin-top: 0px
     margin-bottom: 0px
+    cursor: pointer
+
+    h4
+        margin: 0
 
 .EmissionComponent-emission-table
-    margin-left: 10px
+    padding: 0 10px
     width: 100%
-    td
-        padding: 5px
+
+.EmissionComponent-part-left
+    display: flex
+    flex-direction: row
+
+.EmissionComponent-part-right
+    display: flex
+    flex-direction: row
+    h4
+        margin-right: 10px
+
+.EmissionComponent-value
+    text-align: right
+
+$expand-icon-size: 4px
+
+.EmissionComponent-expand-icon
+    border: solid black
+    border-width: 0 3px 3px 0
+    display: inline-block
+    padding: $expand-icon-size
+    height: $expand-icon-size
+    width: $expand-icon-size
+
+.EmissionComponent-expanded .EmissionComponent-expand-icon
+    transform: rotate(-135deg)
+    -webkit-transform: rotate(-135deg)
+    margin-top: calc($expand-icon-size * 2)
+
+.EmissionComponent-collapsed .EmissionComponent-expand-icon
+    transform: rotate(45deg)
+    -webkit-transform: rotate(45deg)
+
+.EmissionComponent-collapsed
+    .EmissionComponent-emission-table
+        display: none

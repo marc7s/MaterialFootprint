@@ -10,7 +10,7 @@ export type Emission = {
     emissionCost: EmissionCost;
 }
 
-export type surfaceTreatment = {
+export type SurfaceTreatment = {
     id: number;
     name: string;
 }

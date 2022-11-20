@@ -20,7 +20,8 @@ export interface ModelProp {
 }
 
 function ModelComponent({model, size, active, onModelChange}: ModelProp) {
-  const activeClass: string = active ? ' active' : '';
+  const activeClass: string = active ? ' ModelComponent-active' : '';
+  const sizeClass: string = ` ModelComponent-size-${size}`;
 
   const onModelClick = () => {
     if(onModelChange) 
@@ -29,7 +30,7 @@ function ModelComponent({model, size, active, onModelChange}: ModelProp) {
 
   // Render a ModelPart for each part in the model
   return (
-      <div className={'ModelComponent-model' + activeClass} onClick={onModelClick}>
+      <div className={'ModelComponent-model' + activeClass + sizeClass} onClick={onModelClick}>
         {
           model.parts.map(part => <ModelPart key={uniqueID()} size={size} part={part}></ModelPart>)
         }
