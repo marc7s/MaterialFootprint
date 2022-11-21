@@ -28,7 +28,6 @@ router.get('/materials', async (req: any, res: Response, next: NextFunction) => 
 router.get('/models', (req: any, res: Response, next: NextFunction) => {
   log('Getting models...');
   // temporarily returns empty json
-  getModels(req, next);
   res.json([]);
 
   //res.json(getModels(req, next));
