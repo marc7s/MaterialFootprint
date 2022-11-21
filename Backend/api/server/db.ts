@@ -28,14 +28,14 @@ export async function init() {
     MaterialModel.createCollection();
     SurfaceModel.createCollection();
     CompanyModel.createCollection();
-    //CompanyMaterialCostModel.createCollection();
-    //CompanySurfaceCostModel.createCollection();
+    CompanyMaterialCostModel.createCollection();
+    CompanySurfaceCostModel.createCollection();
     log("Collections initialized!");
     await MaterialModel.deleteMany();
     await SurfaceModel.deleteMany();
     await CompanyModel.deleteMany();
-    //await CompanyMaterialCostModel.deleteMany();
-    //await CompanySurfaceCostModel.deleteMany();
+    await CompanyMaterialCostModel.deleteMany();
+    await CompanySurfaceCostModel.deleteMany();
     log("Database cleared!");
     //--------------------------------
     MaterialModel.insertMany(json.materials);
@@ -44,12 +44,10 @@ export async function init() {
     log("Surfaces inserted!");
     CompanyModel.insertMany(json.companies);
     log("Companies inserted!");
-    /*
     CompanyMaterialCostModel.insertMany(json.companyMaterialCosts);
     log("CompanyMaterialCosts inserted!");
     CompanySurfaceCostModel.insertMany(json.companySurfaceCosts);
     log("CompanySurfaceCosts inserted!");
-    */
     log("-----------------------------");
     log("Successfully initialized database!");
 

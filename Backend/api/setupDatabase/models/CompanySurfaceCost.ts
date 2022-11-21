@@ -5,7 +5,7 @@ export const companysurfacecostSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
-    materialID: {
+    surfaceID: {
         type: Number,
         required: true,
     },
