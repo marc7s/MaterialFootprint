@@ -4,11 +4,18 @@ dotenv.config({path: __dirname + '/../.env'});
 
 import express, { Application, Request, Response, NextFunction } from 'express';
 
-import { ErrorMessage, NotFoundError, ApiRequestMalformedError } from './errors';
+import { ErrorMessage, NotFoundError, ApiRequestMalformedError, FatalError } from './errors';
 import { log, logError } from '@shared/utils';
+import { connectToDb } from './db';
 
 const app: Application = express();
 const cors = require('cors');
+
+connectToDb().catch((err: Error) => { 
+    logError("Could not connect to database", err);
+    // if database connection fails, fail server gracefully
+    throw new FatalError();
+});
 
 app.use(cors({
     origin: `http://localhost:${process.env.FRONTEND_PORT}`

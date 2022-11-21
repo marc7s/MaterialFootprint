@@ -9,11 +9,11 @@ export const companysurfacecostSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
-    CO2AmountPerM2: {
+    co2AmountPerM2: {
         type: Number,
         required: true,
     },
-    H2OAmountPerM2: {
+    h2oAmountPerM2: {
         type: Number,
         required: true,
     },

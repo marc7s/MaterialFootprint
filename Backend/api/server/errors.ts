@@ -16,6 +16,13 @@ export class DatabaseConnectionError extends Error {
     }
 }
 
+export class FatalError extends Error {
+    constructor() {
+        super("Fatal error");
+        process.kill(process.pid, 'SIGINT')
+    }
+}
+
 export interface ErrorMessage {
     status: string,
     errorMessage: string,

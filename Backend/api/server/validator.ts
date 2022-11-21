@@ -1,6 +1,5 @@
 import { ErrorMessage, NotFoundError, ApiRequestMalformedError } from './errors';
 import { Request, Response, NextFunction } from 'express';
-import { receiveMessageOnPort } from 'worker_threads';
 
 // validates the input for the emissions endpoint
 export function validateEmissionsInput(req: any, res: Response, next: NextFunction): void {
