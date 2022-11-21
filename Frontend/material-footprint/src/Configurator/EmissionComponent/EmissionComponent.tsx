@@ -1,36 +1,89 @@
 import './EmissionComponent.sass';
-import { Emission } from 'shared/interfaces';
+import { useState } from 'react';
 
 /* Components */
+import ColorIndicator from 'Configurator/ColorIndicator/ColorIndicator';
 
 /* Utilities */
 
 /* Shared */
 import { uniqueID } from 'shared/utils';
+import { Emission, EmissionCost } from 'shared/interfaces';
 
 export interface EmissionProp {
   emission: Emission;
+  totalEmissionCost: EmissionCost;
 }
 
-function EmissionComponent({ emission }: EmissionProp) {
+interface EmissionEntry {
+  title: JSX.Element;
+  cost: number;
+  unit: string;
+  percentage: number;
+}
+
+function EmissionComponent({ emission, totalEmissionCost }: EmissionProp) {
+  const [expanded, setExpanded] = useState(false);
+
+  function toggleExpand() {
+    setExpanded(!expanded);
+  }
+
+  // TODO: Change this to a proper algorithm or redo the percentages
+  function calculateTotalEmissionPercent(emissionCost: EmissionCost, totalEmissionCost: EmissionCost) {
+    return Math.round((emissionCost.priceInDollar / totalEmissionCost.priceInDollar) * 100);
+  }
+
+  function calculateEmissionPercent(cost: number, totalCost: number) {
+    return Math.round((cost / totalCost) * 100);
+  }
+
+  const emissions: EmissionEntry[] = [
+    {
+      title: <>CO<sub>2</sub></>,
+      cost: emission.emissionCost.co2CostInDollar,
+      unit: 'kg',
+      percentage: calculateEmissionPercent(emission.emissionCost.co2CostInDollar, totalEmissionCost.co2CostInDollar)
+    },
+    {
+      title: <>Water</>,
+      cost: emission.emissionCost.h2oCostInDollar,
+      unit: 'L',
+      percentage: calculateEmissionPercent(emission.emissionCost.h2oCostInDollar, totalEmissionCost.h2oCostInDollar)
+    },
+    {
+      title: <>Price</>,
+      cost: emission.emissionCost.priceInDollar,
+      unit: 'SEK',
+      percentage: calculateEmissionPercent(emission.emissionCost.priceInDollar, totalEmissionCost.priceInDollar)
+    }
+  ];
+
   // Render an EmissionComponent for each part in the model
   return (
-    <div>
-      <h4 className="EmissionComponent-part-name">{ emission.partName }</h4>
+    <div className={'EmissionComponent-container EmissionComponent-' + (expanded ? 'expanded' : 'collapsed')}>
+      <div className="EmissionComponent-part-name" onClick={toggleExpand}>
+        <div className="EmissionComponent-part-left">
+          <h4>{ emission.partName }</h4>
+          <ColorIndicator color={emission.material.color}></ColorIndicator>
+        </div>
+        
+        <div className="EmissionComponent-part-right">
+          <h4>{ calculateTotalEmissionPercent(emission.emissionCost, totalEmissionCost) }%</h4>
+          <i className="EmissionComponent-expand-icon"></i>
+        </div>
+      </div>
+      
       <table className="EmissionComponent-emission-table">
         <tbody>
-          <tr key={ uniqueID() }>
-            <td className="EmissionComponent-title">CO<sub>2</sub>:</td>
-            <td className="EmissionComponent-value">{ emission.emissionCost.co2CostInDollar } kg</td>
-          </tr>
-          <tr key={ uniqueID() }>
-            <td className="EmissionComponent-title">Water:</td>
-            <td className="EmissionComponent-value">{ emission.emissionCost.h2oCostInDollar } L</td>
-          </tr>
-          <tr key={ uniqueID() }>
-            <td className="EmissionComponent-title">Cost:</td>
-            <td className="EmissionComponent-value">{ emission.emissionCost.priceInDollar } SEK</td>
-          </tr>
+          {
+            emissions.map(e => 
+              <tr key={ uniqueID() }>
+                <td className="EmissionComponent-title">{ e.title }</td>
+                <td className="EmissionComponent-value">{ e.cost } { e.unit } ({e.percentage}%)</td>
+              </tr>
+            )
+          }
         </tbody>
       </table>
     </div>

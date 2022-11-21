@@ -5,14 +5,18 @@ import './ModelPartComponent.sass';
 
 /* Utilities */
 import { ModelPart } from 'Configurator/interfaces';
+import { Size } from 'shared/interfaces';
 
 /* Shared */
 
 export interface ModelPartProps {
-  part: ModelPart
+  part: ModelPart,
+  size: Size
 }
 
-function ModelPartComponent({part}: ModelPartProps) {
+function ModelPartComponent({part, size}: ModelPartProps) {
+  const sizeClass: string = ` size-${size}`;
+  
   // Set the background image of the part and the color based on its material
   const styling: React.CSSProperties = {
     backgroundImage: `url(${part.image})`,
@@ -22,7 +26,7 @@ function ModelPartComponent({part}: ModelPartProps) {
   // Render the part of the model as one image layer
   // All part images rendered on top of each other will form the final model image
   return (
-    <div className="ModelPartComponent-img" key={part.id} style={styling}></div>
+    <div className={'ModelPartComponent-img' + sizeClass} key={part.id} style={styling}></div>
   );
 }
 
