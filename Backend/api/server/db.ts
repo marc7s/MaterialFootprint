@@ -7,6 +7,8 @@ import mongoose from 'mongoose';
 const Material = require('../setupDatabase/models/Material');
 const Surface = require('../setupDatabase/models/Surface');
 
+var json = require('../setupDatabase/setupData.json');
+
 export async function connectToDb() {
     log("Trying to connect to database...")
     const constring = process.env.DB_CONN_STRING;
@@ -19,18 +21,6 @@ export async function connectToDb() {
     log("Successfully connected to database!");
 }
 
-const material = new Material({
-        name: "Im a material",
-        colour: "red",
-        co2CountInKg: 1,
-        h2oCountInL: 1,
-        priceInDollar: 1,
-});
-
-const surface = new Surface({
-        name: "Im a surface",
-});
-
 export async function init() {
     log("Initializing database...");
     Material.createCollection();
@@ -40,8 +30,10 @@ export async function init() {
     await Surface.deleteMany();
     log("Database cleared!");
     //--------------------------------
-    material.save();
-    //surface.save();
+    Material.insertMany(json.materials);
+    log("Materials inserted!");
+    Surface.insertMany(json.surfaces);
+    log("Surfaces inserted!");
     log("Successfully initialized database!");
 
 }
