@@ -9,11 +9,11 @@ export const companymaterialcostSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
-    CO2AmountPerKg: {
+    co2AmountPerKg: {
         type: Number,
         required: true,
     },
-    H2OAmountPerKg: {
+    h2oAmountPerKg: {
         type: Number,
         required: true,
     },

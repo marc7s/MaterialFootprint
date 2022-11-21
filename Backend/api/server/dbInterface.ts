@@ -19,7 +19,7 @@ export async function fetchMaterialCostForCompany(companyID: number, materialID:
     const docs = await CompanyMaterialCostModel.find({companyID: companyID, materialID: materialID})
         .catch(() => { throw new DatabaseConnectionError(); });
     const companyMaterialCost: EmissionCost[] = docs.map((docs) => {
-         return { priceInDollar: docs.CostPerKg, co2AmountPerKg: docs.CO2AmountPerKg, h2oAmountPerKg: docs.H2OAmountPerKg } 
+         return { priceInDollar: docs.CostPerKg, co2AmountPerKg: docs.co2AmountPerKg, h2oAmountPerKg: docs.h2oAmountPerKg } 
         });
     return Promise.resolve(companyMaterialCost);
 } 

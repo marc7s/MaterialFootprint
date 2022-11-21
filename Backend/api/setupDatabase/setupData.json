@@ -25,9 +25,11 @@
     ],
     "companies": [
         {
+            "id": 1,
             "name": "Ericsson"
         },
         {
+            "id": 2,
             "name": "Rapid Images"
         }
     ],
@@ -35,16 +37,16 @@
         {
             "companyID": 1,
             "materialID": 1,
-            "CO2AmountPerKg": 1,
-            "H2OAmountPerKg": 1,
+            "co2AmountPerKg": 1,
+            "h2oAmountPerKg": 1,
             "CostPerKg": 1
 
         },
         {
             "companyID": 1,
             "materialID": 2,
-            "CO2AmountPerKg": 2,
-            "H2OAmountPerKg": 2,
+            "co2AmountPerKg": 2,
+            "h2oAmountPerKg": 2,
             "CostPerKg": 2
         }
     ],
@@ -52,15 +54,15 @@
         {
             "companyID": 1,
             "surfaceID": 1,
-            "CO2AmountPerM2": 10,
-            "H2OAmountPerM2": 10,
+            "co2AmountPerM2": 10,
+            "h2oAmountPerM2": 10,
             "CostPerM2": 10
         },
         {
             "companyID": 1,
             "surfaceID": 2,
-            "CO2AmountPerM2": 20,
-            "H2OAmountPerM2": 20,
+            "co2AmountPerM2": 20,
+            "h2oAmountPerM2": 20,
             "CostPerM2": 20
         }
     ]
