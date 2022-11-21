@@ -1,0 +1,30 @@
+{
+    "materials": [
+        {
+            "name": "Plastic",
+            "colour": "Yellow"
+        },
+        {
+            "name": "Plastic",
+            "colour": "Red"
+        }
+    ],
+    "surfaces": [
+        {
+            "name": "Paint",
+            "colour": "Yellow"
+        },
+        {
+            "name": "Paint",
+            "colour": "Red"
+        }
+    ],
+    "companies": [
+        {
+            "name": "Ericsson"
+        },
+        {
+            "name": "Rapid Images"
+        }
+    ]
+}

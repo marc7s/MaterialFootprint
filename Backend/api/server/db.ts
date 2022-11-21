@@ -3,9 +3,11 @@ dotenv.config({path: __dirname + '/../.env'});
 import { log } from '@shared/utils';
 import { DatabaseConnectionError } from "./errors";
 import mongoose from 'mongoose';
-
-const Material = require('../setupDatabase/models/Material');
-const Surface = require('../setupDatabase/models/Surface');
+import { MaterialModel } from '../setupDatabase/models/Material';
+import { SurfaceModel } from '../setupDatabase/models/Surface';
+import { CompanyModel } from "../setupDatabase/models/Company";
+import { CompanyMaterialCostModel } from "../setupDatabase/models/CompanyMaterialCost";
+import { CompanySurfaceCostModel } from "../setupDatabase/models/CompanySurfaceCost";
 
 var json = require('../setupDatabase/setupData.json');
 
@@ -23,17 +25,32 @@ export async function connectToDb() {
 
 export async function init() {
     log("Initializing database...");
-    Material.createCollection();
-    Surface.createCollection();
+    MaterialModel.createCollection();
+    SurfaceModel.createCollection();
+    CompanyModel.createCollection();
+    //CompanyMaterialCostModel.createCollection();
+    //CompanySurfaceCostModel.createCollection();
     log("Collections initialized!");
-    await Material.deleteMany();
-    await Surface.deleteMany();
+    await MaterialModel.deleteMany();
+    await SurfaceModel.deleteMany();
+    await CompanyModel.deleteMany();
+    //await CompanyMaterialCostModel.deleteMany();
+    //await CompanySurfaceCostModel.deleteMany();
     log("Database cleared!");
     //--------------------------------
-    Material.insertMany(json.materials);
+    MaterialModel.insertMany(json.materials);
     log("Materials inserted!");
-    Surface.insertMany(json.surfaces);
+    SurfaceModel.insertMany(json.surfaces);
     log("Surfaces inserted!");
+    CompanyModel.insertMany(json.companies);
+    log("Companies inserted!");
+    /*
+    CompanyMaterialCostModel.insertMany(json.companyMaterialCosts);
+    log("CompanyMaterialCosts inserted!");
+    CompanySurfaceCostModel.insertMany(json.companySurfaceCosts);
+    log("CompanySurfaceCosts inserted!");
+    */
+    log("-----------------------------");
     log("Successfully initialized database!");
 
 }
