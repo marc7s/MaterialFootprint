@@ -14,7 +14,6 @@ export async function connectToDb(): Promise<void> {
 
     await mongoose.connect(validConString)
         .catch((err) => {
-            log("Could not connect to database using mongoose.connect");
             throw new DatabaseConnectionError(); 
     });
 
