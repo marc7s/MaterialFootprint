@@ -3,7 +3,7 @@ import { EmissionCost, EmissionCostSurfaceTreatment, Material } from '@shared/in
 import { MaterialModel } from 'setupDatabase/models/Material';
 import { CompanyMaterialCostModel } from 'setupDatabase/models/CompanyMaterialCost';
 import { CompanySurfaceCostModel } from 'setupDatabase/models/CompanySurfaceCost';
-import { DatabaseConnectionError } from './errors';
+import { DatabaseConnectionError } from 'server/errors';
 
 
 // fetch all materials, return array of Materials
