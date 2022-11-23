@@ -6,7 +6,7 @@ import { log, logError } from '@shared/utils';
 import { MaterialModel } from 'setupDatabase/models/Material';
 import { SurfaceModel } from 'setupDatabase/models/Surface';
 import { CompanyModel } from 'setupDatabase/models/Company';
-import { CompanyMaterialCostModel } from "../setupDatabase/models/CompanyMaterialCost";
+import { CompanyMaterialCostModel } from 'setupDatabase/models/CompanyMaterialCost';
 import { CompanySurfaceCostModel } from "../setupDatabase/models/CompanySurfaceCost";
 import { DatabaseConnectionError } from '../server/errors';
 
