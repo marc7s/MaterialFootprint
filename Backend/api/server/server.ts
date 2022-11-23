@@ -6,7 +6,7 @@ import express, { Application, Request, Response, NextFunction } from 'express';
 
 import { ErrorMessage, NotFoundError, ApiRequestMalformedError, FatalError } from 'server/errors';
 import { log, logError } from '@shared/utils';
-import { connectToDb } from './db';
+import { connectToDb } from 'server/db';
 
 const app: Application = express();
 const cors = require('cors');
