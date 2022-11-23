@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-export const companysurfacecostSchema = new mongoose.Schema({
+const companySurfaceCostSchema = new mongoose.Schema({
     companyID: {
         type: Number,
         required: true,
@@ -17,10 +17,10 @@ export const companysurfacecostSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
-    CostPerM2: {
+    costPerM2: {
         type: Number,
         required: true,
     },
 });
 
-export const CompanySurfaceCostModel = mongoose.model('CompanySurfaceCost', companysurfacecostSchema);
+export const CompanySurfaceCostModel = mongoose.model('CompanySurfaceCost', companySurfaceCostSchema);

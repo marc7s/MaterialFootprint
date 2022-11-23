@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-export const companySchema = new mongoose.Schema({
+const companySchema = new mongoose.Schema({
     id: {
         type: Number,
         required: true,

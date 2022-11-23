@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-export const companymaterialcostSchema = new mongoose.Schema({
+const companyMaterialCostSchema = new mongoose.Schema({
     companyID: {
         type: Number,
         required: true,
@@ -17,10 +17,10 @@ export const companymaterialcostSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
-    CostPerKg: {
+    costPerKg: {
         type: Number,
         required: true,
     },
 });
 
-export const CompanyMaterialCostModel = mongoose.model('CompanyMaterialCost', companymaterialcostSchema);
+export const CompanyMaterialCostModel = mongoose.model('CompanyMaterialCost', companyMaterialCostSchema);

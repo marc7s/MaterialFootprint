@@ -1,9 +1,9 @@
 import { EmissionCost, EmissionCostSurfaceTreatment, Material } from '@shared/interfaces';
 
-import { MaterialModel } from 'setupDatabase/models/Material';
-import { CompanyMaterialCostModel } from 'setupDatabase/models/CompanyMaterialCost';
-import { CompanySurfaceCostModel } from 'setupDatabase/models/CompanySurfaceCost';
-import { DatabaseConnectionError } from 'server/errors';
+import { MaterialModel } from '../setupDatabase/models/Material';
+import { CompanyMaterialCostModel } from '../setupDatabase/models/CompanyMaterialCost';
+import { CompanySurfaceCostModel } from '../setupDatabase/models/CompanySurfaceCost';
+import { DatabaseConnectionError } from '../server/errors';
 
 
 // fetch all materials, return array of Materials
@@ -18,8 +18,7 @@ export async function fetchMaterials(): Promise<Material[]> {
 export async function fetchMaterialCostForCompany(companyID: number, materialID: number): Promise<EmissionCost[]> {
     const docs = await CompanyMaterialCostModel.find({companyID: companyID, materialID: materialID})
         .catch(() => { throw new DatabaseConnectionError(); });
-    const companyMaterialCost: EmissionCost[] = docs.map(doc => ({ priceInDollar: doc.CostPerKg, co2AmountPerKg: doc.co2AmountPerKg, h2oAmountPerKg: doc.h2oAmountPerKg }));
-        });
+    const companyMaterialCost: EmissionCost[] = docs.map(doc => ({ priceInDollar: doc.costPerKg, co2AmountPerKg: doc.co2AmountPerKg, h2oAmountPerKg: doc.h2oAmountPerKg }));
     return Promise.resolve(companyMaterialCost);
 } 
 
@@ -27,7 +26,6 @@ export async function fetchMaterialCostForCompany(companyID: number, materialID:
 export async function fetchSurfaceTreatmentCostForCompany(companyID: number, surfaceID: number): Promise<EmissionCostSurfaceTreatment[]> {
     const docs = await CompanySurfaceCostModel.find({companyID: companyID, surfaceID: surfaceID})
         .catch(() => { throw new DatabaseConnectionError(); });
-    const companySurfaceCost: EmissionCostSurfaceTreatment[] = docs.map(doc => ({ priceInDollar: doc.CostPerM2, co2AmountPerM2: doc.co2AmountPerM2, h2oAmountPerM2: doc.h2oAmountPerM2 }));
-    });
+    const companySurfaceCost: EmissionCostSurfaceTreatment[] = docs.map(doc => ({ priceInDollar: doc.costPerM2, co2AmountPerM2: doc.co2AmountPerM2, h2oAmountPerM2: doc.h2oAmountPerM2 }));
     return Promise.resolve(companySurfaceCost); 
 } 

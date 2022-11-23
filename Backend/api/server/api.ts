@@ -5,7 +5,7 @@ dotenv.config({path: __dirname + '../.env'});
 import express, { Response, NextFunction, Router } from 'express';
 import { Material, Emission } from '@shared/interfaces';
 import { validateEmissionsInput } from './validator';
-import { fetchMaterials, fetchMaterialCostForCompany, fetchSurfaceTreatmentCostForCompany } from 'dbInterface';
+import { fetchMaterials, fetchMaterialCostForCompany, fetchSurfaceTreatmentCostForCompany } from 'server/dbInterface';
 
 const router: Router = express.Router();
 

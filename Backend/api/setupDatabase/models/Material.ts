@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-export const materialSchema = new mongoose.Schema({
+const materialSchema = new mongoose.Schema({
     id: {
         type: Number,
         required: true,

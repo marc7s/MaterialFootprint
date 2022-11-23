@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 
-export const surfaceSchema = new mongoose.Schema({
+const surfaceSchema = new mongoose.Schema({
     id: {
         type: Number,
         required: true,
