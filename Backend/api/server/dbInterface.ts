@@ -10,7 +10,7 @@ import { DatabaseConnectionError } from 'server/errors';
 export async function fetchMaterials(): Promise<Material[]> {
         const docs = await MaterialModel.find({})
             .catch(() => { throw new DatabaseConnectionError(); });
-        const materials: Material[] = docs.map((docs) => { return { id: docs.id, name: docs.name, color: docs.color } });
+        const materials: Material[] = docs.map(doc => ({ id: doc.id, name: doc.name, color: doc.color }));
         return Promise.resolve(materials); 
 } 
 
