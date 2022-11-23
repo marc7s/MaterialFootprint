@@ -13,8 +13,6 @@ const cors = require('cors');
 
 connectToDb().catch((err: Error) => { 
     logError("Could not connect to database", err);
-    // if database connection fails, fail server gracefully
-    throw new FatalError();
 });
 
 app.use(cors({
