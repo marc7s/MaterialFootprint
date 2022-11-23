@@ -8,7 +8,7 @@ import { SurfaceModel } from 'setupDatabase/models/Surface';
 import { CompanyModel } from 'setupDatabase/models/Company';
 import { CompanyMaterialCostModel } from 'setupDatabase/models/CompanyMaterialCost';
 import { CompanySurfaceCostModel } from 'setupDatabase/models/CompanySurfaceCost';
-import { DatabaseConnectionError } from '../server/errors';
+import { DatabaseConnectionError } from 'server/errors';
 
 const mockData = require('../setupDatabase/setupData.json');
 
