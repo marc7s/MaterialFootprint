@@ -27,7 +27,7 @@ export async function fetchMaterialCostForCompany(companyID: number, materialID:
 export async function fetchSurfaceTreatmentCostForCompany(companyID: number, surfaceID: number): Promise<EmissionCostSurfaceTreatment[]> {
     const docs = await CompanySurfaceCostModel.find({companyID: companyID, surfaceID: surfaceID})
         .catch(() => { throw new DatabaseConnectionError(); });
-    const companySurfaceCost: EmissionCostSurfaceTreatment[] = docs.map((docs) => { 
+    const companySurfaceCost: EmissionCostSurfaceTreatment[] = docs.map(doc => ({ priceInDollar: doc.CostPerM2, co2AmountPerM2: doc.co2AmountPerM2, h2oAmountPerM2: doc.h2oAmountPerM2 }));
         return { priceInDollar: docs.CostPerM2, co2AmountPerM2: docs.co2AmountPerM2, h2oAmountPerM2: docs.h2oAmountPerM2 }
     });
     return Promise.resolve(companySurfaceCost); 
