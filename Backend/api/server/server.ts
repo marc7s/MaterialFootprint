@@ -4,7 +4,7 @@ dotenv.config({path: __dirname + '/../.env'});
 
 import express, { Application, Request, Response, NextFunction } from 'express';
 
-import { ErrorMessage, NotFoundError, ApiRequestMalformedError, FatalError } from './errors';
+import { ErrorMessage, NotFoundError, ApiRequestMalformedError, FatalError } from 'server/errors';
 import { log, logError } from '@shared/utils';
 import { connectToDb } from './db';
 
