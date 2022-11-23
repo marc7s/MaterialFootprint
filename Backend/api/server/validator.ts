@@ -1,4 +1,4 @@
-import { ErrorMessage, NotFoundError, ApiRequestMalformedError } from './errors';
+import { ErrorMessage, NotFoundError, ApiRequestMalformedError } from 'server/errors';
 import { Request, Response, NextFunction } from 'express';
 
 // validates the input for the emissions endpoint
