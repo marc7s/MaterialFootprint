@@ -1,15 +1,21 @@
 import 'module-alias/register';
 import * as dotenv from "dotenv";
 dotenv.config({path: __dirname + '/../.env'});
-import { connectToDb } from '../server/db';
+
+/* Utils */
+import { connectToDb } from 'server/db';
+import { MaterialModel } from 'setupDatabase/models/Material';
+import { SurfaceModel } from 'setupDatabase/models/Surface';
+import { CompanyModel } from 'setupDatabase/models/Company';
+import { CompanyMaterialCostModel } from 'setupDatabase/models/CompanyMaterialCost';
+import { CompanySurfaceCostModel } from 'setupDatabase/models/CompanySurfaceCost';
+import { DatabaseClearCollectionError, DatabaseConnectionError, DatabaseCreateCollectionError, DatabaseInsertMockDataError } from 'server/errors';
+
+/* Shared */
 import { log, logError } from '@shared/utils';
-import { MaterialModel } from '../setupDatabase/models/Material';
-import { SurfaceModel } from '../setupDatabase/models/Surface';
-import { CompanyModel } from '../setupDatabase/models/Company';
-import { CompanyMaterialCostModel } from '../setupDatabase/models/CompanyMaterialCost';
-import { CompanySurfaceCostModel } from '../setupDatabase/models/CompanySurfaceCost';
-import { DatabaseClearCollectionError, DatabaseConnectionError, DatabaseCreateCollectionError, DatabaseInsertMockDataError } from '../server/errors';
-import mockData from '../setupDatabase/setupData.json'
+
+/* Mock data */
+import mockData from 'setupDatabase/setupData.json';
 
 async function createCollections(): Promise<void> {
     log("Creating collections...");

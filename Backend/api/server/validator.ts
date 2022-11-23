@@ -1,3 +1,4 @@
+/* Utils */
 import { ErrorMessage, NotFoundError, ApiRequestMalformedError } from 'server/errors';
 import { Request, Response, NextFunction } from 'express';
 

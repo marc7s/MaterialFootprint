@@ -2,11 +2,14 @@ import 'module-alias/register';
 import * as dotenv from 'dotenv';
 dotenv.config({path: __dirname + '/../.env'});
 
+/* Utils */
 import express, { Application, Request, Response, NextFunction } from 'express';
-
-import { ErrorMessage, NotFoundError, ApiRequestMalformedError, FatalError } from 'server/errors';
-import { log, logError } from '@shared/utils';
+import { ErrorMessage, NotFoundError, ApiRequestMalformedError } from 'server/errors';
 import { connectToDb } from 'server/db';
+
+/* Shared */
+import { log, logError } from '@shared/utils';
+
 
 const app: Application = express();
 const cors = require('cors');

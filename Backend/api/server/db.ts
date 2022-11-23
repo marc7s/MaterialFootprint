@@ -1,8 +1,13 @@
 import * as dotenv from "dotenv";
 dotenv.config({path: __dirname + '/../.env'});
-import { log } from '@shared/utils';
-import { DatabaseConnectionError } from "./errors";
+
+/* Utils */
+import { DatabaseConnectionError } from "server/errors";
 import mongoose from 'mongoose';
+
+/* Shared */
+import { log } from '@shared/utils';
+
 
 export async function connectToDb(): Promise<void> {
     const constring: string | undefined = process.env.DB_CONN_STRING;

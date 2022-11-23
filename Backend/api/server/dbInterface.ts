@@ -1,9 +1,11 @@
-import { EmissionCost, EmissionCostSurfaceTreatment, Material } from '@shared/interfaces';
+/* Utils */
+import { MaterialModel } from 'setupDatabase/models/Material';
+import { CompanyMaterialCostModel } from 'setupDatabase/models/CompanyMaterialCost';
+import { CompanySurfaceCostModel } from 'setupDatabase/models/CompanySurfaceCost';
+import { DatabaseConnectionError } from 'server/errors';
 
-import { MaterialModel } from '../setupDatabase/models/Material';
-import { CompanyMaterialCostModel } from '../setupDatabase/models/CompanyMaterialCost';
-import { CompanySurfaceCostModel } from '../setupDatabase/models/CompanySurfaceCost';
-import { DatabaseConnectionError } from '../server/errors';
+/* Shared */
+import { EmissionCost, EmissionCostSurfaceTreatment, Material } from '@shared/interfaces';
 
 
 // fetch all materials, return array of Materials

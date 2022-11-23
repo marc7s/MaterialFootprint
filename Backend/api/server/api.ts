@@ -2,10 +2,13 @@ import { log } from '@shared/utils';
 import * as dotenv from 'dotenv';
 dotenv.config({path: __dirname + '../.env'});
 
+/* Utils */
 import express, { Response, NextFunction, Router } from 'express';
+import { validateEmissionsInput } from 'server/validator';
+import { fetchMaterials } from 'server/dbInterface';
+
+/* Shared */
 import { Material, Emission } from '@shared/interfaces';
-import { validateEmissionsInput } from './validator';
-import { fetchMaterials, fetchMaterialCostForCompany, fetchSurfaceTreatmentCostForCompany } from 'server/dbInterface';
 
 const router: Router = express.Router();
 
