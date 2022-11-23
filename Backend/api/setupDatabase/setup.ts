@@ -1,7 +1,7 @@
 import 'module-alias/register';
 import * as dotenv from "dotenv";
 dotenv.config({path: __dirname + '/../.env'});
-import { connectToDb } from "../../api/server/db";
+import { connectToDb } from 'server/db';
 import { log, logError } from '@shared/utils';
 import { MaterialModel } from '../setupDatabase/models/Material';
 import { SurfaceModel } from '../setupDatabase/models/Surface';
