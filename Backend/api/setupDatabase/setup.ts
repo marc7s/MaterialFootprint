@@ -46,7 +46,7 @@ async function setupMockDatabase(): Promise<void> {
 }
 
 connectToDb()
-  .catch((err) => { logError("Could not connect to database",err); });
+  .catch(err => logError("Could not connect to database", err));
 setupMockDatabase()
   .catch((err) => { logError("Could not setup mock data in database",err); });
 
