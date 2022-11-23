@@ -1,6 +1,6 @@
 import { EmissionCost, EmissionCostSurfaceTreatment, Material } from '@shared/interfaces';
 
-import { MaterialModel } from '../setupDatabase/models/Material';
+import { MaterialModel } from 'setupDatabase/models/Material';
 import { CompanyMaterialCostModel } from 'setupDatabase/models/CompanyMaterialCost';
 import { CompanySurfaceCostModel } from '../setupDatabase/models/CompanySurfaceCost';
 import { DatabaseConnectionError } from './errors';
