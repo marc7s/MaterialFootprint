@@ -4,7 +4,7 @@ dotenv.config({path: __dirname + '/../.env'});
 import { connectToDb } from 'server/db';
 import { log, logError } from '@shared/utils';
 import { MaterialModel } from 'setupDatabase/models/Material';
-import { SurfaceModel } from '../setupDatabase/models/Surface';
+import { SurfaceModel } from 'setupDatabase/models/Surface';
 import { CompanyModel } from "../setupDatabase/models/Company";
 import { CompanyMaterialCostModel } from "../setupDatabase/models/CompanyMaterialCost";
 import { CompanySurfaceCostModel } from "../setupDatabase/models/CompanySurfaceCost";
