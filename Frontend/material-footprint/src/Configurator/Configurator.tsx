@@ -143,7 +143,7 @@ function Configurator() {
             currentModel && 
             <>
               <ModelConfiguratorComponent model={currentModel} onPartMaterialChange={onPartMaterialChange} onPartSurfaceTreatmentChange={onPartSurfaceTreatmentChange}></ModelConfiguratorComponent>
-              <Widget currentModel={currentModel}></Widget>
+              <Widget currentModelParts={currentModel.parts}></Widget>
             </>
           }
         </div>

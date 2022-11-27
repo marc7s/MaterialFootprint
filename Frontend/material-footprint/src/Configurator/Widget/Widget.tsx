@@ -5,8 +5,8 @@ import './Widget.sass';
 import EmissionComponent from 'Configurator/EmissionComponent/EmissionComponent';
 
 /* Utilities */
-import { getEmissions } from 'API';
-import { Model } from 'Configurator/interfaces';
+import { getMaterials } from 'API';
+import { ModelPart } from 'Configurator/interfaces';
 
 /* Shared */
 import { Emission, EmissionCost } from 'shared/interfaces';
@@ -15,19 +15,54 @@ import { uniqueID } from 'shared/utils';
 
 
 export interface WidgetProp {
-  currentModel: Model;
+  currentModelParts: ModelPart[];
 }
 
-function Widget({ currentModel }: WidgetProp) {
+// Get a list of all the materials from the API
+// Since the widget is separated this is defined here and not in the API file
+async function getEmissions(modelParts: ModelPart[]): Promise<Emission[]> {
+  const materials = await getMaterials();
+  return [
+      {
+          partName: "Seat",
+          material: materials.find(material => material.name === 'Textile')!,
+          emissionCost: {
+              co2CostInDollar: 100,
+              h2oCostInDollar: 200,
+              priceInDollar: 300
+          }
+      },
+      {
+          partName: "Armrests",
+          material: materials.find(material => material.name === 'Plastic')!,
+          emissionCost: {
+              co2CostInDollar: 1000,
+              h2oCostInDollar: 2000,
+              priceInDollar: 3000
+          }
+      },
+      {
+          partName: "Frame",
+          material: materials.find(material => material.name === 'Steel')!,
+          emissionCost: {
+              co2CostInDollar: 10000,
+              h2oCostInDollar: 20000,
+              priceInDollar: 30000
+          }
+      }
+  ]
+}
+
+function Widget({ currentModelParts }: WidgetProp) {
   const [emissions, setEmissions] = useState([] as Emission[]);
 
   // Load emissions from API on first render
   useEffect(() => {
     async function loadEmissions() {
-      getEmissions(currentModel.parts).then(m => setEmissions(m));
+      getEmissions(currentModelParts).then(m => setEmissions(m));
     }
     loadEmissions();
-  }, [currentModel]);
+  }, [currentModelParts]);
 
   function sum(a: number, b: number) {
     return a + b;
