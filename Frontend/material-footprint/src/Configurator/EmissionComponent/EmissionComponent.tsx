@@ -41,15 +41,15 @@ function EmissionComponent({ emission, totalEmissionCost }: EmissionProp) {
   const emissions: EmissionEntry[] = [
     {
       title: <>CO<sub>2</sub></>,
-      cost: emission.emissionCost.co2CostInDollar,
+      cost: emission.emissionCost.co2AmountPerKg,
       unit: 'kg',
-      percentage: calculateEmissionPercent(emission.emissionCost.co2CostInDollar, totalEmissionCost.co2CostInDollar)
+      percentage: calculateEmissionPercent(emission.emissionCost.co2AmountPerKg, totalEmissionCost.co2AmountPerKg)
     },
     {
       title: <>Water</>,
-      cost: emission.emissionCost.h2oCostInDollar,
+      cost: emission.emissionCost.h2oAmountPerKg,
       unit: 'L',
-      percentage: calculateEmissionPercent(emission.emissionCost.h2oCostInDollar, totalEmissionCost.h2oCostInDollar)
+      percentage: calculateEmissionPercent(emission.emissionCost.h2oAmountPerKg, totalEmissionCost.h2oAmountPerKg)
     },
     {
       title: <>Price</>,

@@ -16,8 +16,8 @@ export type SurfaceTreatment = {
 }
 
 export type EmissionCost = {
-    co2CostInDollar: number;
-    h2oCostInDollar: number;
+    co2AmountPerKg: number;
+    h2oAmountPerKg: number;
     priceInDollar: number;
 }
 

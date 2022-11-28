@@ -69,8 +69,8 @@ function Widget({ currentModelParts }: WidgetProp) {
   }
 
   const totalEmissionCost: EmissionCost = {
-    co2CostInDollar: emissions.map(e => e.emissionCost.co2CostInDollar).reduce(sum, 0),
-    h2oCostInDollar: emissions.map(e => e.emissionCost.h2oCostInDollar).reduce(sum, 0),
+    co2AmountPerKg: emissions.map(e => e.emissionCost.co2AmountPerKg).reduce(sum, 0),
+    h2oAmountPerKg: emissions.map(e => e.emissionCost.h2oAmountPerKg).reduce(sum, 0),
     priceInDollar: emissions.map(e => e.emissionCost.priceInDollar).reduce(sum, 0)
   }
 
@@ -78,8 +78,8 @@ function Widget({ currentModelParts }: WidgetProp) {
     <div className="Widget-container">
       <div className="Widget-total">
         <h3 className="Widget-title">Total emissions</h3>
-        <div className="Widget-total-value"> CO<sub>2</sub>: { totalEmissionCost.co2CostInDollar } kg</div>
-        <div className="Widget-total-value"> Water: { totalEmissionCost.h2oCostInDollar } L</div>
+        <div className="Widget-total-value"> CO<sub>2</sub>: { totalEmissionCost.co2AmountPerKg } kg</div>
+        <div className="Widget-total-value"> Water: { totalEmissionCost.h2oAmountPerKg } L</div>
         <div className="Widget-total-value"> Cost: { totalEmissionCost.priceInDollar } SEK</div>
       </div>
       <div>
