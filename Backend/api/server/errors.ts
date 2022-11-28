@@ -30,7 +30,7 @@ export class DatabaseClearCollectionError extends Error {
 
 export class DatabaseInsertMockDataError extends Error {
     constructor() {
-        super("Could not insert mock data to database");
+        super("Could not insert mock data into database");
     }
 }
 

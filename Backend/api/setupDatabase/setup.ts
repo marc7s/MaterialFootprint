@@ -28,7 +28,7 @@ async function createCollections(): Promise<void> {
       log("Collections created!");
     } catch(err) {
       logError("Could not create collections", err);
-      throw DatabaseCreateCollectionError
+      throw new DatabaseCreateCollectionError
     }
 }
 
@@ -43,7 +43,7 @@ async function clearCollections(): Promise<void> {
     log("Collections cleared!");
   } catch(err) {
     logError("Could not clear collections", err);
-    throw DatabaseClearCollectionError
+    throw new DatabaseClearCollectionError
   }
 }
 
@@ -58,7 +58,7 @@ async function insertMockData(): Promise<void> {
     log("Mock data inserted!");
   } catch(err) {
     logError("Could not insert mock data", err);
-    throw DatabaseInsertMockDataError
+    throw new DatabaseInsertMockDataError
   }
 }
 
@@ -72,7 +72,7 @@ async function setupMockDatabase(): Promise<void> {
       log("Database initialized!");
     } catch(err) {
       logError("Could not initialize database", err);
-      throw DatabaseConnectionError
+      throw new DatabaseConnectionError
     }
 }
 
