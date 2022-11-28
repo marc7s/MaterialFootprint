@@ -27,8 +27,8 @@ async function getEmissions(modelParts: ModelPart[]): Promise<Emission[]> {
           partName: "Seat",
           material: materials.find(material => material.name === 'Textile')!,
           emissionCost: {
-              co2CostInDollar: 100,
-              h2oCostInDollar: 200,
+              co2AmountPerKg: 100,
+              h2oAmountPerKg: 200,
               priceInDollar: 300
           }
       },
@@ -36,8 +36,8 @@ async function getEmissions(modelParts: ModelPart[]): Promise<Emission[]> {
           partName: "Armrests",
           material: materials.find(material => material.name === 'Plastic')!,
           emissionCost: {
-              co2CostInDollar: 1000,
-              h2oCostInDollar: 2000,
+              co2AmountPerKg: 1000,
+              h2oAmountPerKg: 2000,
               priceInDollar: 3000
           }
       },
@@ -45,8 +45,8 @@ async function getEmissions(modelParts: ModelPart[]): Promise<Emission[]> {
           partName: "Frame",
           material: materials.find(material => material.name === 'Steel')!,
           emissionCost: {
-              co2CostInDollar: 10000,
-              h2oCostInDollar: 20000,
+              co2AmountPerKg: 10000,
+              h2oAmountPerKg: 20000,
               priceInDollar: 30000
           }
       }
