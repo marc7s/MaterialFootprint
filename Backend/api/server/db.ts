@@ -15,12 +15,11 @@ export async function connectToDb(): Promise<void> {
         log("database connection string not found");
         throw new DatabaseConnectionError();
     }
-    const validConString: string = constring;
-    await mongoose.connect(validConString, {
+    await mongoose.connect(constring, {
         // 5 second timeout
         serverSelectionTimeoutMS: 5000 
       })
-        .catch((err) => {
+        .catch(err => {
             throw new DatabaseConnectionError(); 
     });
 
