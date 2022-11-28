@@ -1,0 +1,69 @@
+{
+    "materials": [
+        {
+            "id": 1,
+            "name": "Plastic",
+            "color": "Yellow"
+        },
+        {
+            "id": 2,
+            "name": "Plastic",
+            "color": "Red"
+        }
+    ],
+    "surfaces": [
+        {
+            "id": 1,
+            "name": "Paint",
+            "color": "Yellow"
+        },
+        {
+            "id": 2,
+            "name": "Paint",
+            "color": "Red"
+        }
+    ],
+    "companies": [
+        {
+            "id": 1,
+            "name": "Ericsson"
+        },
+        {
+            "id": 2,
+            "name": "Rapid Images"
+        }
+    ],
+    "companyMaterialCosts": [
+        {
+            "companyID": 1,
+            "materialID": 1,
+            "co2AmountPerKg": 1,
+            "h2oAmountPerKg": 1,
+            "costPerKg": 1
+
+        },
+        {
+            "companyID": 1,
+            "materialID": 2,
+            "co2AmountPerKg": 2,
+            "h2oAmountPerKg": 2,
+            "costPerKg": 2
+        }
+    ],
+    "companySurfaceCosts": [
+        {
+            "companyID": 1,
+            "surfaceID": 1,
+            "co2AmountPerM2": 10,
+            "h2oAmountPerM2": 10,
+            "costPerM2": 10
+        },
+        {
+            "companyID": 1,
+            "surfaceID": 2,
+            "co2AmountPerM2": 20,
+            "h2oAmountPerM2": 20,
+            "costPerM2": 20
+        }
+    ]
+}

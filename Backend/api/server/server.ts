@@ -2,13 +2,21 @@ import 'module-alias/register';
 import * as dotenv from 'dotenv';
 dotenv.config({path: __dirname + '/../.env'});
 
+/* Utils */
 import express, { Application, Request, Response, NextFunction } from 'express';
+import { ErrorMessage, NotFoundError, ApiRequestMalformedError } from 'server/errors';
+import { connectToDb } from 'server/db';
 
-import { ErrorMessage, NotFoundError, ApiRequestMalformedError } from './errors';
+/* Shared */
 import { log, logError } from '@shared/utils';
+
 
 const app: Application = express();
 const cors = require('cors');
+
+connectToDb().catch((err: Error) => { 
+    logError("Could not connect to database", err);
+});
 
 app.use(cors({
     origin: `http://localhost:${process.env.FRONTEND_PORT}`

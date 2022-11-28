@@ -27,8 +27,8 @@ async function getEmissions(modelParts: ModelPart[]): Promise<Emission[]> {
           partName: "Seat",
           material: materials.find(material => material.name === 'Textile')!,
           emissionCost: {
-              co2CostInDollar: 100,
-              h2oCostInDollar: 200,
+              co2AmountPerKg: 100,
+              h2oAmountPerKg: 200,
               priceInDollar: 300
           }
       },
@@ -36,8 +36,8 @@ async function getEmissions(modelParts: ModelPart[]): Promise<Emission[]> {
           partName: "Armrests",
           material: materials.find(material => material.name === 'Plastic')!,
           emissionCost: {
-              co2CostInDollar: 1000,
-              h2oCostInDollar: 2000,
+              co2AmountPerKg: 1000,
+              h2oAmountPerKg: 2000,
               priceInDollar: 3000
           }
       },
@@ -45,8 +45,8 @@ async function getEmissions(modelParts: ModelPart[]): Promise<Emission[]> {
           partName: "Frame",
           material: materials.find(material => material.name === 'Steel')!,
           emissionCost: {
-              co2CostInDollar: 10000,
-              h2oCostInDollar: 20000,
+              co2AmountPerKg: 10000,
+              h2oAmountPerKg: 20000,
               priceInDollar: 30000
           }
       }
@@ -69,8 +69,8 @@ function Widget({ currentModelParts }: WidgetProp) {
   }
 
   const totalEmissionCost: EmissionCost = {
-    co2CostInDollar: emissions.map(e => e.emissionCost.co2CostInDollar).reduce(sum, 0),
-    h2oCostInDollar: emissions.map(e => e.emissionCost.h2oCostInDollar).reduce(sum, 0),
+    co2AmountPerKg: emissions.map(e => e.emissionCost.co2AmountPerKg).reduce(sum, 0),
+    h2oAmountPerKg: emissions.map(e => e.emissionCost.h2oAmountPerKg).reduce(sum, 0),
     priceInDollar: emissions.map(e => e.emissionCost.priceInDollar).reduce(sum, 0)
   }
 
@@ -78,8 +78,8 @@ function Widget({ currentModelParts }: WidgetProp) {
     <div className="Widget-container">
       <div className="Widget-total">
         <h3 className="Widget-title">Total emissions</h3>
-        <div className="Widget-total-value"> CO<sub>2</sub>: { totalEmissionCost.co2CostInDollar } kg</div>
-        <div className="Widget-total-value"> Water: { totalEmissionCost.h2oCostInDollar } L</div>
+        <div className="Widget-total-value"> CO<sub>2</sub>: { totalEmissionCost.co2AmountPerKg } kg</div>
+        <div className="Widget-total-value"> Water: { totalEmissionCost.h2oAmountPerKg } L</div>
         <div className="Widget-total-value"> Cost: { totalEmissionCost.priceInDollar } SEK</div>
       </div>
       <div>

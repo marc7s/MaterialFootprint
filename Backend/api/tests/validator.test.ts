@@ -1,6 +1,7 @@
+/* Utils */
 import { NextFunction, Request, Response } from "express";
-import { ApiRequestMalformedError } from "../server/errors";
-import { validateEmissionsInput } from "../server/validator";
+import { ApiRequestMalformedError } from "server/errors";
+import { validateEmissionsInput } from "server/validator";
 
 const emptyReq: Request = {
     body: {}

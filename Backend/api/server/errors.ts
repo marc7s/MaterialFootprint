@@ -16,6 +16,24 @@ export class DatabaseConnectionError extends Error {
     }
 }
 
+export class DatabaseCreateCollectionError extends Error {
+    constructor() {
+        super("Could not create collection in database");
+    }
+}
+
+export class DatabaseClearCollectionError extends Error {
+    constructor() {
+        super("Could not clear collection in database");
+    }
+}
+
+export class DatabaseInsertMockDataError extends Error {
+    constructor() {
+        super("Could not insert mock data into database");
+    }
+}
+
 export interface ErrorMessage {
     status: string,
     errorMessage: string,

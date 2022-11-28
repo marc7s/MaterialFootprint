@@ -2,15 +2,18 @@ import { log } from '@shared/utils';
 import * as dotenv from 'dotenv';
 dotenv.config({path: __dirname + '../.env'});
 
+/* Utils */
 import express, { Response, NextFunction, Router } from 'express';
+import { validateEmissionsInput } from 'server/validator';
+import { fetchMaterials } from 'server/dbInterface';
+
+/* Shared */
 import { Material, Emission } from '@shared/interfaces';
-import { validateEmissionsInput } from './validator';
-import { fetchMaterials, fetchMaterialCostForCompany, fetchSurfaceTreatmentCostForCompany } from '../../database/dbInterface';
 
 const router: Router = express.Router();
 
 // input: {clientID: number, area: number, volume: number, materialID: number, surfaceTreatmentIDs: [number]}
-router.post('/emissions', validateEmissionsInput, (req: any, res: Response, next: NextFunction) => {
+router.post('/emissions', validateEmissionsInput, async (req: any, res: Response, next: NextFunction) => {
     log('Getting emissions...');
     // temporarily returns empty json
     res.json([]);
@@ -25,7 +28,7 @@ router.get('/materials', async (req: any, res: Response, next: NextFunction) => 
     .catch((err) => {next(err)}));
 });
 
-router.get('/models', (req: any, res: Response, next: NextFunction) => {
+router.get('/models', async (req: any, res: Response, next: NextFunction) => {
   log('Getting models...');
   // temporarily returns empty json
   res.json([]);
