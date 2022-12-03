@@ -1,11 +1,12 @@
 /* Utils */
 import { MaterialModel } from 'setupDatabase/models/Material';
+import { SurfaceTreatmentModel } from 'setupDatabase/models/SurfaceTreatment';
 import { CompanyMaterialCostModel } from 'setupDatabase/models/CompanyMaterialCost';
 import { CompanySurfaceCostModel } from 'setupDatabase/models/CompanySurfaceCost';
 import { DatabaseConnectionError } from 'server/errors';
 
 /* Shared */
-import { EmissionCost, EmissionCostSurfaceTreatment, Material } from '@shared/interfaces';
+import { EmissionCost, EmissionCostSurfaceTreatment, Material, SurfaceTreatment } from '@shared/interfaces';
 
 
 // fetch all materials, return array of Materials
@@ -14,6 +15,14 @@ export async function fetchMaterials(): Promise<Material[]> {
             .catch(() => { throw new DatabaseConnectionError(); });
         const materials: Material[] = docs.map(doc => ({ id: doc.id, name: doc.name, color: doc.color }));
         return Promise.resolve(materials); 
+} 
+
+// fetch all surface treatments, return array of Materials
+export async function fetchSurfaceTreatments(): Promise<SurfaceTreatment[]> {
+    const docs = await SurfaceTreatmentModel.find({})
+        .catch(() => { throw new DatabaseConnectionError(); });
+    const surfaceTreatments: SurfaceTreatment[] = docs.map(doc => ({ id: doc.id, name: doc.name }));
+    return Promise.resolve(surfaceTreatments); 
 } 
 
 // fetch material cost for the specified company and specified material, 

@@ -5,10 +5,10 @@ dotenv.config({path: __dirname + '../.env'});
 /* Utils */
 import express, { Response, NextFunction, Router } from 'express';
 import { validateEmissionsInput } from 'server/validator';
-import { fetchMaterials } from 'server/dbInterface';
+import { fetchMaterials, fetchSurfaceTreatments } from 'server/dbInterface';
 
 /* Shared */
-import { Material, Emission } from '@shared/interfaces';
+import { Material, Emission, SurfaceTreatment } from '@shared/interfaces';
 
 const router: Router = express.Router();
 
@@ -28,6 +28,12 @@ router.get('/materials', async (req: any, res: Response, next: NextFunction) => 
     .catch((err) => {next(err)}));
 });
 
+router.get('/surface-treatments', async (req: any, res: Response, next: NextFunction) => {
+  log('Getting surface treatments...');
+  res.json(await getSurfaceTreatments()
+    .catch((err) => {next(err)}));
+});
+
 router.get('/models', async (req: any, res: Response, next: NextFunction) => {
   log('Getting models...');
   // temporarily returns empty json
@@ -42,6 +48,10 @@ async function calculateEmissions(req: any, next: NextFunction): Promise<Emissio
 
 async function getMaterials(): Promise<Material[]> {
   return fetchMaterials();
+}
+
+async function getSurfaceTreatments(): Promise<SurfaceTreatment[]> {
+  return fetchSurfaceTreatments();
 }
 
 // Todo update signature to Model[]

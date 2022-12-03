@@ -5,7 +5,7 @@ dotenv.config({path: __dirname + '/../.env'});
 /* Utils */
 import { connectToDb } from 'server/db';
 import { MaterialModel } from 'setupDatabase/models/Material';
-import { SurfaceModel } from 'setupDatabase/models/Surface';
+import { SurfaceTreatmentModel } from 'setupDatabase/models/SurfaceTreatment';
 import { CompanyModel } from 'setupDatabase/models/Company';
 import { CompanyMaterialCostModel } from 'setupDatabase/models/CompanyMaterialCost';
 import { CompanySurfaceCostModel } from 'setupDatabase/models/CompanySurfaceCost';
@@ -21,7 +21,7 @@ async function createCollections(): Promise<void> {
     log("Creating collections...");
     try {
       await MaterialModel.createCollection();
-      await SurfaceModel.createCollection();
+      await SurfaceTreatmentModel.createCollection();
       await CompanyModel.createCollection();
       await CompanyMaterialCostModel.createCollection();
       await CompanySurfaceCostModel.createCollection();
@@ -36,7 +36,7 @@ async function clearCollections(): Promise<void> {
   log("Creating collections...");
   try {
     await MaterialModel.deleteMany();
-    await SurfaceModel.deleteMany();
+    await SurfaceTreatmentModel.deleteMany();
     await CompanyModel.deleteMany();
     await CompanyMaterialCostModel.deleteMany();
     await CompanySurfaceCostModel.deleteMany();
@@ -51,7 +51,7 @@ async function insertMockData(): Promise<void> {
   log("Inserting mock data...");
   try {
     await MaterialModel.insertMany(mockData.materials);
-    await SurfaceModel.insertMany(mockData.surfaces);
+    await SurfaceTreatmentModel.insertMany(mockData.surfaceTreatments);
     await CompanyModel.insertMany(mockData.companies);
     await CompanyMaterialCostModel.insertMany(mockData.companyMaterialCosts);
     await CompanySurfaceCostModel.insertMany(mockData.companySurfaceCosts);

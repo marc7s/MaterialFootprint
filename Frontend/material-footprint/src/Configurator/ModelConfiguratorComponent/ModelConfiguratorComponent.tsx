@@ -5,10 +5,10 @@ import './ModelConfiguratorComponent.sass';
 import ConfiguratorPart from 'Configurator/ConfiguratorPart/ConfiguratorPart';
 
 /* Utilities */
-import { Model } from 'Configurator/interfaces';
 
 /* Shared */
 import { uniqueID } from 'shared/utils';
+import { Model } from 'shared/interfaces';
 
 
 

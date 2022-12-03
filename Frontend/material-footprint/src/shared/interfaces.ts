@@ -27,6 +27,20 @@ export type EmissionCostSurfaceTreatment = {
     priceInDollar: number;
 }
 
+export interface ModelPart {
+    id: string;
+    name: string;
+    image: string;
+    material: Material;
+    surfaceTreatments: SurfaceTreatment[];
+}
+
+export interface Model {
+    id: number;
+    name: string;
+    parts: ModelPart[];
+}
+
 export enum Size {
     SMALL = "small",
     LARGE = "large"

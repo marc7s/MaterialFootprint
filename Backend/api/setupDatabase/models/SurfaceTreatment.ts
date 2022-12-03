@@ -1,7 +1,7 @@
 /* Utils */
 import mongoose from 'mongoose';
 
-const surfaceSchema = new mongoose.Schema({
+const surfaceTreatmentSchema = new mongoose.Schema({
     id: {
         type: Number,
         required: true,
@@ -10,11 +10,7 @@ const surfaceSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
-    },
-    color: {
-        type: String,
-        required: true,
-    },
+    }
 });
 
-export const SurfaceModel = mongoose.model('Surface', surfaceSchema);
+export const SurfaceTreatmentModel = mongoose.model('SurfaceTreatment', surfaceTreatmentSchema);

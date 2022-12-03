@@ -6,10 +6,9 @@ import EmissionComponent from 'Configurator/EmissionComponent/EmissionComponent'
 
 /* Utilities */
 import { getMaterials } from 'API';
-import { ModelPart } from 'Configurator/interfaces';
 
 /* Shared */
-import { Emission, EmissionCost } from 'shared/interfaces';
+import { ModelPart, Emission, EmissionCost } from 'shared/interfaces';
 import { uniqueID } from 'shared/utils';
 
 
