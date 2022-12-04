@@ -5,7 +5,7 @@ import { CompanySurfaceCostModel } from 'setupDatabase/models/CompanySurfaceCost
 import { DatabaseConnectionError } from 'server/errors';
 
 /* Shared */
-import { EmissionCost, EmissionCostSurfaceTreatment, Material } from '@shared/interfaces';
+import { MaterialEmission, SurfaceTreatmentEmission, Material } from '@shared/interfaces';
 
 
 // fetch all materials, return array of Materials
@@ -17,17 +17,17 @@ export async function fetchMaterials(): Promise<Material[]> {
 } 
 
 // fetch material cost for the specified company and specified material, 
-export async function fetchMaterialCostForCompany(companyID: number, materialID: number): Promise<EmissionCost> {
+export async function fetchMaterialCostForCompany(companyID: number, materialID: number): Promise<MaterialEmission> {
     const docs = await CompanyMaterialCostModel.find({companyID: companyID, materialID: materialID})
         .catch(() => { throw new DatabaseConnectionError(); });
-    const companyMaterialCost: EmissionCost[] = docs.map(doc => ({ priceInDollar: doc.costPerKg, co2AmountPerKg: doc.co2AmountPerKg, h2oAmountPerKg: doc.h2oAmountPerKg }));
-    return Promise.resolve(companyMaterialCost[0]);
+    const companyMaterialEmission: MaterialEmission[] = docs.map(doc => ({ co2AmountPerM3: doc.co2AmountPerM3, h2oAmountPerM3: doc.h2oAmountPerM3, pricePerM3: doc.pricePerM3 }));
+    return Promise.resolve(companyMaterialEmission[0]);
 } 
 
 // fetch surface treatment costs for the specified client and specified surface treatment
-export async function fetchSurfaceTreatmentCostForCompany(companyID: number, surfaceID: number): Promise<EmissionCostSurfaceTreatment> {
+export async function fetchSurfaceTreatmentCostForCompany(companyID: number, surfaceID: number): Promise<SurfaceTreatmentEmission> {
     const docs = await CompanySurfaceCostModel.find({companyID: companyID, surfaceID: surfaceID})
         .catch(() => { throw new DatabaseConnectionError(); });
-    const companySurfaceCost: EmissionCostSurfaceTreatment[] = docs.map(doc => ({ priceInDollar: doc.costPerM2, co2AmountPerM2: doc.co2AmountPerM2, h2oAmountPerM2: doc.h2oAmountPerM2 }));
-    return Promise.resolve(companySurfaceCost[0]); 
+    const companySurfaceEmission: SurfaceTreatmentEmission[] = docs.map(doc => ({ co2AmountPerM2: doc.co2AmountPerM2, h2oAmountPerM2: doc.h2oAmountPerM2, pricePerM2: doc.pricePerM2 }));
+    return Promise.resolve(companySurfaceEmission[0]); 
 } 

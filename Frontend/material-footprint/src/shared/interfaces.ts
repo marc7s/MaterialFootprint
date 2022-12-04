@@ -16,15 +16,21 @@ export type SurfaceTreatment = {
 }
 
 export type EmissionCost = {
-    co2AmountPerKg: number;
-    h2oAmountPerKg: number;
+    co2Amount: number;
+    h2oAmount: number;
     priceInDollar: number;
 }
 
-export type EmissionCostSurfaceTreatment = {
+export type MaterialEmission = {
+    co2AmountPerM3: number;
+    h2oAmountPerM3: number;
+    pricePerM3: number;
+}
+
+export type SurfaceTreatmentEmission = {
     co2AmountPerM2: number;
     h2oAmountPerM2: number;
-    priceInDollar: number;
+    pricePerM2: number;
 }
 
 export type EmissionRequest = {
@@ -38,9 +44,8 @@ export type EmissionRequest = {
 
 export type EmissionResponse = {
     partID: number,
-    //Emission or is emissionCost enough?
     emissionCost: EmissionCost
-  }
+}
 
 export enum Size {
     SMALL = "small",
