@@ -27,6 +27,21 @@ export type EmissionCostSurfaceTreatment = {
     priceInDollar: number;
 }
 
+export type EmissionRequest = {
+    partID: number,
+    clientID: number,
+    materialID: number,
+    surfaceTreatmentIDs: number[],
+    volume: number,
+    area: number;
+  }
+
+export type EmissionResponse = {
+    partID: number,
+    //Emission or is emissionCost enough?
+    emissionCost: EmissionCost
+  }
+
 export enum Size {
     SMALL = "small",
     LARGE = "large"
