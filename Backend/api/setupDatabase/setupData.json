@@ -43,7 +43,7 @@
 
         },
         {
-            "companyID": 1,
+            "companyID": 2,
             "materialID": 2,
             "co2AmountPerKg": 2,
             "h2oAmountPerKg": 2,

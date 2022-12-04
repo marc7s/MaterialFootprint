@@ -15,11 +15,8 @@ const router: Router = express.Router();
 // input: {clientID: number, area: number, volume: number, materialID: number, surfaceTreatmentIDs: [number]}
 router.post('/emissions', validateEmissionsInput, async (req: any, res: Response, next: NextFunction) => {
     log('Getting emissions...');
-    // temporarily returns empty json
-    res.json([]);
-
-    //res.json(calculateEmissions(req, next));
-
+    res.json(await calculateEmissions(req)
+    .catch((err) => {next(err)}));
 });
 
 router.get('/materials', async (req: any, res: Response, next: NextFunction) => {
@@ -36,35 +33,42 @@ router.get('/models', async (req: any, res: Response, next: NextFunction) => {
   //res.json(getModels(req, next));
 });
 
-async function calculateEmissions(req: EmissionRequest, next: NextFunction): Promise<EmissionResponse> {
-
+async function calculateEmissions(req: any): Promise<EmissionResponse> {
+  
   // Calculate material emission
-  var materialEmission: EmissionCost = await fetchMaterialCostForCompany(req.clientID, req.materialID);
-  materialEmission.priceInDollar = materialEmission.priceInDollar*req.volume;
+  var materialEmission: EmissionCost = await fetchMaterialCostForCompany(req.clientID, req.materialID)
+    .catch((err) => {
+      log('Error calculating emissions cost')
+      throw err
+    });
+  materialEmission.priceInDollar = materialEmission.priceInDollar * req.volume;
   materialEmission.co2AmountPerKg = materialEmission.co2AmountPerKg*req.volume;
   materialEmission.h2oAmountPerKg = materialEmission.h2oAmountPerKg*req.volume;
-
+  
   // Calculate surface emission
   var totSEmission: EmissionCostSurfaceTreatment = {priceInDollar: 0, co2AmountPerM2: 0, h2oAmountPerM2: 0};
   for (var surfaceID of req.surfaceTreatmentIDs){
-    const sEmission: EmissionCostSurfaceTreatment = await fetchSurfaceTreatmentCostForCompany(req.clientID, surfaceID);
-
+    const sEmission: EmissionCostSurfaceTreatment = await fetchSurfaceTreatmentCostForCompany(req.clientID, surfaceID)
+    .catch((err) => {
+      log('Error calculating emissions cost')
+      throw err
+    });
     totSEmission.co2AmountPerM2 += sEmission.co2AmountPerM2*req.area;
     totSEmission.h2oAmountPerM2 += sEmission.h2oAmountPerM2*req.area;
-    totSEmission.priceInDollar += sEmission.priceInDollar;
+    totSEmission.priceInDollar += sEmission.priceInDollar*req.area;
   }
 
   // Totals (material + surface)
   const price: number = materialEmission.priceInDollar + totSEmission.priceInDollar;
-  const c2o: number = materialEmission.co2AmountPerKg + totSEmission.co2AmountPerM2;
+  const co2: number = materialEmission.co2AmountPerKg + totSEmission.co2AmountPerM2;
   const h2o: number = materialEmission.h2oAmountPerKg + totSEmission.h2oAmountPerM2;
 
-  const emissionCost: EmissionCost = {priceInDollar: price, co2AmountPerKg: c2o, h2oAmountPerKg: h2o}
+  const emissionCost: EmissionCost = {priceInDollar: price, co2AmountPerKg: co2, h2oAmountPerKg: h2o}
 
   // Create response
-  const respons: EmissionResponse = {partID: req.partID, emissionCost: emissionCost}
+  const response: EmissionResponse = {partID: req.partID, emissionCost: emissionCost}
 
-  return Promise.resolve(respons);
+  return Promise.resolve(response);
 }
 
 async function getMaterials(): Promise<Material[]> {
