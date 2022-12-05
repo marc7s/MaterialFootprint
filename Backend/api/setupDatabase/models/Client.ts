@@ -1,7 +1,7 @@
 /* Utils */
 import mongoose from 'mongoose';
 
-const companySchema = new mongoose.Schema({
+const clientSchema = new mongoose.Schema({
     id: {
         type: Number,
         required: true,
@@ -13,4 +13,4 @@ const companySchema = new mongoose.Schema({
     },
 });
 
-export const CompanyModel = mongoose.model('Company', companySchema);
+export const ClientModel = mongoose.model('Client', clientSchema);

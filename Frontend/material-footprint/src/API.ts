@@ -89,6 +89,8 @@ export async function getModels(): Promise<Model[]> {
                 {
                     id: uniqueID(),
                     name: 'Seat',
+                    area: 1,
+                    volume: 2,
                     image: seat,
                     material: materials.find(material => material.name === 'Leather')!,
                     surfaceTreatments: surfaceTreatments.filter(surfaceTreatment => ['Laquer'].includes(surfaceTreatment.name))
@@ -96,6 +98,8 @@ export async function getModels(): Promise<Model[]> {
                 {
                     id: uniqueID(),
                     name: 'Frame',
+                    area: 3,
+                    volume: 4,
                     image: frame,
                     material: materials.find(material => material.name === 'Steel')!,
                     surfaceTreatments: surfaceTreatments.filter(surfaceTreatment => ['Paint'].includes(surfaceTreatment.name))
@@ -103,6 +107,8 @@ export async function getModels(): Promise<Model[]> {
                 {
                     id: uniqueID(),
                     name: 'Armrests',
+                    area: 5,
+                    volume: 6,
                     image: armrests,
                     material: materials.find(material => material.name === 'Plastic')!,
                     surfaceTreatments: surfaceTreatments.filter(surfaceTreatment => ['Laquer', 'Paint'].includes(surfaceTreatment.name))
@@ -110,6 +116,8 @@ export async function getModels(): Promise<Model[]> {
                 {
                     id: uniqueID(),
                     name: 'Accent',
+                    area: 7,
+                    volume: 8,
                     image: accent,
                     material: materials.find(material => material.name === 'Textile')!,
                     surfaceTreatments: []
@@ -123,6 +131,8 @@ export async function getModels(): Promise<Model[]> {
                 {
                     id: uniqueID(),
                     name: 'Seat',
+                    area: 1,
+                    volume: 2,
                     image: seat,
                     material: materials.find(material => material.name === 'Leather')!,
                     surfaceTreatments: surfaceTreatments.filter(surfaceTreatment => ['Laquer'].includes(surfaceTreatment.name))
@@ -130,6 +140,8 @@ export async function getModels(): Promise<Model[]> {
                 {
                     id: uniqueID(),
                     name: 'Frame',
+                    area: 3,
+                    volume: 4,
                     image: frame,
                     material: materials.find(material => material.name === 'Steel')!,
                     surfaceTreatments: surfaceTreatments.filter(surfaceTreatment => ['Paint'].includes(surfaceTreatment.name))
@@ -137,6 +149,8 @@ export async function getModels(): Promise<Model[]> {
                 {
                     id: uniqueID(),
                     name: 'Armrests',
+                    area: 5,
+                    volume: 6,
                     image: armrests,
                     material: materials.find(material => material.name === 'Plastic')!,
                     surfaceTreatments: surfaceTreatments.filter(surfaceTreatment => ['Laquer', 'Paint'].includes(surfaceTreatment.name))
@@ -144,6 +158,8 @@ export async function getModels(): Promise<Model[]> {
                 {
                     id: uniqueID(),
                     name: 'Accent',
+                    area: 7,
+                    volume: 8,
                     image: accent,
                     material: materials.find(material => material.name === 'Textile')!,
                     surfaceTreatments: []

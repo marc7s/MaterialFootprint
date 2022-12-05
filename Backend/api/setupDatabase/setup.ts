@@ -6,9 +6,9 @@ dotenv.config({path: __dirname + '/../.env'});
 import { connectToDb } from 'server/db';
 import { MaterialModel } from 'setupDatabase/models/Material';
 import { SurfaceTreatmentModel } from 'setupDatabase/models/SurfaceTreatment';
-import { CompanyModel } from 'setupDatabase/models/Company';
-import { CompanyMaterialCostModel } from 'setupDatabase/models/CompanyMaterialCost';
-import { CompanySurfaceCostModel } from 'setupDatabase/models/CompanySurfaceCost';
+import { ClientModel } from 'setupDatabase/models/Client';
+import { ClientMaterialCostModel } from 'setupDatabase/models/ClientMaterialCost';
+import { ClientSurfaceTreatmentCostModel } from 'setupDatabase/models/ClientSurfaceTreatmentCost';
 import { DatabaseClearCollectionError, DatabaseConnectionError, DatabaseCreateCollectionError, DatabaseInsertMockDataError } from 'server/errors';
 
 /* Shared */
@@ -22,9 +22,9 @@ async function createCollections(): Promise<void> {
     try {
       await MaterialModel.createCollection();
       await SurfaceTreatmentModel.createCollection();
-      await CompanyModel.createCollection();
-      await CompanyMaterialCostModel.createCollection();
-      await CompanySurfaceCostModel.createCollection();
+      await ClientModel.createCollection();
+      await ClientMaterialCostModel.createCollection();
+      await ClientSurfaceTreatmentCostModel.createCollection();
       log("Collections created!");
     } catch(err) {
       logError("Could not create collections", err);
@@ -37,9 +37,9 @@ async function clearCollections(): Promise<void> {
   try {
     await MaterialModel.deleteMany();
     await SurfaceTreatmentModel.deleteMany();
-    await CompanyModel.deleteMany();
-    await CompanyMaterialCostModel.deleteMany();
-    await CompanySurfaceCostModel.deleteMany();
+    await ClientModel.deleteMany();
+    await ClientMaterialCostModel.deleteMany();
+    await ClientSurfaceTreatmentCostModel.deleteMany();
     log("Collections cleared!");
   } catch(err) {
     logError("Could not clear collections", err);
@@ -52,9 +52,9 @@ async function insertMockData(): Promise<void> {
   try {
     await MaterialModel.insertMany(mockData.materials);
     await SurfaceTreatmentModel.insertMany(mockData.surfaceTreatments);
-    await CompanyModel.insertMany(mockData.companies);
-    await CompanyMaterialCostModel.insertMany(mockData.companyMaterialCosts);
-    await CompanySurfaceCostModel.insertMany(mockData.companySurfaceCosts);
+    await ClientModel.insertMany(mockData.companies);
+    await ClientMaterialCostModel.insertMany(mockData.clientMaterialCosts);
+    await ClientSurfaceTreatmentCostModel.insertMany(mockData.clientSurfaceTreatmentCosts);
     log("Mock data inserted!");
   } catch(err) {
     logError("Could not insert mock data", err);
