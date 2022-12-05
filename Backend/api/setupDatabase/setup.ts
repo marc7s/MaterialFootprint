@@ -16,6 +16,8 @@ import { log, logError } from '@shared/utils';
 
 /* Mock data */
 import mockData from 'setupDatabase/setupData.json';
+import { ModelModel } from './models/Model';
+import { PartModel } from './models/Part';
 
 async function createCollections(): Promise<void> {
     log("Creating collections...");
@@ -25,6 +27,8 @@ async function createCollections(): Promise<void> {
       await CompanyModel.createCollection();
       await CompanyMaterialCostModel.createCollection();
       await CompanySurfaceCostModel.createCollection();
+      await ModelModel.createCollection();
+      await PartModel.createCollection();
       log("Collections created!");
     } catch(err) {
       logError("Could not create collections", err);
@@ -40,6 +44,8 @@ async function clearCollections(): Promise<void> {
     await CompanyModel.deleteMany();
     await CompanyMaterialCostModel.deleteMany();
     await CompanySurfaceCostModel.deleteMany();
+    await ModelModel.deleteMany();
+    await PartModel.deleteMany();
     log("Collections cleared!");
   } catch(err) {
     logError("Could not clear collections", err);
@@ -53,6 +59,8 @@ async function insertMockData(): Promise<void> {
     await MaterialModel.insertMany(mockData.materials);
     await SurfaceModel.insertMany(mockData.surfaces);
     await CompanyModel.insertMany(mockData.companies);
+    await ModelModel.insertMany(mockData.models);
+    await PartModel.insertMany(mockData.parts);
     await CompanyMaterialCostModel.insertMany(mockData.companyMaterialCosts);
     await CompanySurfaceCostModel.insertMany(mockData.companySurfaceCosts);
     log("Mock data inserted!");

@@ -65,5 +65,48 @@
             "h2oAmountPerM2": 20,
             "pricePerM2": 20
         }
+    ],
+    "parts": [
+        {
+            "id": 1,
+            "name": "Seat",
+            "imageURL": "http://www.example.com/image1.png",
+            "materialID": 1,
+            "surfaceTreatmentIDs": [1]
+        },
+        {
+            "id": 2,
+            "name": "Frame",
+            "imageURL": "http://www.example.com/image2.png",
+            "materialID": 1,
+            "surfaceTreatmentIDs": [1]
+        },
+        {
+            "id": 3,
+            "name": "Armsrests",
+            "imageURL": "http://www.example.com/image3.png",
+            "materialID": 1,
+            "surfaceTreatmentIDs": [1]
+        },
+        {
+            "id": 4,
+            "name": "Accent",
+            "imageURL": "http://www.example.com/image4.png",
+            "materialID": 1,
+            "surfaceTreatmentIDs": [1]
+        }
+
+    ],
+    "models": [
+        {
+            "id": 1,
+            "name": "Chair",
+            "partIDs": [1, 2, 3, 4]
+        },
+        {
+            "id": 2,
+            "name": "Chair2",
+            "partIDs": [1, 2, 3, 4]
+        }
     ]
 }

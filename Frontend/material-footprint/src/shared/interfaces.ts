@@ -51,3 +51,31 @@ export enum Size {
     SMALL = "small",
     LARGE = "large"
 }
+
+export interface ModelPart {
+    id: number;
+    name: string;
+    image: string;
+    material: Material;
+    surfaceTreatments: SurfaceTreatment[];
+}
+
+export interface Model {
+    id: number;
+    name: string;
+    parts: ModelPart[];
+}
+
+export interface ModelDatabaseEntry {
+    id: number;
+    name: string;
+    partIDs: number[];
+}
+
+export interface ModelPartDatabaseEntry {
+    id: number;
+    name: string;
+    imageURL: string;
+    materialID: number;
+    surfaceTreatmentIDs: number[];
+}
