@@ -45,17 +45,17 @@
         {
             "companyID": 1,
             "materialID": 1,
-            "co2AmountPerKg": 1,
-            "h2oAmountPerKg": 1,
-            "costPerKg": 1
+            "co2AmountPerM3": 1,
+            "h2oAmountPerM3": 1,
+            "pricePerM3": 1
 
         },
         {
-            "companyID": 1,
+            "companyID": 2,
             "materialID": 2,
-            "co2AmountPerKg": 2,
-            "h2oAmountPerKg": 2,
-            "costPerKg": 2
+            "co2AmountPerM3": 2,
+            "h2oAmountPerM3": 2,
+            "pricePerM3": 2
         }
     ],
     "companySurfaceCosts": [
@@ -64,14 +64,14 @@
             "surfaceID": 1,
             "co2AmountPerM2": 10,
             "h2oAmountPerM2": 10,
-            "costPerM2": 10
+            "pricePerM2": 10
         },
         {
             "companyID": 1,
             "surfaceID": 2,
             "co2AmountPerM2": 20,
             "h2oAmountPerM2": 20,
-            "costPerM2": 20
+            "pricePerM2": 20
         }
     ]
 }
