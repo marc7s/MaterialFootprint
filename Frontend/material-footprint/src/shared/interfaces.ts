@@ -43,7 +43,7 @@ export type EmissionRequest = {
 }
 
 export interface ModelPart {
-    id: string;
+    id: number;
     name: string;
     area: number;
     volume: number;
@@ -72,6 +72,8 @@ export interface ModelDatabaseEntry {
 export interface ModelPartDatabaseEntry {
     id: number;
     name: string;
+    area: number;
+    volume: number;
     imageURL: string;
     materialID: number;
     surfaceTreatmentIDs: number[];

@@ -49,7 +49,7 @@ function Configurator() {
   }, [models]);
 
   // Handle a material change for a part
-  const onPartMaterialChange = (partID: string, materialID: number) => {
+  const onPartMaterialChange = (partID: number, materialID: number) => {
     // Check that the models and materials have been loaded
     if(!currentModel) return;
     if(!materials) return;
@@ -71,7 +71,7 @@ function Configurator() {
   };
 
   // Handle a surface treatment change for a part
-  const onPartSurfaceTreatmentChange = (partID: string, surfaceTreatmentID: number, added: boolean) => {
+  const onPartSurfaceTreatmentChange = (partID: number, surfaceTreatmentID: number, added: boolean) => {
     // Check that the models and surface treatments have been loaded
     if(!currentModel) return;
     if(!surfaceTreatments) return;

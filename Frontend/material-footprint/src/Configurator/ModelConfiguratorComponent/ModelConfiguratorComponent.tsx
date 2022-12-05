@@ -14,8 +14,8 @@ import { Model } from 'shared/interfaces';
 
 export interface ModelConfiguratorProp {
   model: Model;
-  onPartMaterialChange: (partID: string, materialID: number) => void;
-  onPartSurfaceTreatmentChange: (partID: string, surfaceTreatmentID: number, added: boolean) => void;
+  onPartMaterialChange: (partID: number, materialID: number) => void;
+  onPartSurfaceTreatmentChange: (partID: number, surfaceTreatmentID: number, added: boolean) => void;
 }
 
 function ModelConfiguratorComponent({model, onPartMaterialChange, onPartSurfaceTreatmentChange}: ModelConfiguratorProp) {

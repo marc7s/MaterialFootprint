@@ -1,6 +1,4 @@
 import mongoose from 'mongoose';
-import { MaterialModel } from './Material';
-import { SurfaceModel } from './Surface';
 
 const modelSchema = new mongoose.Schema({
     id: {

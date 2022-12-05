@@ -5,17 +5,10 @@ dotenv.config({path: __dirname + '../.env'});
 /* Utils */
 import express, { Response, NextFunction, Router } from 'express';
 import { validateEmissionsInput } from 'server/validator';
-<<<<<<< HEAD
-import { fetchMaterials, fetchMaterialCostForClient, fetchSurfaceTreatmentCostForClient, fetchSurfaceTreatments } from 'server/dbInterface';
+import { fetchMaterials, fetchMaterialCostForClient, fetchSurfaceTreatmentCostForClient, fetchSurfaceTreatments, fetchModels, fetchPart } from 'server/dbInterface';
 
 /* Shared */
-import { MaterialEmission, SurfaceTreatmentEmission, Material, Emission, EmissionCost, SurfaceTreatment } from '@shared/interfaces';
-=======
-import { fetchMaterials, fetchMaterialCostForCompany, fetchSurfaceTreatmentCostForCompany, fetchModels, fetchPart, fetchSurfaceTreatments } from 'server/dbInterface';
-
-/* Shared */
-import { MaterialEmission, SurfaceTreatmentEmission, Material, EmissionResponse, EmissionCost, Model, ModelPart, ModelDatabaseEntry, ModelPartDatabaseEntry, SurfaceTreatment } from '@shared/interfaces';
->>>>>>> 45da73a (Add models endpoint)
+import { MaterialEmission, SurfaceTreatmentEmission, Material, Emission, EmissionCost, SurfaceTreatment, Model, ModelDatabaseEntry, ModelPart, ModelPartDatabaseEntry } from '@shared/interfaces';
 
 const router: Router = express.Router();
 
@@ -56,12 +49,8 @@ async function calculatePartEmission(req: any): Promise<Emission> {
   const area: number = req.area;
   
   // Calculate material emission
-<<<<<<< HEAD
-  const materialEmission: MaterialEmission = await fetchMaterialCostForClient(clientID, material.id);
-=======
-  const materialEmission: MaterialEmission = await fetchMaterialCostForCompany(clientID, materialID)
+  const materialEmission: MaterialEmission = await fetchMaterialCostForClient(clientID, material.id)
     .catch(err => {throw err});
->>>>>>> 45da73a (Add models endpoint)
 
   // Calculate material emission
   const materialCost: EmissionCost = {
@@ -79,12 +68,8 @@ async function calculatePartEmission(req: any): Promise<Emission> {
 
   // Sum surface treatment emissions
   for(const surfaceTreatmentID of surfaceTreatmentIDs) {
-<<<<<<< HEAD
-    const surfaceEmission: SurfaceTreatmentEmission = await fetchSurfaceTreatmentCostForClient(clientID, surfaceTreatmentID);
-=======
-    const surfaceEmission: SurfaceTreatmentEmission = await fetchSurfaceTreatmentCostForCompany(clientID, surfaceTreatmentID)
+    const surfaceEmission: SurfaceTreatmentEmission = await fetchSurfaceTreatmentCostForClient(clientID, surfaceTreatmentID)
       .catch(err => {throw err});
->>>>>>> 45da73a (Add models endpoint)
 
     totSurfaceTreatmentCost.co2Amount += surfaceEmission.co2AmountPerM2 * area;
     totSurfaceTreatmentCost.h2oAmount += surfaceEmission.h2oAmountPerM2 * area;
@@ -107,15 +92,10 @@ async function getMaterials(): Promise<Material[]> {
   return fetchMaterials();
 }
 
-<<<<<<< HEAD
 async function getSurfaceTreatments(): Promise<SurfaceTreatment[]> {
   return fetchSurfaceTreatments();
 }
 
-// Todo update signature to Model[]
-async function getModels(req: any, next: NextFunction): Promise<any[]> {
-  return Promise.resolve([]);
-=======
 async function getModels(req: any): Promise<Model[]> {
   // fetches all models from database
   const modelsDatabase: ModelDatabaseEntry[] = await fetchModels();
@@ -155,12 +135,13 @@ async function getPart(partID: number): Promise<ModelPart> {
   const part: ModelPart = {
     id: partDatabaseEntry.id,
     name: partDatabaseEntry.name,
+    area: partDatabaseEntry.area,
+    volume: partDatabaseEntry.volume,
     image: partDatabaseEntry.imageURL,
     material: material,
     surfaceTreatments: filteredSurfaceTreatments
   }
   return Promise.resolve(part);
->>>>>>> 45da73a (Add models endpoint)
 }
 
 module.exports = router;

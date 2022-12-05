@@ -55,6 +55,6 @@ export async function fetchModels(): Promise<ModelDatabaseEntry[]> {
 export async function fetchPart(partID: number): Promise<ModelPartDatabaseEntry> {
     const docs = await PartModel.find({id: partID})
         .catch(() => { throw new DatabaseConnectionError(); });
-    const modelPart: ModelPartDatabaseEntry[] = docs.map(doc => ({ id: doc.id, name: doc.name, imageURL: doc.imageURL, materialID: doc.materialID, surfaceTreatmentIDs: doc.surfaceTreatmentIDs }));
+    const modelPart: ModelPartDatabaseEntry[] = docs.map(doc => ({ id: doc.id, name: doc.name, area: doc.area, volume: doc.volume, imageURL: doc.imageURL, materialID: doc.materialID, surfaceTreatmentIDs: doc.surfaceTreatmentIDs }));
     return Promise.resolve(modelPart[0]); 
 } 

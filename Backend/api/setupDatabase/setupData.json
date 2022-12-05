@@ -135,6 +135,8 @@
         {
             "id": 1,
             "name": "Seat",
+            "area": 1,
+            "volume": 1,
             "imageURL": "http://www.example.com/image1.png",
             "materialID": 1,
             "surfaceTreatmentIDs": [1]
@@ -142,6 +144,8 @@
         {
             "id": 2,
             "name": "Frame",
+            "area": 2,
+            "volume": 2,
             "imageURL": "http://www.example.com/image2.png",
             "materialID": 1,
             "surfaceTreatmentIDs": [1]
@@ -149,6 +153,8 @@
         {
             "id": 3,
             "name": "Armsrests",
+            "area": 3,
+            "volume": 3,
             "imageURL": "http://www.example.com/image3.png",
             "materialID": 1,
             "surfaceTreatmentIDs": [1]
@@ -156,6 +162,8 @@
         {
             "id": 4,
             "name": "Accent",
+            "area": 4,
+            "volume": 4,
             "imageURL": "http://www.example.com/image4.png",
             "materialID": 1,
             "surfaceTreatmentIDs": [1]
