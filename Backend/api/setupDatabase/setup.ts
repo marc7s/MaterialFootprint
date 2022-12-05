@@ -16,6 +16,8 @@ import { log, logError } from '@shared/utils';
 
 /* Mock data */
 import mockData from 'setupDatabase/setupData.json';
+import { ModelModel } from './models/Model';
+import { PartModel } from './models/Part';
 
 async function createCollections(): Promise<void> {
     log("Creating collections...");
@@ -25,6 +27,8 @@ async function createCollections(): Promise<void> {
       await ClientModel.createCollection();
       await ClientMaterialCostModel.createCollection();
       await ClientSurfaceTreatmentCostModel.createCollection();
+      await ModelModel.createCollection();
+      await PartModel.createCollection();
       log("Collections created!");
     } catch(err) {
       logError("Could not create collections", err);
@@ -40,6 +44,8 @@ async function clearCollections(): Promise<void> {
     await ClientModel.deleteMany();
     await ClientMaterialCostModel.deleteMany();
     await ClientSurfaceTreatmentCostModel.deleteMany();
+    await ModelModel.deleteMany();
+    await PartModel.deleteMany();
     log("Collections cleared!");
   } catch(err) {
     logError("Could not clear collections", err);
@@ -55,6 +61,8 @@ async function insertMockData(): Promise<void> {
     await ClientModel.insertMany(mockData.companies);
     await ClientMaterialCostModel.insertMany(mockData.clientMaterialCosts);
     await ClientSurfaceTreatmentCostModel.insertMany(mockData.clientSurfaceTreatmentCosts);
+    await ModelModel.insertMany(mockData.models);
+    await PartModel.insertMany(mockData.parts);
     log("Mock data inserted!");
   } catch(err) {
     logError("Could not insert mock data", err);
