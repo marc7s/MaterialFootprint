@@ -1,6 +1,6 @@
 /* Utils */
-import { ErrorMessage, NotFoundError, ApiRequestMalformedError } from 'server/errors';
-import { Request, Response, NextFunction } from 'express';
+import { ApiRequestMalformedError } from 'server/errors';
+import { Response, NextFunction } from 'express';
 
 // validates the input for the emissions endpoint
 export function validateEmissionsInput(req: any, res: Response, next: NextFunction): void {
