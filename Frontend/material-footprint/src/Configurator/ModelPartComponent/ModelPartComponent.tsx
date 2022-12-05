@@ -4,8 +4,7 @@ import './ModelPartComponent.sass';
 /* Components */
 
 /* Utilities */
-import { ModelPart } from 'Configurator/interfaces';
-import { Size } from 'shared/interfaces';
+import { ModelPart, Size } from 'shared/interfaces';
 
 /* Shared */
 

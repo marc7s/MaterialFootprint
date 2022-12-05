@@ -5,11 +5,10 @@ import './ModelComponent.sass';
 import ModelPart from 'Configurator/ModelPartComponent/ModelPartComponent';
 
 /* Utilities */
-import { Model } from 'Configurator/interfaces';
 
 /* Shared */
 import { uniqueID } from 'shared/utils';
-import { Size } from 'shared/interfaces';
+import { Model, Size } from 'shared/interfaces';
 
 
 export interface ModelProp {

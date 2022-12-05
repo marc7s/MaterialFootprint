@@ -1,27 +1,27 @@
 /* Utils */
 import mongoose from 'mongoose';
 
-const companySurfaceCostSchema = new mongoose.Schema({
-    companyID: {
+const clientMaterialCostSchema = new mongoose.Schema({
+    clientID: {
         type: Number,
         required: true,
     },
-    surfaceID: {
+    materialID: {
         type: Number,
         required: true,
     },
-    co2AmountPerM2: {
+    co2AmountPerM3: {
         type: Number,
         required: true,
     },
-    h2oAmountPerM2: {
+    h2oAmountPerM3: {
         type: Number,
         required: true,
     },
-    pricePerM2: {
+    pricePerM3: {
         type: Number,
         required: true,
     },
 });
 
-export const CompanySurfaceCostModel = mongoose.model('CompanySurfaceCost', companySurfaceCostSchema);
+export const ClientMaterialCostModel = mongoose.model('ClientMaterialCost', clientMaterialCostSchema);

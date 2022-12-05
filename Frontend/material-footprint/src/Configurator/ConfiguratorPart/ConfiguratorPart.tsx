@@ -5,11 +5,10 @@ import './ConfiguratorPart.sass';
 import ColorIndicator from 'Configurator/ColorIndicator/ColorIndicator';
 
 /* Utilities */
-import { ModelPart } from 'Configurator/interfaces';
 import { getMaterials, getSurfaceTreatments } from 'API';
 
 /* Shared */
-import { Material, SurfaceTreatment } from 'shared/interfaces';
+import { ModelPart, Material, SurfaceTreatment } from 'shared/interfaces';
 import { uniqueID } from 'shared/utils';
 
 export interface ConfiguratorPartProp {

@@ -5,14 +5,14 @@ dotenv.config({path: __dirname + '../.env'});
 /* Utils */
 import express, { Response, NextFunction, Router } from 'express';
 import { validateEmissionsInput } from 'server/validator';
-import { fetchMaterials, fetchMaterialCostForCompany, fetchSurfaceTreatmentCostForCompany } from 'server/dbInterface';
+import { fetchMaterials, fetchMaterialCostForClient, fetchSurfaceTreatmentCostForClient, fetchSurfaceTreatments } from 'server/dbInterface';
 
 /* Shared */
-import { MaterialEmission, SurfaceTreatmentEmission, Material, EmissionResponse, EmissionCost } from '@shared/interfaces';
+import { MaterialEmission, SurfaceTreatmentEmission, Material, Emission, EmissionCost, SurfaceTreatment } from '@shared/interfaces';
 
 const router: Router = express.Router();
 
-// input: {clientID: number, area: number, volume: number, materialID: number, surfaceTreatmentIDs: [number]}
+// input: {partName: string, clientID: number, area: number, volume: number, material: Material, surfaceTreatmentIDs: [number]}
 router.post('/calculate-part-emission', validateEmissionsInput, async (req: any, res: Response, next: NextFunction) => {
     log('Calculating part emission...');
     res.json(await calculatePartEmission(req)
@@ -25,6 +25,12 @@ router.get('/materials', async (req: any, res: Response, next: NextFunction) => 
     .catch(err => next(err)));
 });
 
+router.get('/surface-treatments', async (req: any, res: Response, next: NextFunction) => {
+  log('Getting surface treatments...');
+  res.json(await getSurfaceTreatments()
+    .catch((err) => {next(err)}));
+});
+
 router.get('/models', async (req: any, res: Response, next: NextFunction) => {
   log('Getting models...');
   // temporarily returns empty json
@@ -33,16 +39,16 @@ router.get('/models', async (req: any, res: Response, next: NextFunction) => {
   //res.json(getModels(req, next));
 });
 
-async function calculatePartEmission(req: any): Promise<EmissionResponse> {
-  const partID: number = req.partID;
+async function calculatePartEmission(req: any): Promise<Emission> {
+  const partName: string = req.partName;
   const clientID: number = req.clientID;
-  const materialID: number = req.materialID;
+  const material: Material = req.material;
   const surfaceTreatmentIDs: number[] = req.surfaceTreatmentIDs;
   const volume: number = req.volume;
   const area: number = req.area;
   
   // Calculate material emission
-  const materialEmission: MaterialEmission = await fetchMaterialCostForCompany(clientID, materialID);
+  const materialEmission: MaterialEmission = await fetchMaterialCostForClient(clientID, material.id);
 
   // Calculate material emission
   const materialCost: EmissionCost = {
@@ -60,7 +66,7 @@ async function calculatePartEmission(req: any): Promise<EmissionResponse> {
 
   // Sum surface treatment emissions
   for(const surfaceTreatmentID of surfaceTreatmentIDs) {
-    const surfaceEmission: SurfaceTreatmentEmission = await fetchSurfaceTreatmentCostForCompany(clientID, surfaceTreatmentID);
+    const surfaceEmission: SurfaceTreatmentEmission = await fetchSurfaceTreatmentCostForClient(clientID, surfaceTreatmentID);
 
     totSurfaceTreatmentCost.co2Amount += surfaceEmission.co2AmountPerM2 * area;
     totSurfaceTreatmentCost.h2oAmount += surfaceEmission.h2oAmountPerM2 * area;
@@ -75,13 +81,16 @@ async function calculatePartEmission(req: any): Promise<EmissionResponse> {
   }
 
   // Create response
-  const response: EmissionResponse = { partID: partID, emissionCost: emissionCost }
-
+  const response: Emission = { partName: partName, material: material, emissionCost: emissionCost }
   return Promise.resolve(response);
 }
 
 async function getMaterials(): Promise<Material[]> {
   return fetchMaterials();
+}
+
+async function getSurfaceTreatments(): Promise<SurfaceTreatment[]> {
+  return fetchSurfaceTreatments();
 }
 
 // Todo update signature to Model[]

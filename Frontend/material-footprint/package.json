@@ -10,6 +10,7 @@
     "@types/node": "^16.18.3",
     "@types/react": "^18.0.25",
     "@types/react-dom": "^18.0.8",
+    "node-fetch": "^3.3.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "typescript": "^4.8.4",
@@ -23,10 +24,12 @@
   },
   "scripts": {
     "dev": "npm run start",
-    "prod": "npm run build",
+    "dev-local": "set REACT_APP_LOCAL_MODE=1&& npm run start",
+    "prod": "set REACT_APP_LOCAL_MODE=0&& npm run build",
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "build-test": "set REACT_APP_LOCAL_MODE=1&& npm run build",
+    "test": "set REACT_APP_LOCAL_MODE=1&& react-scripts test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

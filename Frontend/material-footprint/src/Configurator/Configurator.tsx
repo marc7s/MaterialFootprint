@@ -7,12 +7,11 @@ import ModelComponent from 'Configurator/ModelComponent/ModelComponent';
 import Widget from 'Configurator/Widget/Widget';
 
 /* Utilities */
-import { Model } from 'Configurator/interfaces';
 import { getMaterials, getModels, getSurfaceTreatments } from 'API';
 
 /* Shared */
 import { uniqueID } from 'shared/utils';
-import { Material, Size, SurfaceTreatment } from 'shared/interfaces';
+import { Model, Material, Size, SurfaceTreatment } from 'shared/interfaces';
 
 function Configurator() {
   const [models, setModels] = useState([] as Model[]);
@@ -143,7 +142,7 @@ function Configurator() {
             currentModel && 
             <>
               <ModelConfiguratorComponent model={currentModel} onPartMaterialChange={onPartMaterialChange} onPartSurfaceTreatmentChange={onPartSurfaceTreatmentChange}></ModelConfiguratorComponent>
-              <Widget currentModelParts={currentModel.parts}></Widget>
+              <Widget currentModel={currentModel}></Widget>
             </>
           }
         </div>

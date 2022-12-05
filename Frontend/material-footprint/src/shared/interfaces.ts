@@ -40,11 +40,22 @@ export type EmissionRequest = {
     surfaceTreatmentIDs: number[],
     volume: number,
     area: number;
-  }
+}
 
-export type EmissionResponse = {
-    partID: number,
-    emissionCost: EmissionCost
+export interface ModelPart {
+    id: string;
+    name: string;
+    area: number;
+    volume: number;
+    image: string;
+    material: Material;
+    surfaceTreatments: SurfaceTreatment[];
+}
+
+export interface Model {
+    id: number;
+    name: string;
+    parts: ModelPart[];
 }
 
 export enum Size {

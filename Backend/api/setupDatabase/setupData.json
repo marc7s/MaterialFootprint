@@ -3,24 +3,32 @@
         {
             "id": 1,
             "name": "Plastic",
-            "color": "Yellow"
+            "color": "yellow"
         },
         {
             "id": 2,
-            "name": "Plastic",
-            "color": "Red"
+            "name": "Leather",
+            "color": "brown"
+        },
+        {
+            "id": 3,
+            "name": "Steel",
+            "color": "lightgray"
+        },
+        {
+            "id": 4,
+            "name": "Textile",
+            "color": "purple"
         }
     ],
-    "surfaces": [
+    "surfaceTreatments": [
         {
             "id": 1,
-            "name": "Paint",
-            "color": "Yellow"
+            "name": "Laquer"
         },
         {
             "id": 2,
-            "name": "Paint",
-            "color": "Red"
+            "name": "Paint"
         }
     ],
     "companies": [
@@ -33,9 +41,9 @@
             "name": "Rapid Images"
         }
     ],
-    "companyMaterialCosts": [
+    "clientMaterialCosts": [
         {
-            "companyID": 1,
+            "clientID": 1,
             "materialID": 1,
             "co2AmountPerM3": 1,
             "h2oAmountPerM3": 1,
@@ -43,27 +51,84 @@
 
         },
         {
-            "companyID": 2,
+            "clientID": 1,
             "materialID": 2,
             "co2AmountPerM3": 2,
             "h2oAmountPerM3": 2,
             "pricePerM3": 2
+        },
+        {
+            "clientID": 1,
+            "materialID": 3,
+            "co2AmountPerM3": 3,
+            "h2oAmountPerM3": 3,
+            "pricePerM3": 3
+        },
+        {
+            "clientID": 1,
+            "materialID": 4,
+            "co2AmountPerM3": 4,
+            "h2oAmountPerM3": 4,
+            "pricePerM3": 4
+        },
+        {
+            "clientID": 2,
+            "materialID": 1,
+            "co2AmountPerM3": 5,
+            "h2oAmountPerM3": 5,
+            "pricePerM3": 5
+
+        },
+        {
+            "clientID": 2,
+            "materialID": 2,
+            "co2AmountPerM3": 6,
+            "h2oAmountPerM3": 6,
+            "pricePerM3": 6
+        },
+        {
+            "clientID": 2,
+            "materialID": 3,
+            "co2AmountPerM3": 7,
+            "h2oAmountPerM3": 7,
+            "pricePerM3": 7
+        },
+        {
+            "clientID": 2,
+            "materialID": 4,
+            "co2AmountPerM3": 8,
+            "h2oAmountPerM3": 8,
+            "pricePerM3": 8
         }
     ],
-    "companySurfaceCosts": [
+    "clientSurfaceTreatmentCosts": [
         {
-            "companyID": 1,
+            "clientID": 1,
             "surfaceID": 1,
             "co2AmountPerM2": 10,
             "h2oAmountPerM2": 10,
             "pricePerM2": 10
         },
         {
-            "companyID": 1,
+            "clientID": 1,
             "surfaceID": 2,
             "co2AmountPerM2": 20,
             "h2oAmountPerM2": 20,
             "pricePerM2": 20
+        },
+        {
+            "clientID": 2,
+            "surfaceID": 1,
+            "co2AmountPerM2": 30,
+            "h2oAmountPerM2": 30,
+            "pricePerM2": 30
+        },
+        {
+            "clientID": 2,
+            "surfaceID": 2,
+            "co2AmountPerM2": 40,
+            "h2oAmountPerM2": 40,
+            "pricePerM2": 40
         }
     ]
 }

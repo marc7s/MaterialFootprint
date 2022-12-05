@@ -5,10 +5,10 @@ dotenv.config({path: __dirname + '/../.env'});
 /* Utils */
 import { connectToDb } from 'server/db';
 import { MaterialModel } from 'setupDatabase/models/Material';
-import { SurfaceModel } from 'setupDatabase/models/Surface';
-import { CompanyModel } from 'setupDatabase/models/Company';
-import { CompanyMaterialCostModel } from 'setupDatabase/models/CompanyMaterialCost';
-import { CompanySurfaceCostModel } from 'setupDatabase/models/CompanySurfaceCost';
+import { SurfaceTreatmentModel } from 'setupDatabase/models/SurfaceTreatment';
+import { ClientModel } from 'setupDatabase/models/Client';
+import { ClientMaterialCostModel } from 'setupDatabase/models/ClientMaterialCost';
+import { ClientSurfaceTreatmentCostModel } from 'setupDatabase/models/ClientSurfaceTreatmentCost';
 import { DatabaseClearCollectionError, DatabaseConnectionError, DatabaseCreateCollectionError, DatabaseInsertMockDataError } from 'server/errors';
 
 /* Shared */
@@ -21,10 +21,10 @@ async function createCollections(): Promise<void> {
     log("Creating collections...");
     try {
       await MaterialModel.createCollection();
-      await SurfaceModel.createCollection();
-      await CompanyModel.createCollection();
-      await CompanyMaterialCostModel.createCollection();
-      await CompanySurfaceCostModel.createCollection();
+      await SurfaceTreatmentModel.createCollection();
+      await ClientModel.createCollection();
+      await ClientMaterialCostModel.createCollection();
+      await ClientSurfaceTreatmentCostModel.createCollection();
       log("Collections created!");
     } catch(err) {
       logError("Could not create collections", err);
@@ -36,10 +36,10 @@ async function clearCollections(): Promise<void> {
   log("Creating collections...");
   try {
     await MaterialModel.deleteMany();
-    await SurfaceModel.deleteMany();
-    await CompanyModel.deleteMany();
-    await CompanyMaterialCostModel.deleteMany();
-    await CompanySurfaceCostModel.deleteMany();
+    await SurfaceTreatmentModel.deleteMany();
+    await ClientModel.deleteMany();
+    await ClientMaterialCostModel.deleteMany();
+    await ClientSurfaceTreatmentCostModel.deleteMany();
     log("Collections cleared!");
   } catch(err) {
     logError("Could not clear collections", err);
@@ -51,10 +51,10 @@ async function insertMockData(): Promise<void> {
   log("Inserting mock data...");
   try {
     await MaterialModel.insertMany(mockData.materials);
-    await SurfaceModel.insertMany(mockData.surfaces);
-    await CompanyModel.insertMany(mockData.companies);
-    await CompanyMaterialCostModel.insertMany(mockData.companyMaterialCosts);
-    await CompanySurfaceCostModel.insertMany(mockData.companySurfaceCosts);
+    await SurfaceTreatmentModel.insertMany(mockData.surfaceTreatments);
+    await ClientModel.insertMany(mockData.companies);
+    await ClientMaterialCostModel.insertMany(mockData.clientMaterialCosts);
+    await ClientSurfaceTreatmentCostModel.insertMany(mockData.clientSurfaceTreatmentCosts);
     log("Mock data inserted!");
   } catch(err) {
     logError("Could not insert mock data", err);
