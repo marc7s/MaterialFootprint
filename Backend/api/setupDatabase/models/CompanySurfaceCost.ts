@@ -18,7 +18,7 @@ const companySurfaceCostSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
-    costPerM2: {
+    pricePerM2: {
         type: Number,
         required: true,
     },
