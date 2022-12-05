@@ -33,11 +33,9 @@ router.get('/surface-treatments', async (req: any, res: Response, next: NextFunc
 
 router.get('/models', async (req: any, res: Response, next: NextFunction) => {
   log('Getting models...');
-  // temporarily returns empty json
-  
-  res.json(await getModels(req).catch(err => next(err)));
+  res.json(await getModels(req)
+    .catch(err => next(err)));
 
-  //res.json(getModels(req, next));
 });
 
 async function calculatePartEmission(req: any): Promise<Emission> {
