@@ -5,7 +5,6 @@ import './Widget.sass';
 import EmissionComponent from 'Configurator/EmissionComponent/EmissionComponent';
 
 /* Utilities */
-import { getMaterials } from 'API';
 
 /* Shared */
 import { ModelPart, Emission, EmissionCost, Model } from 'shared/interfaces';
@@ -15,13 +14,13 @@ export interface WidgetProp {
   currentModel: Model;
 }
 
-async function calculatePartEmission(mockData: any, clientID: number, modelPart: ModelPart): Promise<Emission> {
+async function calculatePartEmission(clientID: number, modelPart: ModelPart): Promise<Emission> {
   const data = {
     partName: modelPart.name,
     clientID: clientID,
     area: modelPart.area,
     volume: modelPart.volume,
-    material: modelPart.material,
+    materialID: modelPart.material.id,
     surfaceTreatmentIDs: modelPart.surfaceTreatments.map(st => st.id)
   };
   const options: RequestInit = {
@@ -48,11 +47,9 @@ async function calculatePartEmission(mockData: any, clientID: number, modelPart:
 // Get a list of all the materials from the API
 // Since the widget is separated this is defined here and not in the API file
 async function getEmissions(modelParts: ModelPart[]): Promise<Emission[]> {
-  const materials = await getMaterials();
   const mockData = [
       {
           partName: "Seat",
-          material: materials.find(material => material.name === 'Textile')!,
           emissionCost: {
               co2Amount: 100,
               h2oAmount: 200,
@@ -61,7 +58,6 @@ async function getEmissions(modelParts: ModelPart[]): Promise<Emission[]> {
       },
       {
           partName: "Armrests",
-          material: materials.find(material => material.name === 'Plastic')!,
           emissionCost: {
               co2Amount: 1000,
               h2oAmount: 2000,
@@ -70,7 +66,6 @@ async function getEmissions(modelParts: ModelPart[]): Promise<Emission[]> {
       },
       {
           partName: "Frame",
-          material: materials.find(material => material.name === 'Steel')!,
           emissionCost: {
               co2Amount: 10000,
               h2oAmount: 20000,
@@ -85,7 +80,7 @@ async function getEmissions(modelParts: ModelPart[]): Promise<Emission[]> {
   
   const calculatedEmissions: Emission[] = [];
   for(const modelPart of modelParts) {
-    const calculatedEmission: Emission = await calculatePartEmission(mockData, 1, modelPart);
+    const calculatedEmission: Emission = await calculatePartEmission(1, modelPart);
     calculatedEmissions.push(calculatedEmission);
   }
 

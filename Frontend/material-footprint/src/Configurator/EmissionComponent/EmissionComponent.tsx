@@ -2,7 +2,6 @@ import './EmissionComponent.sass';
 import { useState } from 'react';
 
 /* Components */
-import ColorIndicator from 'Configurator/ColorIndicator/ColorIndicator';
 
 /* Utilities */
 
@@ -65,7 +64,6 @@ function EmissionComponent({ emission, totalEmissionCost }: EmissionProp) {
       <div className="EmissionComponent-part-name" onClick={toggleExpand}>
         <div className="EmissionComponent-part-left">
           <h4>{ emission.partName }</h4>
-          <ColorIndicator color={emission.material.color}></ColorIndicator>
         </div>
         
         <div className="EmissionComponent-part-right">
