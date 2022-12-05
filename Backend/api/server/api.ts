@@ -5,10 +5,10 @@ dotenv.config({path: __dirname + '../.env'});
 /* Utils */
 import express, { Response, NextFunction, Router } from 'express';
 import { validateEmissionsInput } from 'server/validator';
-import { fetchMaterials, fetchMaterialCostForCompany, fetchSurfaceTreatmentCostForCompany } from 'server/dbInterface';
+import { fetchMaterials, fetchMaterialCostForCompany, fetchSurfaceTreatmentCostForCompany, fetchSurfaceTreatments } from 'server/dbInterface';
 
 /* Shared */
-import { MaterialEmission, SurfaceTreatmentEmission, Material, EmissionResponse, EmissionCost } from '@shared/interfaces';
+import { MaterialEmission, SurfaceTreatmentEmission, Material, EmissionResponse, EmissionCost, SurfaceTreatment } from '@shared/interfaces';
 
 const router: Router = express.Router();
 

@@ -6,7 +6,7 @@ import { CompanySurfaceCostModel } from 'setupDatabase/models/CompanySurfaceCost
 import { DatabaseConnectionError } from 'server/errors';
 
 /* Shared */
-import { MaterialEmission, SurfaceTreatmentEmission, Material } from '@shared/interfaces';
+import { MaterialEmission, SurfaceTreatmentEmission, Material, SurfaceTreatment } from '@shared/interfaces';
 
 
 // fetch all materials, return array of Materials
