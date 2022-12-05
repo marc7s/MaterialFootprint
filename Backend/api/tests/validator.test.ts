@@ -8,19 +8,13 @@ const emptyReq: Request = {
     body: {}
 } as Request;
 
-const validMaterial: Material = {
-    id: 1,
-    name: "test material",
-    color: "test color"
-} as Material;
-
 const validReq: Request = {
     body: {
         partName: "test",
         clientID: 1,
         area: 1,
         volume: 1,
-        material: validMaterial,
+        materialID: 1,
         surfaceTreatmentIDs: [1]
     }
 } as Request;
@@ -31,7 +25,7 @@ const negativeClientIDValReq: Request = {
         clientID: -1,
         area: 1,
         volume: 1,
-        material: validMaterial,
+        materialID: 1,
         surfaceTreatmentIDs: [1]
     }
 } as Request;
@@ -42,7 +36,7 @@ const areaValIsStringReq: Request = {
         clientID: 1,
         area: "g",
         volume: 1,
-        material: validMaterial,
+        materialID: 1,
         surfaceTreatmentIDs: [1]
     }
 } as Request;
@@ -52,7 +46,7 @@ const missingAreaReq: Request = {
         partName: "test",
         clientID: 1,
         volume: 1,
-        material: validMaterial,
+        materialID: 1,
         surfaceTreatmentIDs: [1]
     }
 } as Request;
@@ -63,21 +57,18 @@ const surfaceTreatmentIDsNotAllNumbersReq: Request = {
         clientID: 1,
         area: 1,
         volume: 1,
-        material: validMaterial,
+        materialID: 1,
         surfaceTreatmentIDs: [1, "g"]
     }
 } as Request;
 
-const materialMissingColorReq: Request = {
+const materialIDNegativeReq: Request = {
     body: {
         partName: "test",
         clientID: 1,
         area: 1,
         volume: 1,
-        material: {
-            id: 1,
-            name: "test material"
-        },
+        materialID: -1,
         surfaceTreatmentIDs: [1, "g"]
     }
 } as Request;
@@ -120,8 +111,8 @@ test('validateEmissionsInput surfaceTreatmentIDs with not all numbers', () => {
     expect((response as any as ApiRequestMalformedError).message).toContain('surfaceTreatmentIDs must be an array of numbers');
 });
 
-test('validateEmissionsInput material missing color', () => {
-    const response = validateEmissionsInput(materialMissingColorReq, emptyRes, next);
+test('validateEmissionsInput materialID negative', () => {
+    const response = validateEmissionsInput(materialIDNegativeReq, emptyRes, next);
     expect(response).toBeInstanceOf(ApiRequestMalformedError);
-    expect((response as any as ApiRequestMalformedError).message).toContain('material must be of Material type');
+    expect((response as any as ApiRequestMalformedError).message).toContain('materialID must be a positive number');
 });
