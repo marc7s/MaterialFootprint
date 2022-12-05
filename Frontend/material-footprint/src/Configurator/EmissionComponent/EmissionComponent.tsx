@@ -2,7 +2,6 @@ import './EmissionComponent.sass';
 import { useState } from 'react';
 
 /* Components */
-import ColorIndicator from 'Configurator/ColorIndicator/ColorIndicator';
 
 /* Utilities */
 
