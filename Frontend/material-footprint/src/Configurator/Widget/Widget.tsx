@@ -81,7 +81,7 @@ async function getEmissions(modelParts: ModelPart[]): Promise<Emission[]> {
 
   // Return mock data if in local mode
   if(process.env.REACT_APP_LOCAL_MODE === '1')
-    Promise.resolve(mockData);
+    return Promise.resolve(mockData);
   
   const calculatedEmissions: Emission[] = [];
   for(const modelPart of modelParts) {

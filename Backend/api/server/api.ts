@@ -12,7 +12,7 @@ import { MaterialEmission, SurfaceTreatmentEmission, Material, Emission, Emissio
 
 const router: Router = express.Router();
 
-// input: {partName: string, clientID: number, area: number, volume: number, materialID: number, surfaceTreatmentIDs: [number]}
+// input: {partName: string, clientID: number, area: number, volume: number, material: Material, surfaceTreatmentIDs: [number]}
 router.post('/calculate-part-emission', validateEmissionsInput, async (req: any, res: Response, next: NextFunction) => {
     log('Calculating part emission...');
     res.json(await calculatePartEmission(req)

@@ -21,6 +21,7 @@ export function validateEmissionsInput(req: any, res: Response, next: NextFuncti
     if (req.body.volume < 0)
         return next(new ApiRequestMalformedError('volume must be a positive number'));
 
+    // TODO create a general type checker instead of this
     if (!req.body.material.id || !req.body.material.name || !req.body.material.color)
         return next(new ApiRequestMalformedError('material must be of Material type'));
 
