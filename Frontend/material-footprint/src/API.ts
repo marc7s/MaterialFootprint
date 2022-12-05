@@ -8,7 +8,6 @@ import accent from 'assets/configurator/chair/Accent.png';
 
 /* Shared */
 import { Model, Material, SurfaceTreatment } from "shared/interfaces";
-import { uniqueID } from "shared/utils";
 
 
 export function isLocalMode(): boolean {
