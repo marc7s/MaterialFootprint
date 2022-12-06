@@ -12,7 +12,7 @@ import { MaterialEmission, SurfaceTreatmentEmission, Material, Emission, Emissio
 
 const router: Router = express.Router();
 
-// input: {partName: string, clientID: number, area: number, volume: number, material: Material, surfaceTreatmentIDs: [number]}
+// input: {partName: string, clientID: number, area: number, volume: number, materialID: number, surfaceTreatmentIDs: [number]}
 router.post('/calculate-part-emission', validateEmissionsInput, async (req: any, res: Response, next: NextFunction) => {
     log('Calculating part emission...');
     res.json(await calculatePartEmission(req)
@@ -38,23 +38,21 @@ router.get('/images', validateImagesInput, async (req: any, res: Response, next:
 
 router.get('/models', async (req: any, res: Response, next: NextFunction) => {
   log('Getting models...');
-  // temporarily returns empty json
-  
-  res.json(await getModels(req).catch(err => next(err)));
+  res.json(await getModels(req)
+    .catch(err => next(err)));
 
-  //res.json(getModels(req, next));
 });
 
 async function calculatePartEmission(req: any): Promise<Emission> {
   const partName: string = req.partName;
   const clientID: number = req.clientID;
-  const material: Material = req.material;
+  const materialID: number = req.materialID;
   const surfaceTreatmentIDs: number[] = req.surfaceTreatmentIDs;
   const volume: number = req.volume;
   const area: number = req.area;
   
   // Calculate material emission
-  const materialEmission: MaterialEmission = await fetchMaterialCostForClient(clientID, material.id)
+  const materialEmission: MaterialEmission = await fetchMaterialCostForClient(clientID, materialID)
     .catch(err => { throw err });
 
   // Calculate material emission
@@ -89,7 +87,7 @@ async function calculatePartEmission(req: any): Promise<Emission> {
   }
 
   // Create response
-  const response: Emission = { partName: partName, material: material, emissionCost: emissionCost }
+  const response: Emission = { partName: partName, emissionCost: emissionCost }
   return Promise.resolve(response);
 }
 
