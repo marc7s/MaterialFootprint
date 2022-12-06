@@ -6,7 +6,6 @@ export type Material = {
 
 export type Emission = {
     partName: string;
-    material: Material;
     emissionCost: EmissionCost;
 }
 
