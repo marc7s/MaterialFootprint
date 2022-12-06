@@ -18,7 +18,7 @@ async function get(endPoint: string, mockData: any, options?: RequestInit): Prom
     return new Promise((resolve, reject) => {
         // Return mock data if in local mode
         if(isLocalMode())
-            resolve(mockData);
+            return resolve(mockData);
 
         const baseEndpoint: string | undefined = process.env.REACT_APP_BACKEND_ENDPOINT;
         if(baseEndpoint === undefined)
