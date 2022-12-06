@@ -127,7 +127,7 @@ function Configurator() {
         <div className="Configurator-model-container">
           <div className="Configurator-model-carousel">
             {
-              models.map(model => <ModelComponent key={uniqueID()} model={model} size={Size.SMALL} active={model.id === currentModel?.id} onModelChange={onModelChange}></ModelComponent>)
+              models.map(model => <ModelComponent model={model} size={Size.SMALL} active={model.id === currentModel?.id} onModelChange={onModelChange}></ModelComponent>)
             }
           </div>
           <div className="Configurator-current-model">

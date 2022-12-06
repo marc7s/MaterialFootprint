@@ -18,7 +18,7 @@ async function get(endPoint: string, mockData: any, options?: RequestInit): Prom
     return new Promise((resolve, reject) => {
         // Return mock data if in local mode
         if(isLocalMode())
-            resolve(mockData);
+            return resolve(mockData); 
 
         const baseEndpoint: string | undefined = process.env.REACT_APP_BACKEND_ENDPOINT;
         if(baseEndpoint === undefined)
@@ -83,7 +83,7 @@ export async function getModels(): Promise<Model[]> {
     const mockData = [
         {
             id: 1,
-            name: 'Chair',
+            name: '3D Chair',
             parts: [
                 {
                     id: 1,
@@ -96,16 +96,16 @@ export async function getModels(): Promise<Model[]> {
                 },
                 {
                     id: 2,
-                    name: 'Frame',
+                    name: 'Backrest',
                     area: 3,
                     volume: 4,
                     image: frame,
-                    material: materials.find(material => material.name === 'Steel')!,
+                    material: materials.find(material => material.name === 'Textile')!,
                     surfaceTreatments: surfaceTreatments.filter(surfaceTreatment => ['Paint'].includes(surfaceTreatment.name))
                 },
                 {
                     id: 3,
-                    name: 'Armrests',
+                    name: 'Front legs',
                     area: 5,
                     volume: 6,
                     image: armrests,
@@ -114,6 +114,90 @@ export async function getModels(): Promise<Model[]> {
                 },
                 {
                     id: 4,
+                    name: 'Back legs',
+                    area: 7,
+                    volume: 8,
+                    image: accent,
+                    material: materials.find(material => material.name === 'Steel')!,
+                    surfaceTreatments: []
+                }
+            ]
+        },
+        {
+            id: 2,
+            name: '3D Chair 2',
+            parts: [
+                {
+                    id: 5,
+                    name: 'Seat',
+                    area: 1,
+                    volume: 2,
+                    image: seat,
+                    material: materials.find(material => material.name === 'Leather')!,
+                    surfaceTreatments: surfaceTreatments.filter(surfaceTreatment => ['Laquer'].includes(surfaceTreatment.name))
+                },
+                {
+                    id: 6,
+                    name: 'Backrest',
+                    area: 3,
+                    volume: 4,
+                    image: frame,
+                    material: materials.find(material => material.name === 'Textile')!,
+                    surfaceTreatments: surfaceTreatments.filter(surfaceTreatment => ['Paint'].includes(surfaceTreatment.name))
+                },
+                {
+                    id: 7,
+                    name: 'Front legs',
+                    area: 5,
+                    volume: 6,
+                    image: armrests,
+                    material: materials.find(material => material.name === 'Plastic')!,
+                    surfaceTreatments: surfaceTreatments.filter(surfaceTreatment => ['Laquer', 'Paint'].includes(surfaceTreatment.name))
+                },
+                {
+                    id: 8,
+                    name: 'Back legs',
+                    area: 7,
+                    volume: 8,
+                    image: accent,
+                    material: materials.find(material => material.name === 'Steel')!,
+                    surfaceTreatments: []
+                }
+            ]
+        }/*,
+        {
+            id: 2,
+            name: 'Chair',
+            parts: [
+                {
+                    id: 5,
+                    name: 'Seat',
+                    area: 1,
+                    volume: 2,
+                    image: seat,
+                    material: materials.find(material => material.name === 'Leather')!,
+                    surfaceTreatments: surfaceTreatments.filter(surfaceTreatment => ['Laquer'].includes(surfaceTreatment.name))
+                },
+                {
+                    id: 6,
+                    name: 'Frame',
+                    area: 3,
+                    volume: 4,
+                    image: frame,
+                    material: materials.find(material => material.name === 'Steel')!,
+                    surfaceTreatments: surfaceTreatments.filter(surfaceTreatment => ['Paint'].includes(surfaceTreatment.name))
+                },
+                {
+                    id: 7,
+                    name: 'Armrests',
+                    area: 5,
+                    volume: 6,
+                    image: armrests,
+                    material: materials.find(material => material.name === 'Plastic')!,
+                    surfaceTreatments: surfaceTreatments.filter(surfaceTreatment => ['Laquer', 'Paint'].includes(surfaceTreatment.name))
+                },
+                {
+                    id: 8,
                     name: 'Accent',
                     area: 7,
                     volume: 8,
@@ -124,11 +208,11 @@ export async function getModels(): Promise<Model[]> {
             ]
         },
         {
-            id: 2,
+            id: 3,
             name: 'Chair 2',
             parts: [
                 {
-                    id: 1,
+                    id: 5,
                     name: 'Seat',
                     area: 1,
                     volume: 2,
@@ -137,7 +221,7 @@ export async function getModels(): Promise<Model[]> {
                     surfaceTreatments: surfaceTreatments.filter(surfaceTreatment => ['Laquer'].includes(surfaceTreatment.name))
                 },
                 {
-                    id: 2,
+                    id: 6,
                     name: 'Frame',
                     area: 3,
                     volume: 4,
@@ -146,7 +230,7 @@ export async function getModels(): Promise<Model[]> {
                     surfaceTreatments: surfaceTreatments.filter(surfaceTreatment => ['Paint'].includes(surfaceTreatment.name))
                 },
                 {
-                    id: 3,
+                    id: 7,
                     name: 'Armrests',
                     area: 5,
                     volume: 6,
@@ -155,7 +239,7 @@ export async function getModels(): Promise<Model[]> {
                     surfaceTreatments: surfaceTreatments.filter(surfaceTreatment => ['Laquer', 'Paint'].includes(surfaceTreatment.name))
                 },
                 {
-                    id: 4,
+                    id: 8,
                     name: 'Accent',
                     area: 7,
                     volume: 8,
@@ -164,7 +248,7 @@ export async function getModels(): Promise<Model[]> {
                     surfaceTreatments: []
                 }
             ]
-        }
+        }*/
     ]
 
     const response = await get('models', mockData);
