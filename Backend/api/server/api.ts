@@ -4,11 +4,11 @@ dotenv.config({path: __dirname + '../.env'});
 
 /* Utils */
 import express, { Response, NextFunction, Router } from 'express';
-import { validateEmissionsInput } from 'server/validator';
-import { fetchMaterials, fetchMaterialCostForClient, fetchSurfaceTreatmentCostForClient, fetchSurfaceTreatments } from 'server/dbInterface';
+import { validateEmissionsInput, validateImagesInput } from 'server/validator';
+import { fetchMaterials, fetchMaterialCostForClient, fetchSurfaceTreatmentCostForClient, fetchSurfaceTreatments, fetchModels, fetchPart } from 'server/dbInterface';
 
 /* Shared */
-import { MaterialEmission, SurfaceTreatmentEmission, Material, Emission, EmissionCost, SurfaceTreatment } from '@shared/interfaces';
+import { MaterialEmission, SurfaceTreatmentEmission, Material, Emission, EmissionCost, Model, ModelPart, ModelDatabaseEntry, ModelPartDatabaseEntry, SurfaceTreatment } from '@shared/interfaces';
 
 const router: Router = express.Router();
 
@@ -31,12 +31,16 @@ router.get('/surface-treatments', async (req: any, res: Response, next: NextFunc
     .catch((err) => {next(err)}));
 });
 
+router.get('/images', validateImagesInput, async (req: any, res: Response, next: NextFunction) => {
+  log('Getting image...');
+  res.redirect('/images/parts/' + req.imageID + '.png');
+});
+
 router.get('/models', async (req: any, res: Response, next: NextFunction) => {
   log('Getting models...');
-  // temporarily returns empty json
-  res.json([]);
+  res.json(await getModels(req)
+    .catch(err => next(err)));
 
-  //res.json(getModels(req, next));
 });
 
 async function calculatePartEmission(req: any): Promise<Emission> {
@@ -48,7 +52,8 @@ async function calculatePartEmission(req: any): Promise<Emission> {
   const area: number = req.area;
   
   // Calculate material emission
-  const materialEmission: MaterialEmission = await fetchMaterialCostForClient(clientID, materialID);
+  const materialEmission: MaterialEmission = await fetchMaterialCostForClient(clientID, materialID)
+    .catch(err => { throw err });
 
   // Calculate material emission
   const materialCost: EmissionCost = {
@@ -66,7 +71,8 @@ async function calculatePartEmission(req: any): Promise<Emission> {
 
   // Sum surface treatment emissions
   for(const surfaceTreatmentID of surfaceTreatmentIDs) {
-    const surfaceEmission: SurfaceTreatmentEmission = await fetchSurfaceTreatmentCostForClient(clientID, surfaceTreatmentID);
+    const surfaceEmission: SurfaceTreatmentEmission = await fetchSurfaceTreatmentCostForClient(clientID, surfaceTreatmentID)
+      .catch(err => { throw err });
 
     totSurfaceTreatmentCost.co2Amount += surfaceEmission.co2AmountPerM2 * area;
     totSurfaceTreatmentCost.h2oAmount += surfaceEmission.h2oAmountPerM2 * area;
@@ -93,9 +99,53 @@ async function getSurfaceTreatments(): Promise<SurfaceTreatment[]> {
   return fetchSurfaceTreatments();
 }
 
-// Todo update signature to Model[]
-async function getModels(req: any, next: NextFunction): Promise<any[]> {
-  return Promise.resolve([]);
+async function getModels(req: any): Promise<Model[]> {
+  // fetches all models from database
+  const modelsDatabase: ModelDatabaseEntry[] = await fetchModels();
+
+  // transforms ModelDatabaseEntry[] to Model[]
+  const models: Model[] = await Promise.all(modelsDatabase.map(async (modelDatabaseEntry: ModelDatabaseEntry) => {
+    // transforms partIDs into ModelPart[]
+    const parts: ModelPart[] = await Promise.all(modelDatabaseEntry.partIDs.map(async (id: number) => {
+      return await getPart(req, id).catch(err => { throw err });
+    })).catch(err => {throw err});
+
+    const model: Model = {
+      id: modelDatabaseEntry.id,
+      name: modelDatabaseEntry.name,
+      parts: parts
+    }
+    return model;
+  })).catch(err => { throw err });
+  
+  return Promise.resolve(models);
+}
+
+async function getPart(req: any, partID: number): Promise<ModelPart> {
+  // fetches database for specific part
+  const partDatabaseEntry: ModelPartDatabaseEntry = await fetchPart(partID);
+  const materials: Material[] = await fetchMaterials().catch(err => {throw err});
+  // finds the parts specified material
+  const material: Material | undefined = materials.find((material: Material) => material.id == partDatabaseEntry.materialID)
+  if (material == undefined) {
+    throw new Error('Material not found');
+  }
+  const surfaceTreatments: SurfaceTreatment[] = await fetchSurfaceTreatments().catch(err => {throw err});
+  // filters the parts specified surface treatments
+  const filteredSurfaceTreatments: SurfaceTreatment[] = surfaceTreatments.filter(
+    (surfaceTreatment: SurfaceTreatment) => partDatabaseEntry.surfaceTreatmentIDs.includes(surfaceTreatment.id)
+    );
+
+  const part: ModelPart = {
+    id: partDatabaseEntry.id,
+    name: partDatabaseEntry.name,
+    area: partDatabaseEntry.area,
+    volume: partDatabaseEntry.volume,
+    image: `http://localhost:${process.env.port}/images?imageID=${partDatabaseEntry.imageID.toString()}`,
+    material: material,
+    surfaceTreatments: filteredSurfaceTreatments
+  }
+  return Promise.resolve(part);
 }
 
 module.exports = router;

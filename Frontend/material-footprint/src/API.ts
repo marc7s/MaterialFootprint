@@ -8,7 +8,6 @@ import accent from 'assets/configurator/chair/Accent.png';
 
 /* Shared */
 import { Model, Material, SurfaceTreatment } from "shared/interfaces";
-import { uniqueID } from "shared/utils";
 
 
 export function isLocalMode(): boolean {
@@ -81,13 +80,13 @@ export async function getModels(): Promise<Model[]> {
     const materials = await getMaterials();
     const surfaceTreatments = await getSurfaceTreatments();
 
-    return [
+    const mockData = [
         {
             id: 1,
             name: 'Chair',
             parts: [
                 {
-                    id: uniqueID(),
+                    id: 1,
                     name: 'Seat',
                     area: 1,
                     volume: 2,
@@ -96,7 +95,7 @@ export async function getModels(): Promise<Model[]> {
                     surfaceTreatments: surfaceTreatments.filter(surfaceTreatment => ['Laquer'].includes(surfaceTreatment.name))
                 },
                 {
-                    id: uniqueID(),
+                    id: 2,
                     name: 'Frame',
                     area: 3,
                     volume: 4,
@@ -105,7 +104,7 @@ export async function getModels(): Promise<Model[]> {
                     surfaceTreatments: surfaceTreatments.filter(surfaceTreatment => ['Paint'].includes(surfaceTreatment.name))
                 },
                 {
-                    id: uniqueID(),
+                    id: 3,
                     name: 'Armrests',
                     area: 5,
                     volume: 6,
@@ -114,7 +113,7 @@ export async function getModels(): Promise<Model[]> {
                     surfaceTreatments: surfaceTreatments.filter(surfaceTreatment => ['Laquer', 'Paint'].includes(surfaceTreatment.name))
                 },
                 {
-                    id: uniqueID(),
+                    id: 4,
                     name: 'Accent',
                     area: 7,
                     volume: 8,
@@ -129,7 +128,7 @@ export async function getModels(): Promise<Model[]> {
             name: 'Chair 2',
             parts: [
                 {
-                    id: uniqueID(),
+                    id: 1,
                     name: 'Seat',
                     area: 1,
                     volume: 2,
@@ -138,7 +137,7 @@ export async function getModels(): Promise<Model[]> {
                     surfaceTreatments: surfaceTreatments.filter(surfaceTreatment => ['Laquer'].includes(surfaceTreatment.name))
                 },
                 {
-                    id: uniqueID(),
+                    id: 2,
                     name: 'Frame',
                     area: 3,
                     volume: 4,
@@ -147,7 +146,7 @@ export async function getModels(): Promise<Model[]> {
                     surfaceTreatments: surfaceTreatments.filter(surfaceTreatment => ['Paint'].includes(surfaceTreatment.name))
                 },
                 {
-                    id: uniqueID(),
+                    id: 3,
                     name: 'Armrests',
                     area: 5,
                     volume: 6,
@@ -156,7 +155,7 @@ export async function getModels(): Promise<Model[]> {
                     surfaceTreatments: surfaceTreatments.filter(surfaceTreatment => ['Laquer', 'Paint'].includes(surfaceTreatment.name))
                 },
                 {
-                    id: uniqueID(),
+                    id: 4,
                     name: 'Accent',
                     area: 7,
                     volume: 8,
@@ -167,4 +166,7 @@ export async function getModels(): Promise<Model[]> {
             ]
         }
     ]
+
+    const response = await get('models', mockData);
+    return response as Model[];
 }

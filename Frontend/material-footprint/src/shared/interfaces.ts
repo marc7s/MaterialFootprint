@@ -42,7 +42,7 @@ export type EmissionRequest = {
 }
 
 export interface ModelPart {
-    id: string;
+    id: number;
     name: string;
     area: number;
     volume: number;
@@ -60,4 +60,20 @@ export interface Model {
 export enum Size {
     SMALL = "small",
     LARGE = "large"
+}
+
+export interface ModelDatabaseEntry {
+    id: number;
+    name: string;
+    partIDs: number[];
+}
+
+export interface ModelPartDatabaseEntry {
+    id: number;
+    name: string;
+    area: number;
+    volume: number;
+    imageID: number;
+    materialID: number;
+    surfaceTreatmentIDs: number[];
 }

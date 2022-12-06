@@ -42,3 +42,14 @@ export function validateEmissionsInput(req: any, res: Response, next: NextFuncti
     req.surfaceTreatmentIDs = req.body.surfaceTreatmentIDs;
     next();
 }
+
+export function validateImagesInput(req: any, res: Response, next: NextFunction): void {
+    const imageID = req.query.imageID;
+    if (!imageID)
+        return next(new ApiRequestMalformedError('Missing required parameter: imageID'));
+    if (isNaN(imageID))
+        return next(new ApiRequestMalformedError('imageID must be a number'));
+
+    req.imageID = imageID;
+    next();
+}

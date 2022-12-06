@@ -6,6 +6,7 @@ dotenv.config({path: __dirname + '/../.env'});
 import express, { Application, Request, Response, NextFunction } from 'express';
 import { ErrorMessage, NotFoundError, ApiRequestMalformedError } from 'server/errors';
 import { connectToDb } from 'server/db';
+import path from 'path';
 
 /* Shared */
 import { log, logError } from '@shared/utils';
@@ -21,6 +22,8 @@ connectToDb().catch((err: Error) => {
 app.use(cors({
     origin: `http://localhost:${process.env.FRONTEND_PORT}`
 }));
+
+app.use(express.static(path.join(__dirname, '../public')));
 
 app.use(express.json());
 app.use('/', require('./api'));
