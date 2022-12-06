@@ -74,7 +74,7 @@ export interface ModelPartDatabaseEntry {
     name: string;
     area: number;
     volume: number;
-    imageURL: string;
+    imageID: number;
     materialID: number;
     surfaceTreatmentIDs: number[];
 }

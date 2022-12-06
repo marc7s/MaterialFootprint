@@ -80,7 +80,7 @@ export async function getModels(): Promise<Model[]> {
     const materials = await getMaterials();
     const surfaceTreatments = await getSurfaceTreatments();
 
-    return [
+    const mockData = [
         {
             id: 1,
             name: 'Chair',
@@ -166,4 +166,7 @@ export async function getModels(): Promise<Model[]> {
             ]
         }
     ]
+
+    const response = await get('models', mockData);
+    return response as Model[];
 }

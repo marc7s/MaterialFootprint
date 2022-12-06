@@ -135,29 +135,37 @@
         {
             "id": 1,
             "name": "Seat",
-            "imageURL": "http://www.example.com/image1.png",
+            "area": 1,
+            "volume": 2,
+            "imageID": 1,
             "materialID": 1,
             "surfaceTreatmentIDs": [1]
         },
         {
             "id": 2,
             "name": "Frame",
-            "imageURL": "http://www.example.com/image2.png",
-            "materialID": 1,
+            "area": 1,
+            "volume": 2,
+            "imageID": 2,
+            "materialID": 3,
             "surfaceTreatmentIDs": [1]
         },
         {
             "id": 3,
             "name": "Armsrests",
-            "imageURL": "http://www.example.com/image3.png",
-            "materialID": 1,
+            "area": 1,
+            "volume": 2,
+            "imageID": 3,
+            "materialID": 2,
             "surfaceTreatmentIDs": [1]
         },
         {
             "id": 4,
             "name": "Accent",
-            "imageURL": "http://www.example.com/image4.png",
-            "materialID": 1,
+            "area": 1,
+            "volume": 2,
+            "imageID": 4,
+            "materialID": 4,
             "surfaceTreatmentIDs": [1]
         }
 
