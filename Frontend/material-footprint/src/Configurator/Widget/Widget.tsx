@@ -112,7 +112,7 @@ function Widget({ currentModel }: WidgetProp) {
     <div className="Widget-container">
       <div className="Widget-total">
         <h3 className="Widget-title">Total emissions</h3>
-        <div className="Widget-total-value"><i className="Widget-icon Co2-icon"></i>CO<sub>2</sub>: { totalEmissionCost.co2Amount } kg </div>
+        <div className="Widget-total-value"><i className="Widget-icon Co2-icon"></i>CO<sub>2</sub>: { totalEmissionCost.co2Amount } kg</div>
         <div className="Widget-total-value"><i className="Widget-icon Water-icon"></i>Water: { totalEmissionCost.h2oAmount } L</div>
         <div className="Widget-total-value"><i className="Widget-icon Money-icon"></i>Cost: { totalEmissionCost.priceInDollar } SEK</div>
       </div>
