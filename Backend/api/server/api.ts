@@ -4,7 +4,7 @@ dotenv.config({path: __dirname + '../.env'});
 
 /* Utils */
 import express, { Response, NextFunction, Router } from 'express';
-import { validateEmissionsInput, validateImagesInput } from 'server/validator';
+import { validateEmissionsInput, validateModelInput } from 'server/validator';
 import { fetchMaterials, fetchMaterialCostForClient, fetchSurfaceTreatmentCostForClient, fetchSurfaceTreatments, fetchModels, fetchPart } from 'server/dbInterface';
 
 /* Shared */
@@ -31,16 +31,17 @@ router.get('/surface-treatments', async (req: any, res: Response, next: NextFunc
     .catch((err) => {next(err)}));
 });
 
-router.get('/images', validateImagesInput, async (req: any, res: Response, next: NextFunction) => {
-  log('Getting image...');
-  res.redirect('/images/parts/' + req.imageID + '.png');
-});
-
 router.get('/models', async (req: any, res: Response, next: NextFunction) => {
   log('Getting models...');
   res.json(await getModels(req)
     .catch(err => next(err)));
 
+});
+
+router.get('/model-object', validateModelInput, async (req: any, res: Response, next: NextFunction) => {
+  const modelID: number = req.modelID;
+  log(`Getting model object with ID ${modelID}...`);
+  res.redirect(`/model-objects/${modelID}.glb`);
 });
 
 async function calculatePartEmission(req: any): Promise<Emission> {
@@ -108,11 +109,12 @@ async function getModels(req: any): Promise<Model[]> {
     // transforms partIDs into ModelPart[]
     const parts: ModelPart[] = await Promise.all(modelDatabaseEntry.partIDs.map(async (id: number) => {
       return await getPart(req, id).catch(err => { throw err });
-    })).catch(err => {throw err});
+    })).catch(err => { throw err });
 
     const model: Model = {
       id: modelDatabaseEntry.id,
       name: modelDatabaseEntry.name,
+      url: `http://localhost:${process.env.PORT}/model-object?modelID=${modelDatabaseEntry.id}`,
       parts: parts
     }
     return model;
@@ -134,14 +136,13 @@ async function getPart(req: any, partID: number): Promise<ModelPart> {
   // filters the parts specified surface treatments
   const filteredSurfaceTreatments: SurfaceTreatment[] = surfaceTreatments.filter(
     (surfaceTreatment: SurfaceTreatment) => partDatabaseEntry.surfaceTreatmentIDs.includes(surfaceTreatment.id)
-    );
+  );
 
   const part: ModelPart = {
     id: partDatabaseEntry.id,
     name: partDatabaseEntry.name,
     area: partDatabaseEntry.area,
     volume: partDatabaseEntry.volume,
-    image: `http://localhost:${process.env.port}/images?imageID=${partDatabaseEntry.imageID.toString()}`,
     material: material,
     surfaceTreatments: filteredSurfaceTreatments
   }

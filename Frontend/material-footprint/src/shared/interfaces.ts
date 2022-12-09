@@ -46,7 +46,6 @@ export interface ModelPart {
     name: string;
     area: number;
     volume: number;
-    image: string;
     material: Material;
     surfaceTreatments: SurfaceTreatment[];
 }
@@ -54,6 +53,7 @@ export interface ModelPart {
 export interface Model {
     id: number;
     name: string;
+    url: string;
     parts: ModelPart[];
 }
 
@@ -73,7 +73,6 @@ export interface ModelPartDatabaseEntry {
     name: string;
     area: number;
     volume: number;
-    imageID: number;
     materialID: number;
     surfaceTreatmentIDs: number[];
 }

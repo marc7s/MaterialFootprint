@@ -43,13 +43,13 @@ export function validateEmissionsInput(req: any, res: Response, next: NextFuncti
     next();
 }
 
-export function validateImagesInput(req: any, res: Response, next: NextFunction): void {
-    const imageID = req.query.imageID;
-    if (!imageID)
-        return next(new ApiRequestMalformedError('Missing required parameter: imageID'));
-    if (isNaN(imageID))
-        return next(new ApiRequestMalformedError('imageID must be a number'));
+export function validateModelInput(req: any, res: Response, next: NextFunction): void {
+    const modelID = req.query.modelID;
+    if (!modelID)
+        return next(new ApiRequestMalformedError('Missing required parameter: modelID'));
+    if (isNaN(modelID))
+        return next(new ApiRequestMalformedError('modelID must be a number'));
 
-    req.imageID = imageID;
+    req.modelID = modelID;
     next();
 }
