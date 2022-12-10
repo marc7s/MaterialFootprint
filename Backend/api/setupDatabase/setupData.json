@@ -34,11 +34,11 @@
     "clients": [
         {
             "id": 1,
-            "name": "Ericsson"
+            "name": "Rapid Images"
         },
         {
             "id": 2,
-            "name": "Rapid Images"
+            "name": "Ericsson"
         }
     ],
     "clientMaterialCosts": [

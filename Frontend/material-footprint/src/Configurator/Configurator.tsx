@@ -11,9 +11,14 @@ import { getMaterials, getModels, getSurfaceTreatments } from 'API';
 
 /* Shared */
 import { uniqueID } from 'shared/utils';
-import { Model, Material, Size, SurfaceTreatment } from 'shared/interfaces';
+import { Model, Material, Size, SurfaceTreatment, Client } from 'shared/interfaces';
 
-function Configurator() {
+
+interface ConfiguratorProps {
+  currentClient: Client;
+}
+
+function Configurator({ currentClient }: ConfiguratorProps) {
   const [models, setModels] = useState([] as Model[]);
   const [materials, setMaterials] = useState([] as Material[]);
   const [surfaceTreatments, setSurfaceTreatments] = useState([] as SurfaceTreatment[]);
@@ -142,7 +147,7 @@ function Configurator() {
             currentModel && 
             <>
               <ModelConfiguratorComponent model={currentModel} onPartMaterialChange={onPartMaterialChange} onPartSurfaceTreatmentChange={onPartSurfaceTreatmentChange}></ModelConfiguratorComponent>
-              <Widget currentModel={currentModel}></Widget>
+              <Widget currentModel={currentModel} currentClient={currentClient}></Widget>
             </>
           }
         </div>

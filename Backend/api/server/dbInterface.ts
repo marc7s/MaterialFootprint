@@ -3,14 +3,23 @@ import { MaterialModel } from 'setupDatabase/models/Material';
 import { SurfaceTreatmentModel } from 'setupDatabase/models/SurfaceTreatment';
 import { ClientMaterialCostModel } from 'setupDatabase/models/ClientMaterialCost';
 import { ClientSurfaceTreatmentCostModel } from 'setupDatabase/models/ClientSurfaceTreatmentCost';
+import { ClientModel } from 'setupDatabase/models/Client';
 import { ModelModel } from 'setupDatabase/models/Model';
 import { PartModel } from 'setupDatabase/models/Part';
 import { DatabaseConnectionError } from 'server/errors';
 
 /* Shared */
-import { MaterialEmission, SurfaceTreatmentEmission, Material, ModelDatabaseEntry, ModelPartDatabaseEntry, SurfaceTreatment } from '@shared/interfaces';
+import { MaterialEmission, SurfaceTreatmentEmission, Material, ModelDatabaseEntry, ModelPartDatabaseEntry, SurfaceTreatment, Client } from '@shared/interfaces';
 
 
+
+// Fetch all clients, return array of Clients
+export async function fetchClients(): Promise<Client[]> {
+    const docs = await ClientModel.find({})
+        .catch(() => { throw new DatabaseConnectionError(); });
+    const clients: Client[] = docs.map(doc => ({ id: doc.id, name: doc.name }));
+    return Promise.resolve(clients); 
+} 
 
 // Fetch all materials, return array of Materials
 export async function fetchMaterials(): Promise<Material[]> {
