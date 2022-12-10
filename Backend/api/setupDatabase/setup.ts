@@ -78,6 +78,7 @@ async function setupMockDatabase(): Promise<void> {
       await clearCollections();
       await insertMockData();
       log("Database initialized!");
+      log("DONE");
     } catch(err) {
       logError("Could not initialize database", err);
       throw new DatabaseConnectionError();

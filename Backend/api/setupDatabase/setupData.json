@@ -8,7 +8,7 @@
         {
             "id": 2,
             "name": "Leather",
-            "color": "brown"
+            "color": "red"
         },
         {
             "id": 3,
@@ -134,52 +134,79 @@
     "parts": [
         {
             "id": 1,
-            "name": "Seat",
+            "name": "Aero",
             "area": 1,
             "volume": 2,
-            "imageID": 1,
-            "materialID": 1,
-            "surfaceTreatmentIDs": [1]
+            "materialID": 2,
+            "surfaceTreatmentIDs": []
         },
         {
             "id": 2,
-            "name": "Frame",
+            "name": "Windshield",
             "area": 1,
             "volume": 2,
-            "imageID": 2,
             "materialID": 3,
             "surfaceTreatmentIDs": [1]
         },
         {
             "id": 3,
-            "name": "Armsrests",
+            "name": "Intakes",
             "area": 1,
             "volume": 2,
-            "imageID": 3,
-            "materialID": 2,
-            "surfaceTreatmentIDs": [1]
+            "materialID": 1,
+            "surfaceTreatmentIDs": [2]
         },
         {
             "id": 4,
-            "name": "Accent",
+            "name": "Body",
             "area": 1,
             "volume": 2,
-            "imageID": 4,
             "materialID": 4,
+            "surfaceTreatmentIDs": [1, 2]
+        },
+        {
+            "id": 5,
+            "name": "Seat",
+            "area": 1,
+            "volume": 2,
+            "materialID": 2,
+            "surfaceTreatmentIDs": []
+        },
+        {
+            "id": 6,
+            "name": "Front legs",
+            "area": 1,
+            "volume": 2,
+            "materialID": 1,
+            "surfaceTreatmentIDs": [2]
+        },
+        {
+            "id": 7,
+            "name": "Back legs",
+            "area": 1,
+            "volume": 2,
+            "materialID": 3,
             "surfaceTreatmentIDs": [1]
+        },
+        {
+            "id": 8,
+            "name": "Backrest",
+            "area": 1,
+            "volume": 2,
+            "materialID": 4,
+            "surfaceTreatmentIDs": []
         }
-
     ],
     "models": [
         {
             "id": 1,
-            "name": "Chair",
+            "name": "Koenigsegg",
             "partIDs": [1, 2, 3, 4]
         },
         {
             "id": 2,
-            "name": "Chair2",
-            "partIDs": [1, 2, 3, 4]
+            "name": "Chair",
+            "partIDs": [5, 6, 7, 8]
         }
     ]
 }

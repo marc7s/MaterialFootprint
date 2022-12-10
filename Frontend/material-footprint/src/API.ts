@@ -1,10 +1,6 @@
 /* Components */
 
 /* Utilities */
-import seat from 'assets/configurator/chair/Seat.png';
-import frame from 'assets/configurator/chair/Frame.png';
-import armrests from 'assets/configurator/chair/Armrests.png';
-import accent from 'assets/configurator/chair/Accent.png';
 
 /* Shared */
 import { Model, Material, SurfaceTreatment } from "shared/interfaces";
@@ -42,7 +38,7 @@ export async function getMaterials(): Promise<Material[]> {
         {
             id: 2,
             name: 'Leather',
-            color: 'brown'
+            color: 'red'
         },
         {
             id: 3,
@@ -83,83 +79,77 @@ export async function getModels(): Promise<Model[]> {
     const mockData = [
         {
             id: 1,
-            name: 'Chair',
+            name: 'Koenigsegg',
+            url: 'model-objects/koenigsegg.glb',
             parts: [
                 {
                     id: 1,
-                    name: 'Seat',
-                    area: 1,
-                    volume: 2,
-                    image: seat,
+                    name: 'Aero',
+                    area: 7,
+                    volume: 8,
                     material: materials.find(material => material.name === 'Leather')!,
-                    surfaceTreatments: surfaceTreatments.filter(surfaceTreatment => ['Laquer'].includes(surfaceTreatment.name))
+                    surfaceTreatments: []
                 },
                 {
                     id: 2,
-                    name: 'Frame',
-                    area: 3,
-                    volume: 4,
-                    image: frame,
+                    name: 'Windshield',
+                    area: 7,
+                    volume: 8,
                     material: materials.find(material => material.name === 'Steel')!,
-                    surfaceTreatments: surfaceTreatments.filter(surfaceTreatment => ['Paint'].includes(surfaceTreatment.name))
+                    surfaceTreatments: surfaceTreatments.filter(surfaceTreatment => ['Laquer'].includes(surfaceTreatment.name))
                 },
                 {
                     id: 3,
-                    name: 'Armrests',
-                    area: 5,
-                    volume: 6,
-                    image: armrests,
+                    name: 'Intakes',
+                    area: 7,
+                    volume: 8,
                     material: materials.find(material => material.name === 'Plastic')!,
-                    surfaceTreatments: surfaceTreatments.filter(surfaceTreatment => ['Laquer', 'Paint'].includes(surfaceTreatment.name))
+                    surfaceTreatments: surfaceTreatments.filter(surfaceTreatment => ['Paint'].includes(surfaceTreatment.name))
                 },
                 {
                     id: 4,
-                    name: 'Accent',
+                    name: 'Body',
                     area: 7,
                     volume: 8,
-                    image: accent,
                     material: materials.find(material => material.name === 'Textile')!,
-                    surfaceTreatments: []
+                    surfaceTreatments: surfaceTreatments.filter(surfaceTreatment => ['Laquer', 'Paint'].includes(surfaceTreatment.name))
                 }
             ]
         },
         {
             id: 2,
-            name: 'Chair 2',
+            name: 'Chair',
+            url: 'model-objects/chair.glb',
             parts: [
                 {
-                    id: 1,
+                    id: 5,
                     name: 'Seat',
                     area: 1,
                     volume: 2,
-                    image: seat,
                     material: materials.find(material => material.name === 'Leather')!,
-                    surfaceTreatments: surfaceTreatments.filter(surfaceTreatment => ['Laquer'].includes(surfaceTreatment.name))
+                    surfaceTreatments: []
                 },
                 {
-                    id: 2,
-                    name: 'Frame',
-                    area: 3,
-                    volume: 4,
-                    image: frame,
-                    material: materials.find(material => material.name === 'Steel')!,
+                    id: 6,
+                    name: 'Front legs',
+                    area: 5,
+                    volume: 6,
+                    material: materials.find(material => material.name === 'Plastic')!,
                     surfaceTreatments: surfaceTreatments.filter(surfaceTreatment => ['Paint'].includes(surfaceTreatment.name))
                 },
                 {
-                    id: 3,
-                    name: 'Armrests',
-                    area: 5,
-                    volume: 6,
-                    image: armrests,
-                    material: materials.find(material => material.name === 'Plastic')!,
-                    surfaceTreatments: surfaceTreatments.filter(surfaceTreatment => ['Laquer', 'Paint'].includes(surfaceTreatment.name))
-                },
-                {
-                    id: 4,
-                    name: 'Accent',
+                    id: 7,
+                    name: 'Back legs',
                     area: 7,
                     volume: 8,
-                    image: accent,
+                    material: materials.find(material => material.name === 'Steel')!,
+                    surfaceTreatments: surfaceTreatments.filter(surfaceTreatment => ['Laquer'].includes(surfaceTreatment.name))
+                },
+                {
+                    id: 8,
+                    name: 'Backrest',
+                    area: 3,
+                    volume: 4,
                     material: materials.find(material => material.name === 'Textile')!,
                     surfaceTreatments: []
                 }

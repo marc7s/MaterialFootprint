@@ -2,12 +2,11 @@ import React from 'react';
 import './ModelComponent.sass';
 
 /* Components */
-import ModelPart from 'Configurator/ModelPartComponent/ModelPartComponent';
+import ModelViewerComponent from 'Configurator/ModelViewerComponent/ModelViewerComponent';
 
 /* Utilities */
 
 /* Shared */
-import { uniqueID } from 'shared/utils';
 import { Model, Size } from 'shared/interfaces';
 
 
@@ -27,13 +26,13 @@ function ModelComponent({model, size, active, onModelChange}: ModelProp) {
       onModelChange(model.id);
   };
 
-  // Render a ModelPart for each part in the model
+  // Render the 3D model viewer component
   return (
-      <div className={'ModelComponent-model' + activeClass + sizeClass} onClick={onModelClick}>
-        {
-          model.parts.map(part => <ModelPart key={uniqueID()} size={size} part={part}></ModelPart>)
-        }
-      </div>
+    <div className={'ModelComponent-model' + activeClass + sizeClass} onClick={onModelClick}>
+      {
+        <ModelViewerComponent model={model} size={size} />
+      }
+    </div>
   );
 }
 

@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@react-three/drei": "^9.45.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -18,9 +19,11 @@
     "web-vitals": "^2.1.4"
   },
   "devDependencies": {
+    "@types/three": "^0.146.0",
     "@types/uuid": "^8.3.4",
     "react-scripts": "5.0.1",
-    "sass": "^1.56.1"
+    "sass": "^1.56.1",
+    "three": "^0.146.0"
   },
   "scripts": {
     "dev": "npm run start",
@@ -29,7 +32,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "build-test": "set REACT_APP_LOCAL_MODE=1&& npm run build",
-    "test": "set REACT_APP_LOCAL_MODE=1&& react-scripts test",
+    "test": "set REACT_APP_LOCAL_MODE=1&& react-scripts test --transformIgnorePatterns 'node_modules/(?!three)/'",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
