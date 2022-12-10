@@ -3,7 +3,7 @@
 /* Utilities */
 
 /* Shared */
-import { Model, Material, SurfaceTreatment } from "shared/interfaces";
+import { Model, Material, SurfaceTreatment, Client } from "shared/interfaces";
 
 
 export function isLocalMode(): boolean {
@@ -68,6 +68,22 @@ export async function getSurfaceTreatments(): Promise<SurfaceTreatment[]> {
         }
     ];
     const response = await get('surface-treatments', mockData);
+    return response as SurfaceTreatment[];
+}
+
+// Get a list of all the clients from the API
+export async function getClients(): Promise<Client[]> {
+    const mockData = [
+        {
+            id: 1,
+            name: 'Rapid Images'
+        },
+        {
+            id: 2,
+            name: 'Ericsson'
+        }
+    ];
+    const response = await get('clients', mockData);
     return response as SurfaceTreatment[];
 }
 

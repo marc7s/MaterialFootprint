@@ -7,11 +7,12 @@ import EmissionComponent from 'Configurator/EmissionComponent/EmissionComponent'
 /* Utilities */
 
 /* Shared */
-import { ModelPart, Emission, EmissionCost, Model } from 'shared/interfaces';
+import { ModelPart, Emission, EmissionCost, Model, Client } from 'shared/interfaces';
 import { uniqueID } from 'shared/utils';
 
 export interface WidgetProp {
   currentModel: Model;
+  currentClient: Client;
 }
 
 async function calculatePartEmission(clientID: number, modelPart: ModelPart): Promise<Emission> {
@@ -46,7 +47,7 @@ async function calculatePartEmission(clientID: number, modelPart: ModelPart): Pr
 
 // Get a list of all the materials from the API
 // Since the widget is separated this is defined here and not in the API file
-async function getEmissions(modelParts: ModelPart[]): Promise<Emission[]> {
+async function getEmissions(client: Client, modelParts: ModelPart[]): Promise<Emission[]> {
   const mockData = [
       {
           partName: "Seat",
@@ -80,23 +81,23 @@ async function getEmissions(modelParts: ModelPart[]): Promise<Emission[]> {
   
   const calculatedEmissions: Emission[] = [];
   for(const modelPart of modelParts) {
-    const calculatedEmission: Emission = await calculatePartEmission(1, modelPart);
+    const calculatedEmission: Emission = await calculatePartEmission(client.id, modelPart);
     calculatedEmissions.push(calculatedEmission);
   }
 
   return calculatedEmissions;
 }
 
-function Widget({ currentModel }: WidgetProp) {
+function Widget({ currentModel, currentClient }: WidgetProp) {
   const [emissions, setEmissions] = useState([] as Emission[]);
 
   // Load emissions from API on first render
   useEffect(() => {
     async function loadEmissions() {
-      getEmissions(currentModel.parts).then(m => setEmissions(m));
+      getEmissions(currentClient, currentModel.parts).then(m => setEmissions(m));
     }
     loadEmissions();
-  }, [currentModel]);
+  }, [currentModel, currentClient]);
 
   function sum(a: number, b: number) {
     return a + b;

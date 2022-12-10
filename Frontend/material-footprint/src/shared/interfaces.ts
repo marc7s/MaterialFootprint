@@ -76,3 +76,8 @@ export interface ModelPartDatabaseEntry {
     materialID: number;
     surfaceTreatmentIDs: number[];
 }
+
+export interface Client {
+    id: number;
+    name: string;
+}

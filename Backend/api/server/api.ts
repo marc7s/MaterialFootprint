@@ -5,10 +5,10 @@ dotenv.config({path: __dirname + '../.env'});
 /* Utils */
 import express, { Response, NextFunction, Router } from 'express';
 import { validateEmissionsInput, validateModelInput } from 'server/validator';
-import { fetchMaterials, fetchMaterialCostForClient, fetchSurfaceTreatmentCostForClient, fetchSurfaceTreatments, fetchModels, fetchPart } from 'server/dbInterface';
+import { fetchMaterials, fetchMaterialCostForClient, fetchSurfaceTreatmentCostForClient, fetchSurfaceTreatments, fetchModels, fetchPart, fetchClients } from 'server/dbInterface';
 
 /* Shared */
-import { MaterialEmission, SurfaceTreatmentEmission, Material, Emission, EmissionCost, Model, ModelPart, ModelDatabaseEntry, ModelPartDatabaseEntry, SurfaceTreatment } from '@shared/interfaces';
+import { MaterialEmission, SurfaceTreatmentEmission, Material, Emission, EmissionCost, Model, ModelPart, ModelDatabaseEntry, ModelPartDatabaseEntry, SurfaceTreatment, Client } from '@shared/interfaces';
 
 const router: Router = express.Router();
 
@@ -16,6 +16,12 @@ const router: Router = express.Router();
 router.post('/calculate-part-emission', validateEmissionsInput, async (req: any, res: Response, next: NextFunction) => {
     log('Calculating part emission...');
     res.json(await calculatePartEmission(req)
+    .catch(err => next(err)));
+});
+
+router.get('/clients', async (req: any, res: Response, next: NextFunction) => {
+  log('Getting clients...');
+  res.json(await getClients()
     .catch(err => next(err)));
 });
 
@@ -35,7 +41,6 @@ router.get('/models', async (req: any, res: Response, next: NextFunction) => {
   log('Getting models...');
   res.json(await getModels(req)
     .catch(err => next(err)));
-
 });
 
 router.get('/model-object', validateModelInput, async (req: any, res: Response, next: NextFunction) => {
@@ -90,6 +95,10 @@ async function calculatePartEmission(req: any): Promise<Emission> {
   // Create response
   const response: Emission = { partName: partName, emissionCost: emissionCost }
   return Promise.resolve(response);
+}
+
+async function getClients(): Promise<Client[]> {
+  return fetchClients();
 }
 
 async function getMaterials(): Promise<Material[]> {
