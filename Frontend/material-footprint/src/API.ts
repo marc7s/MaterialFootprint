@@ -80,7 +80,7 @@ export async function getModels(): Promise<Model[]> {
         {
             id: 1,
             name: 'Koenigsegg',
-            url: 'koenigsegg.glb',
+            url: 'model-objects/koenigsegg.glb',
             parts: [
                 {
                     id: 1,
@@ -119,7 +119,7 @@ export async function getModels(): Promise<Model[]> {
         {
             id: 2,
             name: 'Chair',
-            url: 'chair.glb',
+            url: 'model-objects/chair.glb',
             parts: [
                 {
                     id: 5,
@@ -127,30 +127,30 @@ export async function getModels(): Promise<Model[]> {
                     area: 1,
                     volume: 2,
                     material: materials.find(material => material.name === 'Leather')!,
-                    surfaceTreatments: surfaceTreatments.filter(surfaceTreatment => ['Laquer'].includes(surfaceTreatment.name))
+                    surfaceTreatments: []
                 },
                 {
                     id: 6,
-                    name: 'Backrest',
-                    area: 3,
-                    volume: 4,
-                    material: materials.find(material => material.name === 'Textile')!,
-                    surfaceTreatments: surfaceTreatments.filter(surfaceTreatment => ['Paint'].includes(surfaceTreatment.name))
-                },
-                {
-                    id: 7,
                     name: 'Front legs',
                     area: 5,
                     volume: 6,
                     material: materials.find(material => material.name === 'Plastic')!,
-                    surfaceTreatments: surfaceTreatments.filter(surfaceTreatment => ['Laquer', 'Paint'].includes(surfaceTreatment.name))
+                    surfaceTreatments: surfaceTreatments.filter(surfaceTreatment => ['Paint'].includes(surfaceTreatment.name))
                 },
                 {
-                    id: 8,
+                    id: 7,
                     name: 'Back legs',
                     area: 7,
                     volume: 8,
                     material: materials.find(material => material.name === 'Steel')!,
+                    surfaceTreatments: surfaceTreatments.filter(surfaceTreatment => ['Laquer'].includes(surfaceTreatment.name))
+                },
+                {
+                    id: 8,
+                    name: 'Backrest',
+                    area: 3,
+                    volume: 4,
+                    material: materials.find(material => material.name === 'Textile')!,
                     surfaceTreatments: []
                 }
             ]

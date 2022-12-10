@@ -169,34 +169,33 @@
             "name": "Seat",
             "area": 1,
             "volume": 2,
-            "materialID": 1,
-            "surfaceTreatmentIDs": [1]
+            "materialID": 2,
+            "surfaceTreatmentIDs": []
         },
         {
             "id": 6,
-            "name": "Frame",
+            "name": "Front legs",
+            "area": 1,
+            "volume": 2,
+            "materialID": 1,
+            "surfaceTreatmentIDs": [2]
+        },
+        {
+            "id": 7,
+            "name": "Back legs",
             "area": 1,
             "volume": 2,
             "materialID": 3,
             "surfaceTreatmentIDs": [1]
         },
         {
-            "id": 7,
-            "name": "Armsrests",
-            "area": 1,
-            "volume": 2,
-            "materialID": 2,
-            "surfaceTreatmentIDs": [1]
-        },
-        {
             "id": 8,
-            "name": "Accent",
+            "name": "Backrest",
             "area": 1,
             "volume": 2,
             "materialID": 4,
-            "surfaceTreatmentIDs": [1]
+            "surfaceTreatmentIDs": []
         }
-
     ],
     "models": [
         {

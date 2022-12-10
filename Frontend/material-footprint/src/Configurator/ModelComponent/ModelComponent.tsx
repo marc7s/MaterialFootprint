@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect, useState, useRef } from 'react';
+import React from 'react';
 import './ModelComponent.sass';
 
 /* Components */
