@@ -5,7 +5,7 @@ dotenv.config({path: __dirname + '../.env'});
 /* Utils */
 import express, { Response, NextFunction, Router } from 'express';
 import { validateEmissionsInput, validateModelInput } from 'server/validator';
-import { fetchMaterials, fetchMaterialCostForClient, fetchSurfaceTreatmentCostForClient, fetchSurfaceTreatments, fetchModels, fetchPart, fetchClients, fetchMaximalMaterialCostForClient, fetchMaximalSurfaceTreatmentCostForClient } from 'server/dbInterface';
+import { fetchMaterials, fetchMaterialCostForClient, fetchSurfaceTreatmentCostForClient, fetchSurfaceTreatments, fetchModels, fetchPart, fetchClients, fetchMaximalMaterialCostForClient, fetchMaximalSurfaceTreatmentCostForClient, fetchMinimalMaterialCostForClient, fetchMinimalSurfaceTreatmentCostForClient } from 'server/dbInterface';
 
 /* Shared */
 import { MaterialEmission, SurfaceTreatmentEmission, Material, Emission, EmissionCost, Model, ModelPart, ModelDatabaseEntry, ModelPartDatabaseEntry, SurfaceTreatment, Client } from '@shared/interfaces';
@@ -75,12 +75,23 @@ async function calculatePartEmission(req: any): Promise<Emission | null> {
     priceInSEK: materialEmission.pricePerM3 * volume
   }
 
+  // Get minimal material emission
+  const minMaterialEmission: MaterialEmission = await fetchMinimalMaterialCostForClient(clientID)
+    .catch(err => { throw err });
+  
   // Get maximal material emission
   const maxMaterialEmission: MaterialEmission = await fetchMaximalMaterialCostForClient(clientID)
     .catch(err => { throw err });
 
 
-  // Calculate material emission
+  // Calculate minimal material emission
+  const minMaterialCost: EmissionCost = {
+    co2Amount: minMaterialEmission.co2AmountPerM3 * volume,
+    h2oAmount: minMaterialEmission.h2oAmountPerM3 * volume,
+    priceInSEK: minMaterialEmission.pricePerM3 * volume
+  }
+
+  // Calculate maximal material emission
   const maxMaterialCost: EmissionCost = {
     co2Amount: maxMaterialEmission.co2AmountPerM3 * volume,
     h2oAmount: maxMaterialEmission.h2oAmountPerM3 * volume,
@@ -113,6 +124,10 @@ async function calculatePartEmission(req: any): Promise<Emission | null> {
     totSurfaceTreatmentCost.priceInSEK += surfaceEmission.pricePerM2 * area;
   };
 
+  // Get minimal surface treatment emission
+  const minSurfaceEmission: SurfaceTreatmentEmission = await fetchMinimalSurfaceTreatmentCostForClient(clientID)
+      .catch(err => { throw err });
+
   // Get maximal surface treatment emission
   const maxSurfaceEmission: SurfaceTreatmentEmission = await fetchMaximalSurfaceTreatmentCostForClient(clientID)
       .catch(err => { throw err });
@@ -124,6 +139,13 @@ async function calculatePartEmission(req: any): Promise<Emission | null> {
     priceInSEK: materialCost.priceInSEK + totSurfaceTreatmentCost.priceInSEK
   }
 
+  // Total minimal emission cost (material + surface)
+  const minEmissionCost: EmissionCost = { 
+    co2Amount: minMaterialCost.co2Amount + minSurfaceEmission.co2AmountPerM2 * area,
+    h2oAmount: minMaterialCost.h2oAmount + minSurfaceEmission.h2oAmountPerM2 * area,
+    priceInSEK: minMaterialCost.priceInSEK + minSurfaceEmission.pricePerM2 * area
+  }
+
   // Total maximal emission cost (material + surface)
   const maxEmissionCost: EmissionCost = { 
     co2Amount: maxMaterialCost.co2Amount + maxSurfaceEmission.co2AmountPerM2 * area,
@@ -132,7 +154,12 @@ async function calculatePartEmission(req: any): Promise<Emission | null> {
   }
 
   // Create response
-  const response: Emission = { partName: partName, emissionCost: emissionCost, maxEmissionCost: maxEmissionCost };
+  const response: Emission = { 
+    partName: partName, 
+    emissionCost: emissionCost, 
+    minEmissionCost: minEmissionCost,
+    maxEmissionCost: maxEmissionCost 
+  };
   return Promise.resolve(response);
 }
 

@@ -55,6 +55,30 @@ export async function fetchMaterialCostForClient(clientID: number, materialID: n
     return Promise.resolve(clientMaterialEmission);
 } 
 
+// Fetch minimal material cost for the specified client
+export async function fetchMinimalMaterialCostForClient(clientID: number): Promise<MaterialEmission> {
+    const docs = await ClientMaterialCostModel.find({clientID: clientID})
+        .catch(() => { throw new DatabaseConnectionError(); });
+    
+    let minCo2AmountPerM3: number = Infinity;
+    let minH2oAmountPerM3: number = Infinity;
+    let minPricePerM3: number = Infinity;
+    
+    // Find the worst material for each parameter
+    docs.forEach(doc => {
+        if(doc.co2AmountPerM3 < minCo2AmountPerM3) minCo2AmountPerM3 = doc.co2AmountPerM3;
+        if(doc.h2oAmountPerM3 < minH2oAmountPerM3) minH2oAmountPerM3 = doc.h2oAmountPerM3;
+        if(doc.pricePerM3 < minPricePerM3) minPricePerM3 = doc.pricePerM3;
+    });
+    
+    const minClientMaterialEmission: MaterialEmission = { 
+        co2AmountPerM3: minCo2AmountPerM3, 
+        h2oAmountPerM3: minH2oAmountPerM3, 
+        pricePerM3: minPricePerM3
+    };
+    return Promise.resolve(minClientMaterialEmission);
+}
+
 // Fetch maximal material cost for the specified client
 export async function fetchMaximalMaterialCostForClient(clientID: number): Promise<MaterialEmission> {
     const docs = await ClientMaterialCostModel.find({clientID: clientID})
@@ -89,6 +113,18 @@ export async function fetchSurfaceTreatmentCostForClient(clientID: number, surfa
 
     const clientSurfaceEmission: SurfaceTreatmentEmission = { co2AmountPerM2: doc.co2AmountPerM2, h2oAmountPerM2: doc.h2oAmountPerM2, pricePerM2: doc.pricePerM2 };
     return Promise.resolve(clientSurfaceEmission); 
+}
+
+// Fetch minimal surface treatment cost for the specified client
+export async function fetchMinimalSurfaceTreatmentCostForClient(clientID: number): Promise<SurfaceTreatmentEmission> {
+    // The lowest cost is when no surface treatment is applied
+    
+    const minClientSurfaceTreatmentEmission: SurfaceTreatmentEmission = { 
+        co2AmountPerM2: 0, 
+        h2oAmountPerM2: 0, 
+        pricePerM2: 0
+    };
+    return Promise.resolve(minClientSurfaceTreatmentEmission);
 }
 
 // Fetch maximal surface treatment cost for the specified client
