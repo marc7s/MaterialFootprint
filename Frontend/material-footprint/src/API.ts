@@ -26,11 +26,6 @@ async function get(endPoint: string, mockData: any, options?: RequestInit): Prom
     });
 }
 
-export function getTexturesURL(url: string) {
-    if (isLocalMode())
-        return url;
-    return process.env.REACT_APP_BACKEND_ENDPOINT + "/" + url;
-}
 // Get a list of all the materials from the API
 export async function getMaterials(): Promise<Material[]> {
     const mockData = [

@@ -7,7 +7,7 @@ import ModelComponent from 'Configurator/ModelComponent/ModelComponent';
 import Widget from 'Configurator/Widget/Widget';
 
 /* Utilities */
-import { getMaterials, getModels, getSurfaceTreatments, getTexturesURL } from 'API';
+import { getMaterials, getModels, getSurfaceTreatments } from 'API';
 import * as THREE from 'three';
 
 /* Shared */
@@ -40,11 +40,11 @@ function Configurator({ currentClient }: ConfiguratorProps) {
       getMaterials().then(m => {
         setMaterials(m)
         const materialTexture: MaterialTexture[] = m.map(material => {
-          const normalMap: THREE.Texture = new THREE.TextureLoader().load(getTexturesURL(material.textureMap.normalMapURL));
+          const normalMap: THREE.Texture = new THREE.TextureLoader().load(material.textureMap.normalMapURL);
           normalMap.wrapS = normalMap.wrapT = THREE.RepeatWrapping;
-          const roughnessMap: THREE.Texture = new THREE.TextureLoader().load(getTexturesURL(material.textureMap.roughnessMapURL));
+          const roughnessMap: THREE.Texture = new THREE.TextureLoader().load(material.textureMap.roughnessMapURL);
           roughnessMap.wrapS = roughnessMap.wrapT = THREE.RepeatWrapping;
-          const occlusionMap: THREE.Texture = new THREE.TextureLoader().load(getTexturesURL(material.textureMap.occlusionMapURL));
+          const occlusionMap: THREE.Texture = new THREE.TextureLoader().load(material.textureMap.occlusionMapURL);
           occlusionMap.wrapS = occlusionMap.wrapT = THREE.RepeatWrapping;
           const materialTexture = {
             material: material,
