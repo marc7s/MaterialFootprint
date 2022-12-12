@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import './ConfiguratorPart.sass';
 
 /* Components */
-import ColorIndicator from 'Configurator/ColorIndicator/ColorIndicator';
 
 /* Utilities */
 import { getMaterials, getSurfaceTreatments } from 'API';
@@ -50,20 +49,24 @@ function ConfiguratorPart({part, onMaterialChange, onSurfaceTreatmentChange}: Co
   // Render an entry in the part configurator list for this part
   return (
     <tr key={uniqueID()} className="ConfiguratorPart-entry">
-      <td className="ConfiguratorPart-part">
-        {part.name}
-        <ColorIndicator color={part.material.color}></ColorIndicator>
-      </td>
+      <td className="ConfiguratorPart-part">{part.name}</td>
       <td>
-        <select defaultValue={part.material.id} onChange={changeMaterial}>
+        <select defaultValue={part.material.id} onChange={changeMaterial} style={{backgroundColor: `${part.material.color}50`}}>
           { 
             materials.map(material => <option key={uniqueID()} value={ material.id }>{ material.name }</option>) 
           }
         </select>
       </td>
-      { 
-        surfaceTreatments.map(surfaceTreatment => <td key={uniqueID()}>{ surfaceTreatment.name }<input type="checkbox" onChange={ changeSurfaceTreatment } value={surfaceTreatment.id} checked={ part.surfaceTreatments.filter(st => st.id === surfaceTreatment.id).length > 0 }/></td>)
-      }
+      <td className="ConfiguratorPart-surface-treatments">
+        { 
+          surfaceTreatments.map(surfaceTreatment => { 
+            return <div key={uniqueID()} className="ConfiguratorPart-surface-treatment">
+                    <span>{ surfaceTreatment.name }</span>
+                    <input type="checkbox" onChange={changeSurfaceTreatment} value={surfaceTreatment.id} checked={part.surfaceTreatments.filter(st => st.id === surfaceTreatment.id).length > 0}/>
+                  </div>;
+          })
+        }
+      </td>
     </tr>
   );
 }

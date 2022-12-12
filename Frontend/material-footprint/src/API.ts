@@ -32,7 +32,7 @@ export async function getMaterials(): Promise<Material[]> {
         {
             id: 1,
             name: 'Plastic',
-            color: 'yellow',
+            color: '#FFAB5C', // Rapid Orange
             isMetallic: false,
             textureMap: {
                 normalMapURL: 'material-textures/plastic_normal.jpg',
@@ -43,7 +43,7 @@ export async function getMaterials(): Promise<Material[]> {
         {
             id: 2,
             name: 'Leather',
-            color: 'red',
+            color: '#F72E41', // Rapid Red 01
             isMetallic: false,
             textureMap: {
                 normalMapURL: 'material-textures/leather_normal.jpg',
@@ -54,26 +54,24 @@ export async function getMaterials(): Promise<Material[]> {
         {
             id: 3,
             name: 'Steel',
-            color: 'lightgray',
+            color: '#B2B8BD', // Rapid Grey 05
             isMetallic: true,
             textureMap: {
                 normalMapURL: 'material-textures/steel_normal.jpg',
                 roughnessMapURL: 'material-textures/steel_roughness.jpg',
                 occlusionMapURL: 'material-textures/steel_occlusion.jpg'
             }
-            
         },
         {
             id: 4,
             name: 'Textile',
-            color: 'purple',
+            color: '#7650FF', // Rapid Purple
             isMetallic: false,
             textureMap: {
                 normalMapURL: 'material-textures/textile_normal.jpg',
                 roughnessMapURL: 'material-textures/textile_roughness.jpg',
                 occlusionMapURL: 'material-textures/textile_occlusion.jpg'
             }
-           
         }
     ];
     const response = await get('materials', mockData);

@@ -1,5 +1,5 @@
 import './EmissionComponent.sass';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 /* Components */
 
@@ -8,24 +8,35 @@ import { useState } from 'react';
 /* Shared */
 import { uniqueID } from 'shared/utils';
 import { Emission, EmissionCost } from 'shared/interfaces';
+import StatComponent from 'Configurator/StatComponent/StatComponent';
 
 export interface EmissionProp {
   emission: Emission;
   totalEmissionCost: EmissionCost;
+  getEmissionStyle: (amount: number, maxAmount: number) => React.CSSProperties;
 }
 
 interface EmissionEntry {
   title: JSX.Element;
   cost: number;
+  maxCost: number;
   unit: string;
   percentage: number;
 }
 
-function EmissionComponent({ emission, totalEmissionCost }: EmissionProp) {
+function EmissionComponent({ emission, totalEmissionCost, getEmissionStyle }: EmissionProp) {
   const [expanded, setExpanded] = useState(false);
+  const expandedStateKey = emission.partName;
+
+  useEffect(() => {
+    const isExpanded: boolean = (localStorage.getItem(expandedStateKey) ?? 'false') === 'true';
+    setExpanded(isExpanded);
+  }, [expandedStateKey]);
 
   function toggleExpand() {
-    setExpanded(!expanded);
+    const newExpandedState: boolean = !expanded;
+    setExpanded(newExpandedState);
+    localStorage.setItem(expandedStateKey, newExpandedState.toString());
   }
 
   // TODO: Change this to a proper algorithm or redo the percentages
@@ -41,18 +52,21 @@ function EmissionComponent({ emission, totalEmissionCost }: EmissionProp) {
     {
       title: <>CO<sub>2</sub></>,
       cost: emission.emissionCost.co2Amount,
+      maxCost: emission.maxEmissionCost.co2Amount,
       unit: 'kg',
       percentage: calculateEmissionPercent(emission.emissionCost.co2Amount, totalEmissionCost.co2Amount)
     },
     {
       title: <>Water</>,
       cost: emission.emissionCost.h2oAmount,
+      maxCost: emission.maxEmissionCost.h2oAmount,
       unit: 'L',
       percentage: calculateEmissionPercent(emission.emissionCost.h2oAmount, totalEmissionCost.h2oAmount)
     },
     {
       title: <>Price</>,
       cost: emission.emissionCost.priceInDollar,
+      maxCost: emission.maxEmissionCost.priceInDollar,
       unit: 'SEK',
       percentage: calculateEmissionPercent(emission.emissionCost.priceInDollar, totalEmissionCost.priceInDollar)
     }
@@ -76,9 +90,9 @@ function EmissionComponent({ emission, totalEmissionCost }: EmissionProp) {
         <tbody>
           {
             emissions.map(e => 
-              <tr key={ uniqueID() }>
+              <tr key={ uniqueID() } style={getEmissionStyle(e.cost, e.maxCost)}>
                 <td className="EmissionComponent-title">{ e.title }</td>
-                <td className="EmissionComponent-value">{ e.cost } { e.unit } ({e.percentage}%)</td>
+                <td className="EmissionComponent-value"><StatComponent amount={e.cost} unit={e.unit} />({e.percentage}%)</td>
               </tr>
             )
           }

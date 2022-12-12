@@ -1,11 +1,11 @@
-import { log } from '@shared/utils';
+import { log, logError } from '@shared/utils';
 import * as dotenv from 'dotenv';
 dotenv.config({path: __dirname + '../.env'});
 
 /* Utils */
 import express, { Response, NextFunction, Router } from 'express';
 import { validateEmissionsInput, validateModelInput } from 'server/validator';
-import { fetchMaterials, fetchMaterialCostForClient, fetchSurfaceTreatmentCostForClient, fetchSurfaceTreatments, fetchModels, fetchPart, fetchClients } from 'server/dbInterface';
+import { fetchMaterials, fetchMaterialCostForClient, fetchSurfaceTreatmentCostForClient, fetchSurfaceTreatments, fetchModels, fetchPart, fetchClients, fetchMaximalMaterialCostForClient, fetchMaximalSurfaceTreatmentCostForClient } from 'server/dbInterface';
 
 /* Shared */
 import { MaterialEmission, SurfaceTreatmentEmission, Material, Emission, EmissionCost, Model, ModelPart, ModelDatabaseEntry, ModelPartDatabaseEntry, SurfaceTreatment, Client } from '@shared/interfaces';
@@ -49,7 +49,7 @@ router.get('/model-object', validateModelInput, async (req: any, res: Response, 
   res.redirect(`/model-objects/${modelID}.glb`);
 });
 
-async function calculatePartEmission(req: any): Promise<Emission> {
+async function calculatePartEmission(req: any): Promise<Emission | null> {
   const partName: string = req.partName;
   const clientID: number = req.clientID;
   const materialID: number = req.materialID;
@@ -57,9 +57,16 @@ async function calculatePartEmission(req: any): Promise<Emission> {
   const volume: number = req.volume;
   const area: number = req.area;
   
+  /* Material */
+
   // Calculate material emission
-  const materialEmission: MaterialEmission = await fetchMaterialCostForClient(clientID, materialID)
+  const materialEmission: MaterialEmission | null = await fetchMaterialCostForClient(clientID, materialID)
     .catch(err => { throw err });
+
+  if(materialEmission === null) {
+    logError(`Material with ID ${materialID} not found for client with ID ${clientID}.`)
+    return Promise.resolve(null);
+  }
 
   // Calculate material emission
   const materialCost: EmissionCost = {
@@ -67,6 +74,22 @@ async function calculatePartEmission(req: any): Promise<Emission> {
     h2oAmount: materialEmission.h2oAmountPerM3 * volume,
     priceInDollar: materialEmission.pricePerM3 * volume
   }
+
+  // Get maximal material emission
+  const maxMaterialEmission: MaterialEmission = await fetchMaximalMaterialCostForClient(clientID)
+    .catch(err => { throw err });
+
+
+  // Calculate material emission
+  const maxMaterialCost: EmissionCost = {
+    co2Amount: maxMaterialEmission.co2AmountPerM3 * volume,
+    h2oAmount: maxMaterialEmission.h2oAmountPerM3 * volume,
+    priceInDollar: maxMaterialEmission.pricePerM3 * volume
+  }
+
+  
+  
+  /* Surface Treatments */
 
   // Accumulator for all surface treatment emissions
   const totSurfaceTreatmentCost: EmissionCost = {
@@ -77,13 +100,22 @@ async function calculatePartEmission(req: any): Promise<Emission> {
 
   // Sum surface treatment emissions
   for(const surfaceTreatmentID of surfaceTreatmentIDs) {
-    const surfaceEmission: SurfaceTreatmentEmission = await fetchSurfaceTreatmentCostForClient(clientID, surfaceTreatmentID)
+    const surfaceEmission: SurfaceTreatmentEmission | null = await fetchSurfaceTreatmentCostForClient(clientID, surfaceTreatmentID)
       .catch(err => { throw err });
 
+    if(surfaceEmission === null) {
+      logError(`Surface treatment with ID ${surfaceTreatmentID} not found for client with ID ${clientID}.`)
+      return Promise.resolve(null);
+    }
+      
     totSurfaceTreatmentCost.co2Amount += surfaceEmission.co2AmountPerM2 * area;
     totSurfaceTreatmentCost.h2oAmount += surfaceEmission.h2oAmountPerM2 * area;
     totSurfaceTreatmentCost.priceInDollar += surfaceEmission.pricePerM2 * area;
   };
+
+  // Get maximal surface treatment emission
+  const maxSurfaceEmission: SurfaceTreatmentEmission = await fetchMaximalSurfaceTreatmentCostForClient(clientID)
+      .catch(err => { throw err });
 
   // Totals (material + surface)
   const emissionCost: EmissionCost = { 
@@ -92,8 +124,15 @@ async function calculatePartEmission(req: any): Promise<Emission> {
     priceInDollar: materialCost.priceInDollar + totSurfaceTreatmentCost.priceInDollar
   }
 
+  // Total maximal emission cost (material + surface)
+  const maxEmissionCost: EmissionCost = { 
+    co2Amount: maxMaterialCost.co2Amount + maxSurfaceEmission.co2AmountPerM2 * area,
+    h2oAmount: maxMaterialCost.h2oAmount + maxSurfaceEmission.h2oAmountPerM2 * area,
+    priceInDollar: maxMaterialCost.priceInDollar + maxSurfaceEmission.pricePerM2 * area
+  }
+
   // Create response
-  const response: Emission = { partName: partName, emissionCost: emissionCost }
+  const response: Emission = { partName: partName, emissionCost: emissionCost, maxEmissionCost: maxEmissionCost };
   return Promise.resolve(response);
 }
 

@@ -3,12 +3,12 @@ import './Widget.sass';
 
 /* Components */
 import EmissionComponent from 'Configurator/EmissionComponent/EmissionComponent';
+import StatComponent from 'Configurator/StatComponent/StatComponent';
 
 /* Utilities */
 
 /* Shared */
 import { ModelPart, Emission, EmissionCost, Model, Client } from 'shared/interfaces';
-import { uniqueID } from 'shared/utils';
 
 export interface WidgetProp {
   currentModel: Model;
@@ -55,6 +55,11 @@ async function getEmissions(client: Client, modelParts: ModelPart[]): Promise<Em
               co2Amount: 100,
               h2oAmount: 200,
               priceInDollar: 300
+          },
+          maxEmissionCost: {
+            co2Amount: 200,
+            h2oAmount: 250,
+            priceInDollar: 300
           }
       },
       {
@@ -63,6 +68,11 @@ async function getEmissions(client: Client, modelParts: ModelPart[]): Promise<Em
               co2Amount: 1000,
               h2oAmount: 2000,
               priceInDollar: 3000
+          },
+          maxEmissionCost: {
+            co2Amount: 1000,
+            h2oAmount: 2000,
+            priceInDollar: 3000
           }
       },
       {
@@ -71,6 +81,11 @@ async function getEmissions(client: Client, modelParts: ModelPart[]): Promise<Em
               co2Amount: 10000,
               h2oAmount: 20000,
               priceInDollar: 30000
+          },
+          maxEmissionCost: {
+            co2Amount: 1000,
+            h2oAmount: 2000,
+            priceInDollar: 3000
           }
       }
   ];
@@ -109,19 +124,45 @@ function Widget({ currentModel, currentClient }: WidgetProp) {
     priceInDollar: emissions.map(e => e.emissionCost.priceInDollar).reduce(sum, 0)
   }
 
+  const maxEmissionCost: EmissionCost = {
+    co2Amount: emissions.map(e => e.maxEmissionCost.co2Amount).reduce(sum, 0),
+    h2oAmount: emissions.map(e => e.maxEmissionCost.h2oAmount).reduce(sum, 0),
+    priceInDollar: emissions.map(e => e.maxEmissionCost.priceInDollar).reduce(sum, 0)
+  }
+
+  function getEmissionStyle(amount: number, maxAmount: number): React.CSSProperties {
+    const color: string = 'rgba(247, 46, 65, 0.4)';
+    return {
+      background: `linear-gradient(90deg, ${color} ${100 * amount / maxAmount}%, rgba(0, 0, 0, 0) 0%)`,
+      borderRight: `1px solid ${color}`
+    }
+  }
+
   return (
     <div className="Widget-container">
       <div className="Widget-total">
         <h3 className="Widget-title">Total emissions</h3>
-        <div className="Widget-total-value"><i className="Widget-icon Co2-icon"></i>CO<sub>2</sub>: { totalEmissionCost.co2Amount } kg</div>
-        <div className="Widget-total-value"><i className="Widget-icon Water-icon"></i>Water: { totalEmissionCost.h2oAmount } L</div>
-        <div className="Widget-total-value"><i className="Widget-icon Money-icon"></i>Cost: { totalEmissionCost.priceInDollar } SEK</div>
+        <div className="Widget-total-value" style={getEmissionStyle(totalEmissionCost.co2Amount, maxEmissionCost.co2Amount)}>
+          <i className="Widget-icon Co2-icon" />
+          <span className="Widget-stat-title">CO<sub>2</sub>:</span>
+          <StatComponent amount={ totalEmissionCost.co2Amount } unit={ 'kg' } />
+        </div>
+        <div className="Widget-total-value" style={getEmissionStyle(totalEmissionCost.h2oAmount, maxEmissionCost.h2oAmount)}>
+          <i className="Widget-icon Water-icon" />
+          <span className="Widget-stat-title">Water:</span>
+          <StatComponent amount={ totalEmissionCost.h2oAmount } unit={ 'L' } />
+        </div>
+        <div className="Widget-total-value" style={getEmissionStyle(totalEmissionCost.priceInDollar, maxEmissionCost.priceInDollar)}>
+          <i className="Widget-icon Money-icon" />
+          <span className="Widget-stat-title">Price:</span>
+          <StatComponent amount={ totalEmissionCost.priceInDollar } unit={ 'SEK' } />
+        </div>
       </div>
       <div>
-        <h3 className="Widget-title">Part emissions</h3>
+        <h3 className="Widget-title">Emissions by part</h3>
       </div>
       {
-        emissions.map(e => <EmissionComponent key={uniqueID()} emission={e} totalEmissionCost={totalEmissionCost}></EmissionComponent>)
+        emissions.map(e => <EmissionComponent key={e.partName} emission={e} totalEmissionCost={totalEmissionCost} getEmissionStyle={getEmissionStyle}></EmissionComponent>)
       }
     </div>
   );
