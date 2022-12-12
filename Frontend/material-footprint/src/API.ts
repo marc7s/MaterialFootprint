@@ -4,8 +4,6 @@
 
 /* Shared */
 import { Model, Material, SurfaceTreatment, Client } from "shared/interfaces";
-import { Texture } from "three";
-
 
 export function isLocalMode(): boolean {
     return process.env.REACT_APP_LOCAL_MODE === '1';
