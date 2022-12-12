@@ -1,6 +1,15 @@
-import { Material, SurfaceTreatment, Client, ModelPartDatabaseEntry, 
-    ModelDatabaseEntry, ClientMaterialCostDatabaseEntry, 
-    ClientSurfaceTreatmentCostDatabaseEntry, Model, ModelPart, MaterialDatabaseEntry} from './interfaces';
+import { 
+    Material, 
+    SurfaceTreatment, 
+    Client, 
+    ModelPartDatabaseEntry, 
+    ModelDatabaseEntry, 
+    ClientMaterialCostDatabaseEntry, 
+    ClientSurfaceTreatmentCostDatabaseEntry, 
+    Model, 
+    ModelPart, 
+    MaterialDatabaseEntry
+} from './interfaces';
 
 export const materials: Material[] = [
     { 
@@ -46,45 +55,47 @@ export const materials: Material[] = [
             roughnessMapURL: "/material-textures/textile_roughness.jpg",
             occlusionMapURL: "/material-textures/textile_occlusion.jpg"
         }
-    }];
+    }
+];
 
-    export const materialDatabaseEntry: MaterialDatabaseEntry[] = [
-        { 
-            id: 1, 
-            name: 'Plastic', 
-            color: '#FFAB5C',
-            isMetallic: false,
-            normalMapURL: "/material-textures/plastic_normal.jpg",
-            roughnessMapURL: "/material-textures/plastic_roughness.jpg",
-            occlusionMapURL: "/material-textures/plastic_occlusion.jpg"
-        },
-        {
-            id: 2,
-            name: 'Leather',
-            color: "#F72E41",
-            isMetallic: false,
-            normalMapURL: "/material-textures/leather_normal.jpg",
-            roughnessMapURL: "/material-textures/leather_roughness.jpg",
-            occlusionMapURL: "/material-textures/leather_occlusion.jpg"
-        },
-        { 
-            id: 3, 
-            name: 'Steel', 
-            color: "#B2B8BD",
-            isMetallic: true,
-            normalMapURL: "/material-textures/steel_normal.jpg",
-            roughnessMapURL: "/material-textures/steel_roughness.jpg",
-            occlusionMapURL: "/material-textures/steel_occlusion.jpg"
-        },
-        { 
-            id: 4, 
-            name: 'Textile', 
-            color: "#7650FF",
-            isMetallic: false,
-            normalMapURL: "/material-textures/textile_normal.jpg",
-            roughnessMapURL: "/material-textures/textile_roughness.jpg",
-            occlusionMapURL: "/material-textures/textile_occlusion.jpg"
-        }];
+export const materialDatabaseEntry: MaterialDatabaseEntry[] = [
+    { 
+        id: 1, 
+        name: 'Plastic', 
+        color: '#FFAB5C',
+        isMetallic: false,
+        normalMapURL: "/material-textures/plastic_normal.jpg",
+        roughnessMapURL: "/material-textures/plastic_roughness.jpg",
+        occlusionMapURL: "/material-textures/plastic_occlusion.jpg"
+    },
+    {
+        id: 2,
+        name: 'Leather',
+        color: "#F72E41",
+        isMetallic: false,
+        normalMapURL: "/material-textures/leather_normal.jpg",
+        roughnessMapURL: "/material-textures/leather_roughness.jpg",
+        occlusionMapURL: "/material-textures/leather_occlusion.jpg"
+    },
+    { 
+        id: 3, 
+        name: 'Steel', 
+        color: "#B2B8BD",
+        isMetallic: true,
+        normalMapURL: "/material-textures/steel_normal.jpg",
+        roughnessMapURL: "/material-textures/steel_roughness.jpg",
+        occlusionMapURL: "/material-textures/steel_occlusion.jpg"
+    },
+    { 
+        id: 4, 
+        name: 'Textile', 
+        color: "#7650FF",
+        isMetallic: false,
+        normalMapURL: "/material-textures/textile_normal.jpg",
+        roughnessMapURL: "/material-textures/textile_roughness.jpg",
+        occlusionMapURL: "/material-textures/textile_occlusion.jpg"
+    }
+];
 
 
 export const surfaceTreatments: SurfaceTreatment[] = [
@@ -95,7 +106,8 @@ export const surfaceTreatments: SurfaceTreatment[] = [
     {
         id: 2,
         name: 'Paint'
-    }];
+    }
+];
 
 export const clients: Client[] = [
     {
@@ -105,7 +117,8 @@ export const clients: Client[] = [
     {
         id: 2,
         name: "rapid images"
-    }];
+    }
+];
 
 export const modelpartsDatabaseEntry: ModelPartDatabaseEntry[] = [
     {
@@ -171,19 +184,21 @@ export const modelpartsDatabaseEntry: ModelPartDatabaseEntry[] = [
         volume: 0.02,
         materialID: 4,
         surfaceTreatmentIDs: []
-    }];
+    }
+];
 
 export const modelsDataBaseEntry: ModelDatabaseEntry[] = [
-        {
-            id: 1,
-            name: "Koenigsegg",
-            partIDs: [1, 2, 3, 4]
-        },
-        {
-            id: 2,
-            name: "Chair",
-            partIDs: [5, 6, 7, 8]
-        }];
+    {
+        id: 1,
+        name: "Koenigsegg",
+        partIDs: [1, 2, 3, 4]
+    },
+    {
+        id: 2,
+        name: "Chair",
+        partIDs: [5, 6, 7, 8]
+    }
+];
 
 export const modelParts: ModelPart[] = [
     {
@@ -249,7 +264,8 @@ export const modelParts: ModelPart[] = [
         volume: 0.02,
         material: materials[3],
         surfaceTreatments: []
-    }];
+    }
+];
 
 export const models: Model[] = [
     {
@@ -263,7 +279,8 @@ export const models: Model[] = [
         name: 'Chair',
         url: 'model-objects/chair.glb',
         parts: [modelParts[4], modelParts[5], modelParts[6], modelParts[7]]
-    }];
+    }
+];
 
 export const clientMaterialCosts: ClientMaterialCostDatabaseEntry[] = [
     {
@@ -323,7 +340,8 @@ export const clientMaterialCosts: ClientMaterialCostDatabaseEntry[] = [
         co2AmountPerM3: 0.82,
         h2oAmountPerM3: 11.4,
         pricePerM3: 24695
-    }];
+    }
+];
 
 export const clientSurfaceTreatmentCosts: ClientSurfaceTreatmentCostDatabaseEntry[] = [
     {
@@ -353,4 +371,5 @@ export const clientSurfaceTreatmentCosts: ClientSurfaceTreatmentCostDatabaseEntr
         co2AmountPerM2: 5.6,
         h2oAmountPerM2: 12.3,
         pricePerM2: 429
-    }];
+    }
+];
