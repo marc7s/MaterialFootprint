@@ -8,7 +8,8 @@ import StatComponent from 'Configurator/StatComponent/StatComponent';
 /* Utilities */
 
 /* Shared */
-import { ModelPart, Emission, EmissionCost, Model, Client } from 'shared/interfaces';
+import { ModelPart, Emission, EmissionCost, Model, Client, EmissionIcon } from 'shared/interfaces';
+import IconComponent from 'Configurator/IconComponent/IconComponent';
 
 export interface WidgetProp {
   currentModel: Model;
@@ -143,17 +144,17 @@ function Widget({ currentModel, currentClient }: WidgetProp) {
       <div className="Widget-total">
         <h3 className="Widget-title">Total emissions</h3>
         <div className="Widget-total-value" style={getEmissionStyle(totalEmissionCost.co2Amount, maxEmissionCost.co2Amount)}>
-          <i className="Widget-icon Co2-icon" />
+          <IconComponent icon={ EmissionIcon.CO2 }/>
           <span className="Widget-stat-title">CO<sub>2</sub>:</span>
           <StatComponent amount={ totalEmissionCost.co2Amount } unit={ 'kg' } />
         </div>
         <div className="Widget-total-value" style={getEmissionStyle(totalEmissionCost.h2oAmount, maxEmissionCost.h2oAmount)}>
-          <i className="Widget-icon Water-icon" />
+        <IconComponent icon={ EmissionIcon.WATER }/>
           <span className="Widget-stat-title">Water:</span>
           <StatComponent amount={ totalEmissionCost.h2oAmount } unit={ 'L' } />
         </div>
         <div className="Widget-total-value" style={getEmissionStyle(totalEmissionCost.priceInDollar, maxEmissionCost.priceInDollar)}>
-          <i className="Widget-icon Money-icon" />
+        <IconComponent icon={ EmissionIcon.MONEY }/>
           <span className="Widget-stat-title">Price:</span>
           <StatComponent amount={ totalEmissionCost.priceInDollar } unit={ 'SEK' } />
         </div>

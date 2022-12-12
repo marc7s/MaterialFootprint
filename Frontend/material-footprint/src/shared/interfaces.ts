@@ -66,6 +66,12 @@ export enum Size {
     LARGE = "large"
 }
 
+export enum EmissionIcon {
+    CO2,
+    WATER,
+    MONEY
+}
+
 export interface ModelDatabaseEntry {
     id: number;
     name: string;
