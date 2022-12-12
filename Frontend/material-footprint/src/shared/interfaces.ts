@@ -7,6 +7,16 @@ export type Material = {
     textureMap: TextureMap;
 }
 
+export type MaterialDatabaseEntry = {
+    id: number;
+    name: string;
+    color: string;
+    isMetallic: boolean;
+    normalMapURL: string;
+    roughnessMapURL: string;
+    occlusionMapURL: string;
+}
+
 export type Emission = {
     partName: string;
     emissionCost: EmissionCost;
@@ -21,7 +31,7 @@ export type SurfaceTreatment = {
 export type EmissionCost = {
     co2Amount: number;
     h2oAmount: number;
-    priceInDollar: number;
+    priceInSEK: number;
 }
 
 export type MaterialEmission = {
@@ -97,4 +107,20 @@ export interface MaterialTexture {
     normalMap: THREE.Texture
     roughnessMap: THREE.Texture
     occlusionMap: THREE.Texture
+}
+
+export interface ClientMaterialCostDatabaseEntry {
+    clientID: number;
+    materialID: number;
+    co2AmountPerM3: number;
+    h2oAmountPerM3: number;
+    pricePerM3: number;
+}
+
+export interface ClientSurfaceTreatmentCostDatabaseEntry {
+    clientID: number;
+    surfaceID: number;
+    co2AmountPerM2: number;
+    h2oAmountPerM2: number;
+    pricePerM2: number;
 }
