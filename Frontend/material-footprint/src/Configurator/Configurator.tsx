@@ -8,10 +8,11 @@ import Widget from 'Configurator/Widget/Widget';
 
 /* Utilities */
 import { getMaterials, getModels, getSurfaceTreatments } from 'API';
+import * as THREE from 'three';
 
 /* Shared */
 import { uniqueID } from 'shared/utils';
-import { Model, Material, Size, SurfaceTreatment, Client } from 'shared/interfaces';
+import { Model, Material, Size, SurfaceTreatment, Client, MaterialTexture } from 'shared/interfaces';
 
 
 interface ConfiguratorProps {
@@ -20,6 +21,7 @@ interface ConfiguratorProps {
 
 function Configurator({ currentClient }: ConfiguratorProps) {
   const [models, setModels] = useState([] as Model[]);
+  const [materialTexture, setMaterialTextures] = useState([] as MaterialTexture[]);
   const [materials, setMaterials] = useState([] as Material[]);
   const [surfaceTreatments, setSurfaceTreatments] = useState([] as SurfaceTreatment[]);
   const [currentModel, setCurrentModel] = useState(null as Model | null);
@@ -35,7 +37,25 @@ function Configurator({ currentClient }: ConfiguratorProps) {
   // Load materials from API on first render
   useEffect(() => {
     async function loadMaterials() {
-      getMaterials().then(m => setMaterials(m));
+      getMaterials().then(m => {
+        setMaterials(m)
+        const materialTexture: MaterialTexture[] = m.map(material => {
+          const normalMap: THREE.Texture = new THREE.TextureLoader().load(material.textureMap.normalMapURL);
+          normalMap.wrapS = normalMap.wrapT = THREE.RepeatWrapping;
+          const roughnessMap: THREE.Texture = new THREE.TextureLoader().load(material.textureMap.roughnessMapURL);
+          roughnessMap.wrapS = roughnessMap.wrapT = THREE.RepeatWrapping;
+          const occlusionMap: THREE.Texture = new THREE.TextureLoader().load(material.textureMap.occlusionMapURL);
+          occlusionMap.wrapS = occlusionMap.wrapT = THREE.RepeatWrapping;
+          const materialTexture = {
+            material: material,
+            normalMap: normalMap,
+            roughnessMap: roughnessMap,
+            occlusionMap: occlusionMap
+          }
+          return materialTexture;
+        });
+        setMaterialTextures(materialTexture);
+      });
     }
     loadMaterials();
   }, []);
@@ -132,13 +152,13 @@ function Configurator({ currentClient }: ConfiguratorProps) {
         <div className="Configurator-model-container">
           <div className="Configurator-model-carousel">
             {
-              models.map(model => <ModelComponent key={uniqueID()} model={model} size={Size.SMALL} active={model.id === currentModel?.id} onModelChange={onModelChange}></ModelComponent>)
+              models.map(model => <ModelComponent key={uniqueID()} model={model} materialTexture={materialTexture} size={Size.SMALL} active={model.id === currentModel?.id} onModelChange={onModelChange}></ModelComponent>)
             }
           </div>
           <div className="Configurator-current-model">
             {
               currentModel && 
-              <ModelComponent model={currentModel} size={Size.LARGE}></ModelComponent>
+              <ModelComponent model={currentModel} materialTexture={materialTexture} size={Size.LARGE}></ModelComponent>
             }
           </div>
         </div>
