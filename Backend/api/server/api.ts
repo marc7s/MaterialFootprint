@@ -72,7 +72,7 @@ async function calculatePartEmission(req: any): Promise<Emission | null> {
   const materialCost: EmissionCost = {
     co2Amount: materialEmission.co2AmountPerM3 * volume,
     h2oAmount: materialEmission.h2oAmountPerM3 * volume,
-    priceInDollar: materialEmission.pricePerM3 * volume
+    priceInSEK: materialEmission.pricePerM3 * volume
   }
 
   // Get maximal material emission
@@ -84,7 +84,7 @@ async function calculatePartEmission(req: any): Promise<Emission | null> {
   const maxMaterialCost: EmissionCost = {
     co2Amount: maxMaterialEmission.co2AmountPerM3 * volume,
     h2oAmount: maxMaterialEmission.h2oAmountPerM3 * volume,
-    priceInDollar: maxMaterialEmission.pricePerM3 * volume
+    priceInSEK: maxMaterialEmission.pricePerM3 * volume
   }
 
   
@@ -95,7 +95,7 @@ async function calculatePartEmission(req: any): Promise<Emission | null> {
   const totSurfaceTreatmentCost: EmissionCost = {
     co2Amount: 0,
     h2oAmount: 0,
-    priceInDollar: 0
+    priceInSEK: 0
   }
 
   // Sum surface treatment emissions
@@ -110,7 +110,7 @@ async function calculatePartEmission(req: any): Promise<Emission | null> {
       
     totSurfaceTreatmentCost.co2Amount += surfaceEmission.co2AmountPerM2 * area;
     totSurfaceTreatmentCost.h2oAmount += surfaceEmission.h2oAmountPerM2 * area;
-    totSurfaceTreatmentCost.priceInDollar += surfaceEmission.pricePerM2 * area;
+    totSurfaceTreatmentCost.priceInSEK += surfaceEmission.pricePerM2 * area;
   };
 
   // Get maximal surface treatment emission
@@ -121,14 +121,14 @@ async function calculatePartEmission(req: any): Promise<Emission | null> {
   const emissionCost: EmissionCost = { 
     co2Amount: materialCost.co2Amount + totSurfaceTreatmentCost.co2Amount,
     h2oAmount: materialCost.h2oAmount + totSurfaceTreatmentCost.h2oAmount,
-    priceInDollar: materialCost.priceInDollar + totSurfaceTreatmentCost.priceInDollar
+    priceInSEK: materialCost.priceInSEK + totSurfaceTreatmentCost.priceInSEK
   }
 
   // Total maximal emission cost (material + surface)
   const maxEmissionCost: EmissionCost = { 
     co2Amount: maxMaterialCost.co2Amount + maxSurfaceEmission.co2AmountPerM2 * area,
     h2oAmount: maxMaterialCost.h2oAmount + maxSurfaceEmission.h2oAmountPerM2 * area,
-    priceInDollar: maxMaterialCost.priceInDollar + maxSurfaceEmission.pricePerM2 * area
+    priceInSEK: maxMaterialCost.priceInSEK + maxSurfaceEmission.pricePerM2 * area
   }
 
   // Create response

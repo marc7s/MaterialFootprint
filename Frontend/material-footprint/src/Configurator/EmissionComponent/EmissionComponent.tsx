@@ -42,7 +42,7 @@ function EmissionComponent({ emission, totalEmissionCost, getEmissionStyle }: Em
 
   // TODO: Change this to a proper algorithm or redo the percentages
   function calculateTotalEmissionPercent(emissionCost: EmissionCost, totalEmissionCost: EmissionCost) {
-    return Math.round((emissionCost.priceInDollar / totalEmissionCost.priceInDollar) * 100);
+    return Math.round((emissionCost.priceInSEK / totalEmissionCost.priceInSEK) * 100);
   }
 
   function calculateEmissionPercent(cost: number, totalCost: number) {
@@ -66,10 +66,10 @@ function EmissionComponent({ emission, totalEmissionCost, getEmissionStyle }: Em
     },
     {
       icon: EmissionIcon.MONEY,
-      cost: emission.emissionCost.priceInDollar,
-      maxCost: emission.maxEmissionCost.priceInDollar,
+      cost: emission.emissionCost.priceInSEK,
+      maxCost: emission.maxEmissionCost.priceInSEK,
       unit: 'SEK',
-      percentage: calculateEmissionPercent(emission.emissionCost.priceInDollar, totalEmissionCost.priceInDollar)
+      percentage: calculateEmissionPercent(emission.emissionCost.priceInSEK, totalEmissionCost.priceInSEK)
     }
   ];
 

@@ -12,7 +12,7 @@ interface StatProp {
 }
 
 function formatAmount(amount: number) {
-  return amount.toLocaleString('sv-SE', { maximumFractionDigits: 2 });
+  return amount.toLocaleString('sv-SE', { maximumFractionDigits: 1 });
 }
 
 function StatComponent({ amount, unit }: StatProp) {

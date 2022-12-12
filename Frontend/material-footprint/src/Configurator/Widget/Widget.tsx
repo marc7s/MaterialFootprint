@@ -55,12 +55,12 @@ async function getEmissions(client: Client, modelParts: ModelPart[]): Promise<Em
           emissionCost: {
               co2Amount: 100,
               h2oAmount: 200,
-              priceInDollar: 300
+              priceInSEK: 300
           },
           maxEmissionCost: {
             co2Amount: 200,
             h2oAmount: 250,
-            priceInDollar: 300
+            priceInSEK: 300
           }
       },
       {
@@ -68,12 +68,12 @@ async function getEmissions(client: Client, modelParts: ModelPart[]): Promise<Em
           emissionCost: {
               co2Amount: 1000,
               h2oAmount: 2000,
-              priceInDollar: 3000
+              priceInSEK: 3000
           },
           maxEmissionCost: {
             co2Amount: 1000,
             h2oAmount: 2000,
-            priceInDollar: 3000
+            priceInSEK: 3000
           }
       },
       {
@@ -81,12 +81,12 @@ async function getEmissions(client: Client, modelParts: ModelPart[]): Promise<Em
           emissionCost: {
               co2Amount: 10000,
               h2oAmount: 20000,
-              priceInDollar: 30000
+              priceInSEK: 30000
           },
           maxEmissionCost: {
             co2Amount: 1000,
             h2oAmount: 2000,
-            priceInDollar: 3000
+            priceInSEK: 3000
           }
       }
   ];
@@ -122,13 +122,13 @@ function Widget({ currentModel, currentClient }: WidgetProp) {
   const totalEmissionCost: EmissionCost = {
     co2Amount: emissions.map(e => e.emissionCost.co2Amount).reduce(sum, 0),
     h2oAmount: emissions.map(e => e.emissionCost.h2oAmount).reduce(sum, 0),
-    priceInDollar: emissions.map(e => e.emissionCost.priceInDollar).reduce(sum, 0)
+    priceInSEK: emissions.map(e => e.emissionCost.priceInSEK).reduce(sum, 0)
   }
 
   const maxEmissionCost: EmissionCost = {
     co2Amount: emissions.map(e => e.maxEmissionCost.co2Amount).reduce(sum, 0),
     h2oAmount: emissions.map(e => e.maxEmissionCost.h2oAmount).reduce(sum, 0),
-    priceInDollar: emissions.map(e => e.maxEmissionCost.priceInDollar).reduce(sum, 0)
+    priceInSEK: emissions.map(e => e.maxEmissionCost.priceInSEK).reduce(sum, 0)
   }
 
   function getEmissionStyle(amount: number, maxAmount: number): React.CSSProperties {
@@ -149,14 +149,14 @@ function Widget({ currentModel, currentClient }: WidgetProp) {
           <StatComponent amount={ totalEmissionCost.co2Amount } unit={ 'kg' } />
         </div>
         <div className="Widget-total-value" style={getEmissionStyle(totalEmissionCost.h2oAmount, maxEmissionCost.h2oAmount)}>
-        <IconComponent icon={ EmissionIcon.WATER }/>
+          <IconComponent icon={ EmissionIcon.WATER }/>
           <span className="Widget-stat-title">Water:</span>
           <StatComponent amount={ totalEmissionCost.h2oAmount } unit={ 'L' } />
         </div>
-        <div className="Widget-total-value" style={getEmissionStyle(totalEmissionCost.priceInDollar, maxEmissionCost.priceInDollar)}>
-        <IconComponent icon={ EmissionIcon.MONEY }/>
+        <div className="Widget-total-value" style={getEmissionStyle(totalEmissionCost.priceInSEK, maxEmissionCost.priceInSEK)}>
+          <IconComponent icon={ EmissionIcon.MONEY }/>
           <span className="Widget-stat-title">Price:</span>
-          <StatComponent amount={ totalEmissionCost.priceInDollar } unit={ 'SEK' } />
+          <StatComponent amount={ totalEmissionCost.priceInSEK } unit={ 'SEK' } />
         </div>
       </div>
       <div>
