@@ -1,12 +1,16 @@
+import * as THREE from "three";
 export type Material = {
     id: number;
     name: string;
     color: string;
+    isMetallic: boolean;
+    textureMap: TextureMap;
 }
 
 export type Emission = {
     partName: string;
     emissionCost: EmissionCost;
+    maxEmissionCost: EmissionCost;
 }
 
 export type SurfaceTreatment = {
@@ -80,4 +84,17 @@ export interface ModelPartDatabaseEntry {
 export interface Client {
     id: number;
     name: string;
+}
+
+export interface TextureMap {
+    normalMapURL: string;
+    roughnessMapURL: string;
+    occlusionMapURL: string;
+}
+
+export interface MaterialTexture {
+    material: Material;
+    normalMap: THREE.Texture
+    roughnessMap: THREE.Texture
+    occlusionMap: THREE.Texture
 }

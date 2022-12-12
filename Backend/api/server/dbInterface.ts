@@ -25,7 +25,9 @@ export async function fetchClients(): Promise<Client[]> {
 export async function fetchMaterials(): Promise<Material[]> {
         const docs = await MaterialModel.find({})
             .catch(() => { throw new DatabaseConnectionError(); });
-        const materials: Material[] = docs.map(doc => ({ id: doc.id, name: doc.name, color: doc.color }));
+        const baseURL = "http://localhost:" + process.env.PORT + "/";
+        const materials: Material[] = docs.map(doc => ({ id: doc.id, name: doc.name, color: doc.color, isMetallic: doc.isMetallic, 
+            textureMap: {normalMapURL: baseURL + doc.normalMapURL, roughnessMapURL: baseURL + doc.roughnessMapURL, occlusionMapURL: baseURL + doc.occlusionMapURL} }));
         return Promise.resolve(materials); 
 } 
 
@@ -38,19 +40,79 @@ export async function fetchSurfaceTreatments(): Promise<SurfaceTreatment[]> {
 } 
 
 // Fetch material cost for the specified client and specified material, 
-export async function fetchMaterialCostForClient(clientID: number, materialID: number): Promise<MaterialEmission> {
-    const docs = await ClientMaterialCostModel.find({clientID: clientID, materialID: materialID})
+export async function fetchMaterialCostForClient(clientID: number, materialID: number): Promise<MaterialEmission | null> {
+    const doc = await ClientMaterialCostModel.findOne({clientID: clientID, materialID: materialID})
         .catch(() => { throw new DatabaseConnectionError(); });
-    const clientMaterialEmission: MaterialEmission[] = docs.map(doc => ({ co2AmountPerM3: doc.co2AmountPerM3, h2oAmountPerM3: doc.h2oAmountPerM3, pricePerM3: doc.pricePerM3 }));
-    return Promise.resolve(clientMaterialEmission[0]);
+    
+    if(doc === null) 
+        return Promise.resolve(null);
+    
+    const clientMaterialEmission: MaterialEmission = { 
+        co2AmountPerM3: doc.co2AmountPerM3, 
+        h2oAmountPerM3: doc.h2oAmountPerM3, 
+        pricePerM3: doc.pricePerM3 
+    };
+    return Promise.resolve(clientMaterialEmission);
 } 
 
-// Fetch surface treatment costs for the specified client and specified surface treatment
-export async function fetchSurfaceTreatmentCostForClient(clientID: number, surfaceID: number): Promise<SurfaceTreatmentEmission> {
-    const docs = await ClientSurfaceTreatmentCostModel.find({clientID: clientID, surfaceID: surfaceID})
+// Fetch maximal material cost for the specified client
+export async function fetchMaximalMaterialCostForClient(clientID: number): Promise<MaterialEmission> {
+    const docs = await ClientMaterialCostModel.find({clientID: clientID})
         .catch(() => { throw new DatabaseConnectionError(); });
-    const clientSurfaceEmission: SurfaceTreatmentEmission[] = docs.map(doc => ({ co2AmountPerM2: doc.co2AmountPerM2, h2oAmountPerM2: doc.h2oAmountPerM2, pricePerM2: doc.pricePerM2 }));
-    return Promise.resolve(clientSurfaceEmission[0]); 
+    
+    let maxCo2AmountPerM3: number = 0;
+    let maxH2oAmountPerM3: number = 0;
+    let maxPricePerM3: number = 0;
+    
+    // Find the worst material for each parameter
+    docs.forEach(doc => {
+        if(doc.co2AmountPerM3 > maxCo2AmountPerM3) maxCo2AmountPerM3 = doc.co2AmountPerM3;
+        if(doc.h2oAmountPerM3 > maxH2oAmountPerM3) maxH2oAmountPerM3 = doc.h2oAmountPerM3;
+        if(doc.pricePerM3 > maxPricePerM3) maxPricePerM3 = doc.pricePerM3;
+    });
+    
+    const maxClientMaterialEmission: MaterialEmission = { 
+        co2AmountPerM3: maxCo2AmountPerM3, 
+        h2oAmountPerM3: maxH2oAmountPerM3, 
+        pricePerM3: maxPricePerM3
+    };
+    return Promise.resolve(maxClientMaterialEmission);
+}
+
+// Fetch surface treatment costs for the specified client and specified surface treatment
+export async function fetchSurfaceTreatmentCostForClient(clientID: number, surfaceID: number): Promise<SurfaceTreatmentEmission | null> {
+    const doc = await ClientSurfaceTreatmentCostModel.findOne({clientID: clientID, surfaceID: surfaceID})
+        .catch(() => { throw new DatabaseConnectionError(); });
+
+    if(doc === null)
+        return Promise.resolve(null);
+
+    const clientSurfaceEmission: SurfaceTreatmentEmission = { co2AmountPerM2: doc.co2AmountPerM2, h2oAmountPerM2: doc.h2oAmountPerM2, pricePerM2: doc.pricePerM2 };
+    return Promise.resolve(clientSurfaceEmission); 
+}
+
+// Fetch maximal surface treatment cost for the specified client
+export async function fetchMaximalSurfaceTreatmentCostForClient(clientID: number): Promise<SurfaceTreatmentEmission> {
+    const docs = await ClientSurfaceTreatmentCostModel.find({clientID: clientID})
+        .catch(() => { throw new DatabaseConnectionError(); });
+    
+    let totalCo2AmountPerM2: number = 0;
+    let totalH2oAmountPerM2: number = 0;
+    let totalPricePerM2: number = 0;
+    
+    // The maximal cost is when all surface treatments are applied
+    docs.forEach(doc => {
+        totalCo2AmountPerM2 += doc.co2AmountPerM2;
+        totalH2oAmountPerM2 += doc.h2oAmountPerM2;
+        totalPricePerM2 += doc.pricePerM2;
+    });
+    
+    const maxClientSurfaceTreatmentEmission: SurfaceTreatmentEmission = { 
+        co2AmountPerM2: totalCo2AmountPerM2, 
+        h2oAmountPerM2: totalH2oAmountPerM2, 
+        pricePerM2: totalPricePerM2
+    };
+    return Promise.resolve(maxClientSurfaceTreatmentEmission);
 }
 
 // fetch all models
