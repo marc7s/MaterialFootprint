@@ -112,11 +112,11 @@ export const surfaceTreatments: SurfaceTreatment[] = [
 export const clients: Client[] = [
     {
         id: 1,
-        name: "ericsson"
+        name: "Ericsson"
     },
     {
         id: 2,
-        name: "rapid images"
+        name: "Rapid Images"
     }
 ];
 
