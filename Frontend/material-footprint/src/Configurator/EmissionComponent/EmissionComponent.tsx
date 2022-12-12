@@ -14,7 +14,6 @@ import IconComponent from 'Configurator/IconComponent/IconComponent';
 export interface EmissionProp {
   emission: Emission;
   totalEmissionCost: EmissionCost;
-  getEmissionStyle: (amount: number, minAmount: number, maxAmount: number) => React.CSSProperties;
 }
 
 interface EmissionEntry {
@@ -26,7 +25,7 @@ interface EmissionEntry {
   percentage: number;
 }
 
-function EmissionComponent({ emission, totalEmissionCost, getEmissionStyle }: EmissionProp) {
+function EmissionComponent({ emission, totalEmissionCost }: EmissionProp) {
   const [expanded, setExpanded] = useState(false);
   const expandedStateKey = emission.partName;
 
@@ -95,9 +94,9 @@ function EmissionComponent({ emission, totalEmissionCost, getEmissionStyle }: Em
         <tbody>
           {
             emissions.map(e =>
-              <tr key={ uniqueID() } style={getEmissionStyle(e.cost, e.minCost, e.maxCost)}>
+              <tr key={ uniqueID() }>
                 <td className="EmissionComponent-icon"><IconComponent icon={e.icon}></IconComponent></td>
-                <td className="EmissionComponent-value"><StatComponent amount={e.cost} unit={e.unit} />({e.percentage}%)</td>
+                <td className="EmissionComponent-value"><StatComponent amount={e.cost} unit={e.unit} minAmount={ e.minCost } maxAmount={ e.maxCost } />({e.percentage}%)</td>
               </tr>
             )
           }

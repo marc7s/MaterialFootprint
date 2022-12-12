@@ -152,20 +152,6 @@ function Widget({ currentModel, currentClient }: WidgetProp) {
     priceInSEK: emissions.map(e => e.maxEmissionCost.priceInSEK).reduce(sum, 0)
   }
 
-  function getEmissionStyle(amount: number, minAmount: number, maxAmount: number): React.CSSProperties {
-    enum colors {
-      BAD = '#F72E41', // Rapid Red 01
-      OK = '#FFAB5C', // Rapid Orange
-      GOOD = '#45CB5E' // Rapid Green
-    };
-    const percentage: number = 100 * (amount - minAmount) / (maxAmount - minAmount);
-    return  {
-        color:  percentage < 33 ? colors.GOOD 
-                        : percentage < 66 ? colors.OK
-                        : colors.BAD
-    }
-  }
-
   return (
     <div className="Widget-container">
       <div className="Widget-total">
@@ -173,24 +159,24 @@ function Widget({ currentModel, currentClient }: WidgetProp) {
         <div className="Widget-total-value">
           <IconComponent icon={ EmissionIcon.CO2 }/>
           <span className="Widget-stat-title">CO<sub>2</sub>:</span>
-          <StatComponent amount={ totalEmissionCost.co2Amount } unit={ 'kg' } style={getEmissionStyle(totalEmissionCost.co2Amount, minEmissionCost.co2Amount, maxEmissionCost.co2Amount)} />
+          <StatComponent amount={ totalEmissionCost.co2Amount } minAmount={ minEmissionCost.co2Amount } maxAmount={ maxEmissionCost.co2Amount } unit={ 'kg' } />
         </div>
         <div className="Widget-total-value">
           <IconComponent icon={ EmissionIcon.WATER }/>
           <span className="Widget-stat-title">Water:</span>
-          <StatComponent amount={ totalEmissionCost.h2oAmount } unit={ 'L' } style={getEmissionStyle(totalEmissionCost.h2oAmount, minEmissionCost.h2oAmount, maxEmissionCost.h2oAmount)} />
+          <StatComponent amount={ totalEmissionCost.h2oAmount } minAmount={ minEmissionCost.h2oAmount } maxAmount={ maxEmissionCost.h2oAmount } unit={ 'L' }  />
         </div>
         <div className="Widget-total-value">
           <IconComponent icon={ EmissionIcon.MONEY }/>
           <span className="Widget-stat-title">Price:</span>
-          <StatComponent amount={ totalEmissionCost.priceInSEK } unit={ 'SEK' } style={getEmissionStyle(totalEmissionCost.priceInSEK, minEmissionCost.priceInSEK, maxEmissionCost.priceInSEK)} />
+          <StatComponent amount={ totalEmissionCost.priceInSEK } minAmount={ minEmissionCost.priceInSEK } maxAmount={ maxEmissionCost.priceInSEK } unit={ 'SEK' }  />
         </div>
       </div>
       <div>
         <h3 className="Widget-title">Emissions by part</h3>
       </div>
       {
-        emissions.map(e => <EmissionComponent key={e.partName} emission={e} totalEmissionCost={totalEmissionCost} getEmissionStyle={getEmissionStyle}></EmissionComponent>)
+        emissions.map(e => <EmissionComponent key={ e.partName } emission={ e } totalEmissionCost={ totalEmissionCost }></EmissionComponent>)
       }
     </div>
   );
