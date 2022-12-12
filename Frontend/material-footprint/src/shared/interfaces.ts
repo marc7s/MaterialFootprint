@@ -20,6 +20,7 @@ export type MaterialDatabaseEntry = {
 export type Emission = {
     partName: string;
     emissionCost: EmissionCost;
+    minEmissionCost: EmissionCost;
     maxEmissionCost: EmissionCost;
 }
 
