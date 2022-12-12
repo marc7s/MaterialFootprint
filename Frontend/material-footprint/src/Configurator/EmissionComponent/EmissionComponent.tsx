@@ -7,8 +7,9 @@ import { useEffect, useState } from 'react';
 
 /* Shared */
 import { uniqueID } from 'shared/utils';
-import { Emission, EmissionCost } from 'shared/interfaces';
+import { Emission, EmissionCost, EmissionIcon } from 'shared/interfaces';
 import StatComponent from 'Configurator/StatComponent/StatComponent';
+import IconComponent from 'Configurator/IconComponent/IconComponent';
 
 export interface EmissionProp {
   emission: Emission;
@@ -17,7 +18,7 @@ export interface EmissionProp {
 }
 
 interface EmissionEntry {
-  title: JSX.Element;
+  icon: EmissionIcon;
   cost: number;
   maxCost: number;
   unit: string;
@@ -50,21 +51,21 @@ function EmissionComponent({ emission, totalEmissionCost, getEmissionStyle }: Em
 
   const emissions: EmissionEntry[] = [
     {
-      title: <>CO<sub>2</sub></>,
+      icon: EmissionIcon.CO2,
       cost: emission.emissionCost.co2Amount,
       maxCost: emission.maxEmissionCost.co2Amount,
       unit: 'kg',
       percentage: calculateEmissionPercent(emission.emissionCost.co2Amount, totalEmissionCost.co2Amount)
     },
     {
-      title: <>Water</>,
+      icon: EmissionIcon.WATER,
       cost: emission.emissionCost.h2oAmount,
       maxCost: emission.maxEmissionCost.h2oAmount,
       unit: 'L',
       percentage: calculateEmissionPercent(emission.emissionCost.h2oAmount, totalEmissionCost.h2oAmount)
     },
     {
-      title: <>Price</>,
+      icon: EmissionIcon.MONEY,
       cost: emission.emissionCost.priceInSEK,
       maxCost: emission.maxEmissionCost.priceInSEK,
       unit: 'SEK',
@@ -89,9 +90,9 @@ function EmissionComponent({ emission, totalEmissionCost, getEmissionStyle }: Em
       <table className="EmissionComponent-emission-table">
         <tbody>
           {
-            emissions.map(e => 
+            emissions.map(e =>
               <tr key={ uniqueID() } style={getEmissionStyle(e.cost, e.maxCost)}>
-                <td className="EmissionComponent-title">{ e.title }</td>
+                <td className="EmissionComponent-icon"><IconComponent icon={e.icon}></IconComponent></td>
                 <td className="EmissionComponent-value"><StatComponent amount={e.cost} unit={e.unit} />({e.percentage}%)</td>
               </tr>
             )
