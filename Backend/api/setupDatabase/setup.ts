@@ -17,7 +17,7 @@ import { DatabaseClearCollectionError, DatabaseConnectionError, DatabaseCreateCo
 import { log, logError } from '@shared/utils';
 
 /* Mock data */
-import mockData from 'setupDatabase/setupData.json';
+import {materialDatabaseEntry, surfaceTreatments, clients, clientMaterialCosts, clientSurfaceTreatmentCosts, modelsDataBaseEntry, modelpartsDatabaseEntry} from '@shared/mockData';
 
 async function createCollections(): Promise<void> {
     log("Creating collections...");
@@ -56,13 +56,13 @@ async function clearCollections(): Promise<void> {
 async function insertMockData(): Promise<void> {
   log("Inserting mock data...");
   try {
-    await MaterialModel.insertMany(mockData.materials);
-    await SurfaceTreatmentModel.insertMany(mockData.surfaceTreatments);
-    await ClientModel.insertMany(mockData.clients);
-    await ClientMaterialCostModel.insertMany(mockData.clientMaterialCosts);
-    await ClientSurfaceTreatmentCostModel.insertMany(mockData.clientSurfaceTreatmentCosts);
-    await ModelModel.insertMany(mockData.models);
-    await PartModel.insertMany(mockData.parts);
+    await MaterialModel.insertMany(materialDatabaseEntry);
+    await SurfaceTreatmentModel.insertMany(surfaceTreatments);
+    await ClientModel.insertMany(clients);
+    await ClientMaterialCostModel.insertMany(clientMaterialCosts);
+    await ClientSurfaceTreatmentCostModel.insertMany(clientSurfaceTreatmentCosts);
+    await ModelModel.insertMany(modelsDataBaseEntry);
+    await PartModel.insertMany(modelpartsDatabaseEntry);
     log("Mock data inserted!");
   } catch(err) {
     logError("Could not insert mock data", err);
