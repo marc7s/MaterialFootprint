@@ -7,6 +7,7 @@ export type Material = {
 export type Emission = {
     partName: string;
     emissionCost: EmissionCost;
+    maxEmissionCost: EmissionCost;
 }
 
 export type SurfaceTreatment = {

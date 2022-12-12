@@ -33,22 +33,22 @@ export async function getMaterials(): Promise<Material[]> {
         {
             id: 1,
             name: 'Plastic',
-            color: 'yellow'
+            color: '#FFAB5C' // Rapid Orange
         },
         {
             id: 2,
             name: 'Leather',
-            color: 'red'
+            color: '#F72E41' // Rapid Red 01
         },
         {
             id: 3,
             name: 'Steel',
-            color: 'lightgray'
+            color: '#B2B8BD' // Rapid Grey 05
         },
         {
             id: 4,
             name: 'Textile',
-            color: 'purple'
+            color: '#7650FF' // Rapid Purple
         }
     ];
     const response = await get('materials', mockData);
