@@ -25,7 +25,9 @@ export async function fetchClients(): Promise<Client[]> {
 export async function fetchMaterials(): Promise<Material[]> {
         const docs = await MaterialModel.find({})
             .catch(() => { throw new DatabaseConnectionError(); });
-        const materials: Material[] = docs.map(doc => ({ id: doc.id, name: doc.name, color: doc.color }));
+        const baseURL = "http://localhost:" + process.env.PORT + "/";
+        const materials: Material[] = docs.map(doc => ({ id: doc.id, name: doc.name, color: doc.color, isMetallic: doc.isMetallic, 
+            textureMap: {normalMapURL: baseURL + doc.normalMapURL, roughnessMapURL: baseURL + doc.roughnessMapURL, occlusionMapURL: baseURL + doc.occlusionMapURL} }));
         return Promise.resolve(materials); 
 } 
 
