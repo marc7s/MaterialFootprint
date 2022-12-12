@@ -85,7 +85,7 @@ function ModelViewerComponent({ model, materialTexture, size }: ModelViewerCompo
         if(modelPart !== undefined){
           // find the texture corresponding to the material
           const textures: MaterialTexture | undefined = materialTexture.find(m => m.material.id === modelPart.material.id);
-          var material = new THREE.MeshStandardMaterial({ color: modelPart.material.color });
+          const material = new THREE.MeshStandardMaterial({ color: modelPart.material.color });
           // Apply the texture to the material if it is found
           if (textures !== undefined){
             material.normalMap = textures.normalMap;
