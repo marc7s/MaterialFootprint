@@ -4,6 +4,7 @@
 
 /* Shared */
 import { Model, Material, SurfaceTreatment, Client } from "shared/interfaces";
+import { Texture } from "three";
 
 
 export function isLocalMode(): boolean {
@@ -27,28 +28,59 @@ async function get(endPoint: string, mockData: any, options?: RequestInit): Prom
     });
 }
 
+export function getTexturesURL(url: string) {
+    if (isLocalMode())
+        return url;
+    return process.env.REACT_APP_BACKEND_ENDPOINT + "/" + url;
+}
 // Get a list of all the materials from the API
 export async function getMaterials(): Promise<Material[]> {
     const mockData = [
         {
             id: 1,
             name: 'Plastic',
-            color: 'yellow'
+            color: 'yellow',
+            isMetallic: false,
+            textureMap: {
+                normalMapURL: 'material-textures/plastic_normal.jpg',
+                roughnessMapURL: 'material-textures/plastic_roughness.jpg',
+                occlusionMapURL: 'material-textures/plastic_occlusion.jpg'
+            }
         },
         {
             id: 2,
             name: 'Leather',
-            color: 'red'
+            color: 'red',
+            isMetallic: false,
+            textureMap: {
+                normalMapURL: 'material-textures/leather_normal.jpg',
+                roughnessMapURL: 'material-textures/leather_roughness.jpg',
+                occlusionMapURL: 'material-textures/leather_occlusion.jpg'
+            }
         },
         {
             id: 3,
             name: 'Steel',
-            color: 'lightgray'
+            color: 'lightgray',
+            isMetallic: true,
+            textureMap: {
+                normalMapURL: 'material-textures/steel_normal.jpg',
+                roughnessMapURL: 'material-textures/steel_roughness.jpg',
+                occlusionMapURL: 'material-textures/steel_occlusion.jpg'
+            }
+            
         },
         {
             id: 4,
             name: 'Textile',
-            color: 'purple'
+            color: 'purple',
+            isMetallic: false,
+            textureMap: {
+                normalMapURL: 'material-textures/textile_normal.jpg',
+                roughnessMapURL: 'material-textures/textile_roughness.jpg',
+                occlusionMapURL: 'material-textures/textile_occlusion.jpg'
+            }
+           
         }
     ];
     const response = await get('materials', mockData);
@@ -107,14 +139,6 @@ export async function getModels(): Promise<Model[]> {
                     surfaceTreatments: []
                 },
                 {
-                    id: 2,
-                    name: 'Windshield',
-                    area: 7,
-                    volume: 8,
-                    material: materials.find(material => material.name === 'Steel')!,
-                    surfaceTreatments: surfaceTreatments.filter(surfaceTreatment => ['Laquer'].includes(surfaceTreatment.name))
-                },
-                {
                     id: 3,
                     name: 'Intakes',
                     area: 7,
@@ -127,7 +151,7 @@ export async function getModels(): Promise<Model[]> {
                     name: 'Body',
                     area: 7,
                     volume: 8,
-                    material: materials.find(material => material.name === 'Textile')!,
+                    material: materials.find(material => material.name === 'Steel')!,
                     surfaceTreatments: surfaceTreatments.filter(surfaceTreatment => ['Laquer', 'Paint'].includes(surfaceTreatment.name))
                 }
             ]

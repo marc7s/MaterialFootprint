@@ -15,6 +15,23 @@ const materialSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    isMetallic: {
+        type: Boolean,
+        required: true,
+    },
+    normalMapURL: {
+        type: String,
+        required: true,
+    },
+    roughnessMapURL: {
+        type: String,
+        required: true,
+    },
+    occlusionMapURL: {
+        type: String,
+        required: true,
+    },
+
 });
 
 export const MaterialModel = mongoose.model('Material', materialSchema);

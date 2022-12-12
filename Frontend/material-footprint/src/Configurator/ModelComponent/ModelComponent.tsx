@@ -7,17 +7,18 @@ import ModelViewerComponent from 'Configurator/ModelViewerComponent/ModelViewerC
 /* Utilities */
 
 /* Shared */
-import { Model, Size } from 'shared/interfaces';
+import { MaterialTexture, Model, Size } from 'shared/interfaces';
 
 
 export interface ModelProp {
   model: Model;
+  materialTexture: MaterialTexture[];
   size: Size;
   active?: boolean;
   onModelChange?: (modelID: number) => void;
 }
 
-function ModelComponent({model, size, active, onModelChange}: ModelProp) {
+function ModelComponent({model, materialTexture, size, active, onModelChange}: ModelProp) {
   const activeClass: string = active ? ' ModelComponent-active' : '';
   const sizeClass: string = ` ModelComponent-size-${size}`;
 
@@ -30,7 +31,7 @@ function ModelComponent({model, size, active, onModelChange}: ModelProp) {
   return (
     <div className={'ModelComponent-model' + activeClass + sizeClass} onClick={onModelClick}>
       {
-        <ModelViewerComponent model={model} size={size} />
+        <ModelViewerComponent model={model} materialTexture={materialTexture} size={size} />
       }
     </div>
   );
