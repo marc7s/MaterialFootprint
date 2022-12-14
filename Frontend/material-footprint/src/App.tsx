@@ -45,7 +45,7 @@ function App() {
   return (
     <div className="App">
       <header>
-        Material Footprint
+        <i className="logo"/>
         { localMode && <span className="App-local-mode">Local Mode</span> }
         <div className="App-client-container">
           <select onChange={changeClient}>
