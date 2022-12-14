@@ -130,14 +130,6 @@ export const modelpartsDatabaseEntry: ModelPartDatabaseEntry[] = [
         surfaceTreatmentIDs: []
     },
     {
-        id: 2,
-        name: "Windshield",
-        area: 2,
-        volume: 0.06,
-        materialID: 3,
-        surfaceTreatmentIDs: [1]
-    },
-    {
         id: 3,
         name: "Intakes",
         area: 0.8,
@@ -191,7 +183,7 @@ export const modelsDataBaseEntry: ModelDatabaseEntry[] = [
     {
         id: 1,
         name: "Koenigsegg",
-        partIDs: [1, 2, 3, 4]
+        partIDs: [1, 3, 4]
     },
     {
         id: 2,
@@ -208,14 +200,6 @@ export const modelParts: ModelPart[] = [
         volume: 0.09,
         material: materials[1],
         surfaceTreatments: []
-    },
-    {
-        id: 2,
-        name: 'Windshield',
-        area: 2,
-        volume: 0.06,
-        material: materials[2],
-        surfaceTreatments: [surfaceTreatments[0]]
     },
     {
         id: 3,
@@ -272,7 +256,7 @@ export const models: Model[] = [
         id: 1,
         name: 'Koenigsegg',
         url: 'model-objects/koenigsegg.glb',
-        parts: [modelParts[0], modelParts[1], modelParts[2], modelParts[3]]
+        parts: [modelParts[0], modelParts[2], modelParts[3]]
     },
     {
         id: 2,
