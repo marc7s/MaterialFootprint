@@ -286,59 +286,59 @@ export const clientMaterialCosts: ClientMaterialCostDatabaseEntry[] = [
     {
         clientID: 1,
         materialID: 1,
-        co2AmountPerM3: 0.0064,
-        h2oAmountPerM3: 14.5,
+        co2AmountPerM3: 8100,
+        h2oAmountPerM3: 145,
         pricePerM3: 8789
 
     },
     {
         clientID: 1,
         materialID: 2,
-        co2AmountPerM3: 1.1,
-        h2oAmountPerM3: 9.2,
+        co2AmountPerM3: 3000,
+        h2oAmountPerM3: 12000,
         pricePerM3: 94721
     },
     {
         clientID: 1,
         materialID: 3,
-        co2AmountPerM3: 0.000177,
-        h2oAmountPerM3: 2.2,
+        co2AmountPerM3: 16000,
+        h2oAmountPerM3: 2200,
         pricePerM3: 68354
     },
     {
         clientID: 1,
         materialID: 4,
-        co2AmountPerM3: 0.83,
-        h2oAmountPerM3: 12.2,
+        co2AmountPerM3: 5666,
+        h2oAmountPerM3: 28000,
         pricePerM3: 24816
     },
     {
         clientID: 2,
         materialID: 1,
-        co2AmountPerM3: 0.0059,
-        h2oAmountPerM3: 13.7,
+        co2AmountPerM3: 7900,
+        h2oAmountPerM3: 137,
         pricePerM3: 8624
 
     },
     {
         clientID: 2,
         materialID: 2,
-        co2AmountPerM3: 1.02,
-        h2oAmountPerM3: 8.7,
+        co2AmountPerM3: 2000,
+        h2oAmountPerM3: 10000,
         pricePerM3: 92675
     },
     {
         clientID: 2,
         materialID: 3,
-        co2AmountPerM3: 0.00014,
-        h2oAmountPerM3: 2.1,
+        co2AmountPerM3: 13000,
+        h2oAmountPerM3: 2100,
         pricePerM3: 67210
     },
     {
         clientID: 2,
         materialID: 4,
-        co2AmountPerM3: 0.82,
-        h2oAmountPerM3: 11.4,
+        co2AmountPerM3: 4333,
+        h2oAmountPerM3: 25000,
         pricePerM3: 24695
     }
 ];
