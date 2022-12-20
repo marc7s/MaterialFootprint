@@ -1,1 +1,0 @@
-import { Material, SurfaceTreatment } from "shared/interfaces";

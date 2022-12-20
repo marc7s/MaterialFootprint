@@ -82,18 +82,20 @@ function ModelViewerComponent({ model, materialTexture, size }: ModelViewerCompo
         // Find the ModelPart with the corresponding partID
         const modelPart: ModelPart | undefined = model.parts.find(m => m.id === partID);
         // Apply the material to the component if the ModelPart is found
-        if(modelPart !== undefined){
-          // find the texture corresponding to the material
+        if(modelPart !== undefined) {
+          // Find the texture corresponding to the material
           const textures: MaterialTexture | undefined = materialTexture.find(m => m.material.id === modelPart.material.id);
           const material = new THREE.MeshStandardMaterial({ color: modelPart.material.color });
+          
           // Apply the texture to the material if it is found
-          if (textures !== undefined){
+          if(textures !== undefined) {
             material.normalMap = textures.normalMap;
             material.roughnessMap = textures.roughnessMap;
             material.aoMap = textures.occlusionMap;
           } 
+          
           // If the material is metallic, give it metallic properties
-          if (modelPart.material.isMetallic) 
+          if(modelPart.material.isMetallic) 
             material.metalness = 0.5;
           
           child.material = material;

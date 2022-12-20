@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import './Widget.sass';
 
 /* Components */
@@ -16,8 +16,10 @@ export interface WidgetProp {
   currentClient: Client;
 }
 
+// Calculates the emissions for a specific part by contacting the API
 async function calculatePartEmission(clientID: number, modelPart: ModelPart): Promise<Emission> {
-  const data = {
+  // Create the request body with the correct parameters
+  const request = {
     partName: modelPart.name,
     clientID: clientID,
     area: modelPart.area,
@@ -25,13 +27,15 @@ async function calculatePartEmission(clientID: number, modelPart: ModelPart): Pr
     materialID: modelPart.material.id,
     surfaceTreatmentIDs: modelPart.surfaceTreatments.map(st => st.id)
   };
+  
+  // Create the request options
   const options: RequestInit = {
     method: 'POST',
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify(data)
+    body: JSON.stringify(request)
   }
 
   return new Promise((resolve, reject) => {
@@ -39,6 +43,7 @@ async function calculatePartEmission(clientID: number, modelPart: ModelPart): Pr
       if(baseEndpoint === undefined)
           reject(new Error('No backend endpoint specified'));
 
+      // Fetch the result from the API
       fetch(new URL('calculate-part-emission', baseEndpoint), options)
       .then(response => response.json())
       .then(data => resolve(data as Emission))
@@ -46,9 +51,10 @@ async function calculatePartEmission(clientID: number, modelPart: ModelPart): Pr
   });
 }
 
-// Get a list of all the materials from the API
+// Get a list of all the emissions from the API
 // Since the widget is separated this is defined here and not in the API file
 async function getEmissions(client: Client, modelParts: ModelPart[]): Promise<Emission[]> {
+  // Define mock data for use in local mode testing
   const mockData = [
       {
           partName: "Seat",
@@ -110,7 +116,10 @@ async function getEmissions(client: Client, modelParts: ModelPart[]): Promise<Em
   if(process.env.REACT_APP_LOCAL_MODE === '1')
     return Promise.resolve(mockData);
   
+  // Initialise an empty array to store the emissions
   const calculatedEmissions: Emission[] = [];
+  
+  // For each part in the model, calculate the emissions for that part and append to the array
   for(const modelPart of modelParts) {
     const calculatedEmission: Emission = await calculatePartEmission(client.id, modelPart);
     calculatedEmissions.push(calculatedEmission);
@@ -124,28 +133,29 @@ function Widget({ currentModel, currentClient }: WidgetProp) {
 
   // Load emissions from API on first render
   useEffect(() => {
-    async function loadEmissions() {
-      getEmissions(currentClient, currentModel.parts).then(m => setEmissions(m));
-    }
-    loadEmissions();
+    getEmissions(currentClient, currentModel.parts).then(m => setEmissions(m));
   }, [currentModel, currentClient]);
 
+  // Helper function for use with `reduce`
   function sum(a: number, b: number) {
     return a + b;
   }
 
+  // Calculate the total emission cost
   const totalEmissionCost: EmissionCost = {
     co2Amount: emissions.map(e => e.emissionCost.co2Amount).reduce(sum, 0),
     h2oAmount: emissions.map(e => e.emissionCost.h2oAmount).reduce(sum, 0),
     priceInSEK: emissions.map(e => e.emissionCost.priceInSEK).reduce(sum, 0)
   }
 
+  // Calculate the minimum emission cost
   const minEmissionCost: EmissionCost = {
     co2Amount: emissions.map(e => e.minEmissionCost.co2Amount).reduce(sum, 0),
     h2oAmount: emissions.map(e => e.minEmissionCost.h2oAmount).reduce(sum, 0),
     priceInSEK: emissions.map(e => e.minEmissionCost.priceInSEK).reduce(sum, 0)
   }
 
+  // Calculate the maximum emission cost
   const maxEmissionCost: EmissionCost = {
     co2Amount: emissions.map(e => e.maxEmissionCost.co2Amount).reduce(sum, 0),
     h2oAmount: emissions.map(e => e.maxEmissionCost.h2oAmount).reduce(sum, 0),

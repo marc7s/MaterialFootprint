@@ -4,12 +4,15 @@
 
 /* Shared */
 import { Model, Material, SurfaceTreatment, Client } from "shared/interfaces";
-import { materials, surfaceTreatments, clients, models } from "shared/mockData";
+import { MOCK_MATERIALS, MOCK_SURFACE_TREATMENTS, clients, MOCK_MODELS } from "shared/mockData";
 
+
+// Determine if the app is running in local mode
 export function isLocalMode(): boolean {
     return process.env.REACT_APP_LOCAL_MODE === '1';
 }
 
+// Helper function that sends a get request to the API
 async function get(endPoint: string, mockData: any, options?: RequestInit): Promise<any> {
     return new Promise((resolve, reject) => {
         // Return mock data if in local mode
@@ -29,13 +32,13 @@ async function get(endPoint: string, mockData: any, options?: RequestInit): Prom
 
 // Get a list of all the materials from the API
 export async function getMaterials(): Promise<Material[]> {
-    const response = await get('materials', materials);
+    const response = await get('materials', MOCK_MATERIALS);
     return response as Material[];
 }
 
 // Get a list of all the materials from the API
 export async function getSurfaceTreatments(): Promise<SurfaceTreatment[]> {
-    const response = await get('surface-treatments', surfaceTreatments);
+    const response = await get('surface-treatments', MOCK_SURFACE_TREATMENTS);
     return response as SurfaceTreatment[];
 }
 
@@ -47,6 +50,6 @@ export async function getClients(): Promise<Client[]> {
 
 // Get a list of all the models from the API
 export async function getModels(): Promise<Model[]> {
-    const response = await get('models', models);
+    const response = await get('models', MOCK_MODELS);
     return response as Model[];
 }

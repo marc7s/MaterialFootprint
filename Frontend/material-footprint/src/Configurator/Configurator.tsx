@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import './Configurator.sass';
 
 /* Components */
@@ -28,49 +28,48 @@ function Configurator({ currentClient }: ConfiguratorProps) {
 
   // Load models from API on first render
   useEffect(() => {
-    async function loadModels() {
-      getModels().then(m => setModels(m));
-    }
-    loadModels();
+    getModels().then(m => setModels(m));
   }, []);
 
   // Load materials from API on first render
   useEffect(() => {
-    async function loadMaterials() {
-      getMaterials().then(m => {
-        setMaterials(m)
-        const materialTexture: MaterialTexture[] = m.map(material => {
-          const normalMap: THREE.Texture = new THREE.TextureLoader().load(material.textureMap.normalMapURL);
-          normalMap.wrapS = normalMap.wrapT = THREE.RepeatWrapping;
-          const roughnessMap: THREE.Texture = new THREE.TextureLoader().load(material.textureMap.roughnessMapURL);
-          roughnessMap.wrapS = roughnessMap.wrapT = THREE.RepeatWrapping;
-          const occlusionMap: THREE.Texture = new THREE.TextureLoader().load(material.textureMap.occlusionMapURL);
-          occlusionMap.wrapS = occlusionMap.wrapT = THREE.RepeatWrapping;
-          const materialTexture = {
-            material: material,
-            normalMap: normalMap,
-            roughnessMap: roughnessMap,
-            occlusionMap: occlusionMap
-          }
-          return materialTexture;
-        });
-        setMaterialTextures(materialTexture);
+    getMaterials().then(m => {
+      setMaterials(m);
+      
+      const materialTexture: MaterialTexture[] = m.map(material => {
+        // Load the normal map and set the wrap mode to repeat
+        const normalMap: THREE.Texture = new THREE.TextureLoader().load(material.textureMap.normalMapURL);
+        normalMap.wrapS = normalMap.wrapT = THREE.RepeatWrapping;
+        
+        // Load the roughness map and set the wrap mode to repeat
+        const roughnessMap: THREE.Texture = new THREE.TextureLoader().load(material.textureMap.roughnessMapURL);
+        roughnessMap.wrapS = roughnessMap.wrapT = THREE.RepeatWrapping;
+        
+        // Load the occlusion map and set the wrap mode to repeat
+        const occlusionMap: THREE.Texture = new THREE.TextureLoader().load(material.textureMap.occlusionMapURL);
+        occlusionMap.wrapS = occlusionMap.wrapT = THREE.RepeatWrapping;
+        
+        // Create the material texture object
+        const materialTexture = {
+          material: material,
+          normalMap: normalMap,
+          roughnessMap: roughnessMap,
+          occlusionMap: occlusionMap
+        }
+        return materialTexture;
       });
-    }
-    loadMaterials();
+      setMaterialTextures(materialTexture);
+    });
   }, []);
 
   // Load surface treatments from API on first render
   useEffect(() => {
-    async function loadSurfaceTreatments() {
-      getSurfaceTreatments().then(s => setSurfaceTreatments(s));
-    }
-    loadSurfaceTreatments();
+    getSurfaceTreatments().then(s => setSurfaceTreatments(s));
   }, []);
 
-  // Set current model to first model once they have been loaded
+  // Set current model to the first model once they have been loaded
   useEffect(() => {
-    setCurrentModel(models[0]); // Set the current model to the first model
+    setCurrentModel(models[0]);
   }, [models]);
 
   // Handle a material change for a part

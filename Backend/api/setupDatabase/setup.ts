@@ -11,14 +11,15 @@ import { ClientMaterialCostModel } from 'setupDatabase/models/ClientMaterialCost
 import { ClientSurfaceTreatmentCostModel } from 'setupDatabase/models/ClientSurfaceTreatmentCost';
 import { ModelModel } from 'setupDatabase/models/Model';
 import { PartModel } from 'setupDatabase/models/Part';
-import { DatabaseClearCollectionError, DatabaseConnectionError, DatabaseCreateCollectionError, DatabaseInsertMockDataError } from 'server/errors';
+import { DatabaseClearCollectionError, DatabaseCreateCollectionError, DatabaseInitialisationError, DatabaseInsertMockDataError } from 'server/errors';
 
 /* Shared */
 import { log, logError } from '@shared/utils';
 
 /* Mock data */
-import {materialDatabaseEntry, surfaceTreatments, clients, clientMaterialCosts, clientSurfaceTreatmentCosts, modelsDataBaseEntry, modelpartsDatabaseEntry} from '@shared/mockData';
+import { MOCK_MATERIAL_DATABASE_ENTRIES, MOCK_SURFACE_TREATMENTS, clients, MOCK_CLIENT_MATERIAL_COST_DATABASE_ENTRIES, MOCK_CLIENT_SURFACE_TREATMENT_COST_DATABASE_ENTRIES, MOCK_MODEL_DATABASE_ENTRIES, MOCK_MODEL_PART_DATABASE_ENTRIES } from '@shared/mockData';
 
+// Create the collections in the database
 async function createCollections(): Promise<void> {
     log("Creating collections...");
     try {
@@ -29,6 +30,7 @@ async function createCollections(): Promise<void> {
       await ClientSurfaceTreatmentCostModel.createCollection();
       await ModelModel.createCollection();
       await PartModel.createCollection();
+      
       log("Collections created!");
     } catch(err) {
       logError("Could not create collections", err);
@@ -36,8 +38,9 @@ async function createCollections(): Promise<void> {
     }
 }
 
+// Clear the collections in the database
 async function clearCollections(): Promise<void> {
-  log("Creating collections...");
+  log("Clearing collections...");
   try {
     await MaterialModel.deleteMany();
     await SurfaceTreatmentModel.deleteMany();
@@ -46,6 +49,7 @@ async function clearCollections(): Promise<void> {
     await ClientSurfaceTreatmentCostModel.deleteMany();
     await ModelModel.deleteMany();
     await PartModel.deleteMany();
+    
     log("Collections cleared!");
   } catch(err) {
     logError("Could not clear collections", err);
@@ -53,16 +57,18 @@ async function clearCollections(): Promise<void> {
   }
 }
 
+// Insert mock data into the database
 async function insertMockData(): Promise<void> {
   log("Inserting mock data...");
   try {
-    await MaterialModel.insertMany(materialDatabaseEntry);
-    await SurfaceTreatmentModel.insertMany(surfaceTreatments);
+    await MaterialModel.insertMany(MOCK_MATERIAL_DATABASE_ENTRIES);
+    await SurfaceTreatmentModel.insertMany(MOCK_SURFACE_TREATMENTS);
     await ClientModel.insertMany(clients);
-    await ClientMaterialCostModel.insertMany(clientMaterialCosts);
-    await ClientSurfaceTreatmentCostModel.insertMany(clientSurfaceTreatmentCosts);
-    await ModelModel.insertMany(modelsDataBaseEntry);
-    await PartModel.insertMany(modelpartsDatabaseEntry);
+    await ClientMaterialCostModel.insertMany(MOCK_CLIENT_MATERIAL_COST_DATABASE_ENTRIES);
+    await ClientSurfaceTreatmentCostModel.insertMany(MOCK_CLIENT_SURFACE_TREATMENT_COST_DATABASE_ENTRIES);
+    await ModelModel.insertMany(MOCK_MODEL_DATABASE_ENTRIES);
+    await PartModel.insertMany(MOCK_MODEL_PART_DATABASE_ENTRIES);
+    
     log("Mock data inserted!");
   } catch(err) {
     logError("Could not insert mock data", err);
@@ -77,16 +83,21 @@ async function setupMockDatabase(): Promise<void> {
       await createCollections();
       await clearCollections();
       await insertMockData();
+      
       log("Database initialized!");
       log("DONE");
     } catch(err) {
-      logError("Could not initialize database", err);
-      throw new DatabaseConnectionError();
+      throw new DatabaseInitialisationError(err);
     }
 }
 
+// Connect to the database on startup
 connectToDb()
+  .then(() => {
+    setupMockDatabase()
+    .catch(err => logError("Could not setup mock data in database", err));
+  })
   .catch(err => logError("Could not connect to database", err));
-setupMockDatabase()
-  .catch(err => logError("Could not setup mock data in database", err));
+
+
 

@@ -1,9 +1,9 @@
 /* Utils */
-import { Material } from "@shared/interfaces";
 import { NextFunction, Request, Response } from "express";
 import { ApiRequestMalformedError } from "server/errors";
 import { validateEmissionsInput } from "server/validator";
 
+// Mock requests for testing
 const emptyReq: Request = {
     body: {}
 } as Request;
@@ -73,7 +73,10 @@ const materialIDNegativeReq: Request = {
     }
 } as Request;
 
+// Empty mock response for testing
 const emptyRes: Response = {} as Response;
+
+// Mock next function for testing
 const next: NextFunction = (a: any) => a;
 
 test('validateEmissionsInput with valid parameters', () => {

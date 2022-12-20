@@ -1,4 +1,3 @@
-import React from 'react';
 import './ModelComponent.sass';
 
 /* Components */
@@ -19,9 +18,11 @@ export interface ModelProp {
 }
 
 function ModelComponent({model, materialTexture, size, active, onModelChange}: ModelProp) {
+  // Determine the active and size classes
   const activeClass: string = active ? ' ModelComponent-active' : '';
   const sizeClass: string = ` ModelComponent-size-${size}`;
 
+  // Call the parent's onModelChange function when a model is selected (if it exists)
   const onModelClick = () => {
     if(onModelChange) 
       onModelChange(model.id);

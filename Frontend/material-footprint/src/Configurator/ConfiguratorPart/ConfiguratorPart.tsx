@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import './ConfiguratorPart.sass';
 
 /* Components */
@@ -21,27 +21,21 @@ function ConfiguratorPart({part, onMaterialChange, onSurfaceTreatmentChange}: Co
   const [surfaceTreatments, setSurfaceTreatments] = useState([] as SurfaceTreatment[]);
   
   useEffect(() => {
-    async function loadMaterials() {
-      getMaterials().then(m => setMaterials(m));
-    }
-    loadMaterials();
+    getMaterials().then(m => setMaterials(m));
   }, []);
 
   useEffect(() => {
-    async function loadSurfaceTreatments() {
-      getSurfaceTreatments().then(s => setSurfaceTreatments(s));
-    }
-    loadSurfaceTreatments();
+    getSurfaceTreatments().then(s => setSurfaceTreatments(s));
   }, []);
 
   // Call the parent's onMaterialChange function when a material is selected
-  function changeMaterial(e: React.ChangeEvent<HTMLSelectElement>): void {
+  function changeMaterial(e: ChangeEvent<HTMLSelectElement>): void {
     const materialID: number = parseInt(e.target.value);
     onMaterialChange(materialID);
   }
 
   // Call the parent's onSurfaceTreatmentChange function when a surface treatment is selected
-  function changeSurfaceTreatment(e: React.ChangeEvent<HTMLInputElement>): void {
+  function changeSurfaceTreatment(e: ChangeEvent<HTMLInputElement>): void {
     const surfaceTreatmentID: number = parseInt(e.target.value);
     onSurfaceTreatmentChange(surfaceTreatmentID, e.target.checked);
   }

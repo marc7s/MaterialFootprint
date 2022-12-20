@@ -1,4 +1,3 @@
-import React from 'react';
 import './ModelConfiguratorComponent.sass';
 
 /* Components */
@@ -19,7 +18,6 @@ export interface ModelConfiguratorProp {
 }
 
 function ModelConfiguratorComponent({model, onPartMaterialChange, onPartSurfaceTreatmentChange}: ModelConfiguratorProp) {
-  // Render a ConfiguratorPart for each part in the model
   return (
     <table className="ModelConfiguratorComponent-table">
       <tbody>
