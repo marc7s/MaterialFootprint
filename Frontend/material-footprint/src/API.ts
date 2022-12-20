@@ -6,6 +6,7 @@
 import { Model, Material, SurfaceTreatment, Client } from "shared/interfaces";
 import { MOCK_MATERIALS, MOCK_SURFACE_TREATMENTS, clients, MOCK_MODELS } from "shared/mockData";
 
+
 // Determine if the app is running in local mode
 export function isLocalMode(): boolean {
     return process.env.REACT_APP_LOCAL_MODE === '1';

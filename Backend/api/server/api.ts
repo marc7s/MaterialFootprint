@@ -8,7 +8,7 @@ import { fetchMaterials, fetchMaterialCostForClient, fetchSurfaceTreatmentCostFo
 
 /* Shared */
 import { log, logError } from '@shared/utils';
-import { MaterialEmission, SurfaceTreatmentEmission, Material, Emission, EmissionCost, Model, ModelPart, ModelDatabaseEntry, ModelPartDatabaseEntry, SurfaceTreatment, Client } from '@shared/interfaces';
+import { MaterialEmission, SurfaceTreatmentEmission, Material, Emission, EmissionCost, Model, ModelPart, ModelDatabaseEntry, ModelPartDatabaseEntry, SurfaceTreatment } from '@shared/interfaces';
 import { DatabaseQueryResultError } from './errors';
 
 const router: Router = express.Router();

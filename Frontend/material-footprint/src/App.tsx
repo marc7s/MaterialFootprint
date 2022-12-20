@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import './App.sass';
 
 /* Components */
@@ -29,7 +29,7 @@ function App() {
   }, [clients]);
 
   // Call the parent's onMaterialChange function when a material is selected
-  function changeClient(e: React.ChangeEvent<HTMLSelectElement>): void {
+  function changeClient(e: ChangeEvent<HTMLSelectElement>): void {
     // Get the clienmt ID from the select element
     const clientID: number = parseInt(e.target.value);
     if(Number.isNaN(clientID)) return;

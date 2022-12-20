@@ -11,7 +11,7 @@ import { ClientMaterialCostModel } from 'setupDatabase/models/ClientMaterialCost
 import { ClientSurfaceTreatmentCostModel } from 'setupDatabase/models/ClientSurfaceTreatmentCost';
 import { ModelModel } from 'setupDatabase/models/Model';
 import { PartModel } from 'setupDatabase/models/Part';
-import { DatabaseClearCollectionError, DatabaseConnectionError, DatabaseCreateCollectionError, DatabaseInitialisationError, DatabaseInsertMockDataError } from 'server/errors';
+import { DatabaseClearCollectionError, DatabaseCreateCollectionError, DatabaseInitialisationError, DatabaseInsertMockDataError } from 'server/errors';
 
 /* Shared */
 import { log, logError } from '@shared/utils';
