@@ -130,7 +130,7 @@ export const MOCK_MODEL_PART_DATABASE_ENTRIES: ModelPartDatabaseEntry[] = [
         surfaceTreatmentIDs: []
     },
     {
-        id: 3,
+        id: 2,
         name: "Intakes",
         area: 0.8,
         volume: 0.02,
@@ -138,7 +138,7 @@ export const MOCK_MODEL_PART_DATABASE_ENTRIES: ModelPartDatabaseEntry[] = [
         surfaceTreatmentIDs: [2]
     },
     {
-        id: 4,
+        id: 3,
         name: "Body",
         area: 20,
         volume: 0.5,
@@ -146,7 +146,7 @@ export const MOCK_MODEL_PART_DATABASE_ENTRIES: ModelPartDatabaseEntry[] = [
         surfaceTreatmentIDs: [1, 2]
     },
     {
-        id: 5,
+        id: 4,
         name: "Seat",
         area: 1.5,
         volume: 0.015,
@@ -154,7 +154,7 @@ export const MOCK_MODEL_PART_DATABASE_ENTRIES: ModelPartDatabaseEntry[] = [
         surfaceTreatmentIDs: []
     },
     {
-        id: 6,
+        id: 5,
         name: "Front legs",
         area: 0.1,
         volume: 0.001,
@@ -162,7 +162,7 @@ export const MOCK_MODEL_PART_DATABASE_ENTRIES: ModelPartDatabaseEntry[] = [
         surfaceTreatmentIDs: [2]
     },
     {
-        id: 7,
+        id: 6,
         name: "Back legs",
         area: 0.1,
         volume: 0.001,
@@ -170,7 +170,7 @@ export const MOCK_MODEL_PART_DATABASE_ENTRIES: ModelPartDatabaseEntry[] = [
         surfaceTreatmentIDs: [1]
     },
     {
-        id: 8,
+        id: 7,
         name: "Backrest",
         area: 2,
         volume: 0.02,
@@ -183,12 +183,12 @@ export const MOCK_MODEL_DATABASE_ENTRIES: ModelDatabaseEntry[] = [
     {
         id: 1,
         name: "Koenigsegg",
-        partIDs: [1, 3, 4]
+        partIDs: [1, 2, 3]
     },
     {
         id: 2,
         name: "Chair",
-        partIDs: [5, 6, 7, 8]
+        partIDs: [4, 5, 6, 7]
     }
 ];
 
@@ -202,7 +202,7 @@ export const MOCK_MODEL_PARTS: ModelPart[] = [
         surfaceTreatments: []
     },
     {
-        id: 3,
+        id: 2,
         name: 'Intakes',
         area: 0.8,
         volume: 0.02,
@@ -210,7 +210,7 @@ export const MOCK_MODEL_PARTS: ModelPart[] = [
         surfaceTreatments: [MOCK_SURFACE_TREATMENTS[1]]
     },
     {
-        id: 4,
+        id: 3,
         name: 'Body',
         area: 20,
         volume: 0.5,
@@ -218,7 +218,7 @@ export const MOCK_MODEL_PARTS: ModelPart[] = [
         surfaceTreatments: [MOCK_SURFACE_TREATMENTS[0], MOCK_SURFACE_TREATMENTS[1]]
     },
     {
-        id: 5,
+        id: 4,
         name: 'Seat',
         area: 1.5,
         volume: 0.015,
@@ -226,7 +226,7 @@ export const MOCK_MODEL_PARTS: ModelPart[] = [
         surfaceTreatments: []
     },
     {
-        id: 6,
+        id: 5,
         name: 'Front legs',
         area: 0.1,
         volume: 0.001,
@@ -234,7 +234,7 @@ export const MOCK_MODEL_PARTS: ModelPart[] = [
         surfaceTreatments: [MOCK_SURFACE_TREATMENTS[1]]
     },
     {
-        id: 7,
+        id: 6,
         name: 'Back legs',
         area: 0.1,
         volume: 0.001,
@@ -242,7 +242,7 @@ export const MOCK_MODEL_PARTS: ModelPart[] = [
         surfaceTreatments: [MOCK_SURFACE_TREATMENTS[0]]
     },
     {
-        id: 8,
+        id: 7,
         name: 'Backrest',
         area: 2,
         volume: 0.02,
@@ -256,13 +256,13 @@ export const MOCK_MODELS: Model[] = [
         id: 1,
         name: 'Koenigsegg',
         url: 'model-objects/koenigsegg.glb',
-        parts: [MOCK_MODEL_PARTS[0], MOCK_MODEL_PARTS[2], MOCK_MODEL_PARTS[3]]
+        parts: [MOCK_MODEL_PARTS[0], MOCK_MODEL_PARTS[1], MOCK_MODEL_PARTS[2]]
     },
     {
         id: 2,
         name: 'Chair',
         url: 'model-objects/chair.glb',
-        parts: [MOCK_MODEL_PARTS[4], MOCK_MODEL_PARTS[5], MOCK_MODEL_PARTS[6], MOCK_MODEL_PARTS[7]]
+        parts: [MOCK_MODEL_PARTS[3], MOCK_MODEL_PARTS[4], MOCK_MODEL_PARTS[5], MOCK_MODEL_PARTS[6]]
     }
 ];
 

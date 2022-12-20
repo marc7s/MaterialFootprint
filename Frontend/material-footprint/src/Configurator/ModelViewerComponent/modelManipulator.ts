@@ -28,38 +28,34 @@ const glbObjects: GLBObjectMapping[] = [
         offset: 0,
         // 11 parts, indexes 0-10
         parts: [
+            // Index 0 is the windshield, so we ignore it
+            // Index 1 is the window seal, so we ignore it
+            // Index 2 is the emblem, so we ignore it
+            // Index 3 are the rear lights, so we ignore it
+            // Index 4 is the front left wheel, so we ignore it
+            // Index 5 is the front right wheel, so we ignore it
+            // Index 6 is the rear left wheel, so we ignore it
+            // Index 7 is the rear right wheel, so we ignore it
             {
-                index: 0,
+                index: 8,
+                name: 'Body',
+                relativePartID: 3
+            },
+            {
+                index: 9,
                 name: 'Aero',
                 relativePartID: 1
             },
             {
-                index: 1,
-                name: 'Windshield',
-                relativePartID: 2
-            },
-            {
-                index: 2,
+                index: 10,
                 name: 'Intakes',
-                relativePartID: 3
-            },
-            // Index 3 is the window seal, so we ignore it
-            {
-                index: 4,
-                name: 'Body',
-                relativePartID: 4
+                relativePartID: 2
             }
-            // Index 5 is the emblem, so we ignore it
-            // Index 6 are the rear lights, so we ignore it
-            // Index 7 is the front left wheel, so we ignore it
-            // Index 8 is the front right wheel, so we ignore it
-            // Index 9 is the rear left wheel, so we ignore it
-            // Index 10 is the rear right wheel, so we ignore it
         ]
     },
     {
         name: 'Chair',
-        offset: 4,
+        offset: 3,
         // 4 parts, indexes 0-3
         parts: [
             {
@@ -138,6 +134,9 @@ function applyMetadataTo3DObject(object: any, glbObjectMapping: GLBObjectMapping
           }
   
           console.log('New mesh:', child);
+        } else {
+            // Clear the user data if the part is not included in the metadata
+            child.userData = {};
         }
       }
       applyMetadataTo3DObject(child, glbObjectMapping);
