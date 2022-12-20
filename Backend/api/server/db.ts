@@ -10,22 +10,22 @@ import { log } from '@shared/utils';
 
 
 export async function connectToDb(): Promise<void> {
-    const constring: string | undefined = process.env.DB_CONN_STRING;
-    if(!constring) {
-        log("database connection string not found");
-        throw new DatabaseConnectionError();
-    }
+    // Get the connection string from the environment variables
+    const connstring: string | undefined = process.env.DB_CONN_STRING;
+    if(!connstring)
+        throw new DatabaseConnectionError("Database connection string not found");
     
     // strictQuery will be set to false in Mongoose 7, so this needs to be added
     // to prepare and avoid deprecation warnings
     mongoose.set('strictQuery', false);
     
-    await mongoose.connect(constring, {
+    // Connect to the database
+    await mongoose.connect(connstring, {
         // 5 second timeout
         serverSelectionTimeoutMS: 5000 
       })
         .catch(err => {
-            throw new DatabaseConnectionError(); 
+            throw new DatabaseConnectionError("Could not connect to database: " + err);
     });
 
     log("Successfully connected to database!");

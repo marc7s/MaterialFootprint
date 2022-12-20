@@ -27,13 +27,17 @@ interface EmissionEntry {
 
 function EmissionComponent({ emission, totalEmissionCost }: EmissionProp) {
   const [expanded, setExpanded] = useState(false);
+  
+  // The key used to store the expanded state in local storage
   const expandedStateKey = emission.partName;
 
   useEffect(() => {
+    // Get the expanded state from local storage if it exists, otherwise default to collapsed
     const isExpanded: boolean = (localStorage.getItem(expandedStateKey) ?? 'false') === 'true';
     setExpanded(isExpanded);
   }, [expandedStateKey]);
 
+  // Toggle the expanded state and save it to local storage
   function toggleExpand() {
     const newExpandedState: boolean = !expanded;
     setExpanded(newExpandedState);
@@ -45,10 +49,12 @@ function EmissionComponent({ emission, totalEmissionCost }: EmissionProp) {
     return Math.round(100 * (emissionCost.co2Amount / totalEmissionCost.co2Amount + emissionCost.h2oAmount / totalEmissionCost.h2oAmount) / 2);
   }
 
+  // Helper function to return a formatted percentage of the emission compared to the total emission
   function calculateEmissionPercent(cost: number, totalCost: number) {
     return Math.round((cost / totalCost) * 100);
   }
 
+  // The emission entries to display
   const emissions: EmissionEntry[] = [
     {
       icon: EmissionIcon.CO2,

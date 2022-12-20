@@ -11,8 +11,26 @@ export class ApiRequestMalformedError extends Error {
 }
 
 export class DatabaseConnectionError extends Error {
+    constructor(message: string) {
+        super(message);
+    }
+}
+
+export class DatabaseQueryError extends Error {
     constructor() {
-        super("Could not connect to database");
+        super("Query to database failed");
+    }
+}
+
+export class DatabaseQueryResultError extends Error {
+    constructor(message: string) {
+        super("Unexpected result from database query: " + message);
+    }
+}
+
+export class DatabaseInitialisationError extends Error {
+    constructor(error: any) {
+        super("Could not initialise database: " + error);
     }
 }
 

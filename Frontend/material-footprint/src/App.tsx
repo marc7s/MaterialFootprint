@@ -11,8 +11,8 @@ import { getClients, isLocalMode } from 'API';
 import { Client } from 'shared/interfaces';
 
 
-
-const localMode = isLocalMode();
+// Determine if the app is running in local mode
+const localMode: boolean = isLocalMode();
 
 function App() {
   const [clients, setClients] = useState([] as Client[]);
@@ -20,10 +20,7 @@ function App() {
 
   // Load clients from API on first render
   useEffect(() => {
-    async function loadClients() {
-      getClients().then(c => setClients(c));
-    }
-    loadClients();
+    getClients().then(c => setClients(c));
   }, []);
 
   // Set current client to first client once they have been loaded
@@ -33,9 +30,11 @@ function App() {
 
   // Call the parent's onMaterialChange function when a material is selected
   function changeClient(e: React.ChangeEvent<HTMLSelectElement>): void {
+    // Get the clienmt ID from the select element
     const clientID: number = parseInt(e.target.value);
     if(Number.isNaN(clientID)) return;
     
+    // Find the client with the given ID
     const client: Client | undefined = clients.find(c => c.id === clientID);
     if(client === undefined) return;
     

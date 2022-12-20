@@ -21,17 +21,11 @@ function ConfiguratorPart({part, onMaterialChange, onSurfaceTreatmentChange}: Co
   const [surfaceTreatments, setSurfaceTreatments] = useState([] as SurfaceTreatment[]);
   
   useEffect(() => {
-    async function loadMaterials() {
-      getMaterials().then(m => setMaterials(m));
-    }
-    loadMaterials();
+    getMaterials().then(m => setMaterials(m));
   }, []);
 
   useEffect(() => {
-    async function loadSurfaceTreatments() {
-      getSurfaceTreatments().then(s => setSurfaceTreatments(s));
-    }
-    loadSurfaceTreatments();
+    getSurfaceTreatments().then(s => setSurfaceTreatments(s));
   }, []);
 
   // Call the parent's onMaterialChange function when a material is selected

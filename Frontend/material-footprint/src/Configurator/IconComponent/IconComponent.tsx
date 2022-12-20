@@ -12,19 +12,12 @@ interface IconProp {
 }
 
 function IconComponent({ icon }: IconProp) {
-  // Render an EmissionComponent for each part in the model
-  let iconClass = "Widget-icon ";
-  switch (icon) {
-    case EmissionIcon.CO2:
-      iconClass += "Co2-icon";
-      break;
-    case EmissionIcon.WATER:
-      iconClass += "Water-icon";
-      break;
-    case EmissionIcon.MONEY:
-      iconClass += "Money-icon";
-      break;
-  }
+  // Determine the icon class based on the icon type
+  const iconClass = "Widget-icon " + (
+    icon === EmissionIcon.CO2 ? "Co2-icon" :
+    icon === EmissionIcon.WATER ? "Water-icon" :
+    icon === EmissionIcon.MONEY ? "Money-icon" :
+    "");
   return <i className={iconClass}/>;
 }
 

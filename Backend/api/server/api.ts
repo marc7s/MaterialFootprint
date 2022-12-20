@@ -1,55 +1,85 @@
-import { log, logError } from '@shared/utils';
 import * as dotenv from 'dotenv';
 dotenv.config({path: __dirname + '../.env'});
 
 /* Utils */
 import express, { Response, NextFunction, Router } from 'express';
 import { validateEmissionsInput, validateModelInput } from 'server/validator';
-import { fetchMaterials, fetchMaterialCostForClient, fetchSurfaceTreatmentCostForClient, fetchSurfaceTreatments, fetchModels, fetchPart, fetchClients, fetchMaximalMaterialCostForClient, fetchMaximalSurfaceTreatmentCostForClient, fetchMinimalMaterialCostForClient, fetchMinimalSurfaceTreatmentCostForClient } from 'server/dbInterface';
+import { fetchMaterials, fetchMaterialCostForClient, fetchSurfaceTreatmentCostForClient, fetchSurfaceTreatments, fetchModels, fetchPart, fetchClients, fetchMaximalMaterialCostForClient, fetchMaximalSurfaceTreatmentCostForClient, fetchMinimalMaterialCostForClient, fetchMaterial, fetchMinimalSurfaceTreatmentCost } from 'server/dbInterface';
 
 /* Shared */
+import { log, logError } from '@shared/utils';
 import { MaterialEmission, SurfaceTreatmentEmission, Material, Emission, EmissionCost, Model, ModelPart, ModelDatabaseEntry, ModelPartDatabaseEntry, SurfaceTreatment, Client } from '@shared/interfaces';
+import { DatabaseQueryResultError } from './errors';
 
 const router: Router = express.Router();
 
-// input: {partName: string, clientID: number, area: number, volume: number, materialID: number, surfaceTreatmentIDs: [number]}
+// Calculates the emissions for a single part
+// Request format:
+/* 
+  {
+    partName: string, 
+    clientID: number, 
+    area: number, 
+    volume: number, 
+    materialID: number, 
+    surfaceTreatmentIDs: [number]
+  }
+*/
 router.post('/calculate-part-emission', validateEmissionsInput, async (req: any, res: Response, next: NextFunction) => {
     log('Calculating part emission...');
     res.json(await calculatePartEmission(req)
     .catch(err => next(err)));
 });
 
+// Gets a list of the clients
+// No request parameters
 router.get('/clients', async (req: any, res: Response, next: NextFunction) => {
   log('Getting clients...');
-  res.json(await getClients()
+  res.json(await fetchClients()
     .catch(err => next(err)));
 });
 
+// Gets a list of the materials
+// No request parameters
 router.get('/materials', async (req: any, res: Response, next: NextFunction) => {
   log('Getting materials...');
-  res.json(await getMaterials()
+  res.json(await fetchMaterials()
     .catch(err => next(err)));
 });
 
+// Gets a list of the surface treatments
+// No request parameters
 router.get('/surface-treatments', async (req: any, res: Response, next: NextFunction) => {
   log('Getting surface treatments...');
-  res.json(await getSurfaceTreatments()
+  res.json(await fetchSurfaceTreatments()
     .catch((err) => {next(err)}));
 });
 
+// Gets a list of the models
+// No request parameters
 router.get('/models', async (req: any, res: Response, next: NextFunction) => {
   log('Getting models...');
   res.json(await getModels(req)
     .catch(err => next(err)));
 });
 
+// Redirects to a link of a 3D model object to be used in the 3D viewer
+// Request format:
+/*
+  {
+    modelID: number
+  }
+*/
 router.get('/model-object', validateModelInput, async (req: any, res: Response, next: NextFunction) => {
   const modelID: number = req.modelID;
   log(`Getting model object with ID ${modelID}...`);
   res.redirect(`/model-objects/${modelID}.glb`);
 });
 
+
+// Calculates the emissions for a specified part
 async function calculatePartEmission(req: any): Promise<Emission | null> {
+  // Get the request parameters
   const partName: string = req.partName;
   const clientID: number = req.clientID;
   const materialID: number = req.materialID;
@@ -57,9 +87,9 @@ async function calculatePartEmission(req: any): Promise<Emission | null> {
   const volume: number = req.volume;
   const area: number = req.area;
   
-  /* Material */
+  /* Material emissions */
 
-  // Calculate material emission
+  // Get material cost
   const materialEmission: MaterialEmission | null = await fetchMaterialCostForClient(clientID, materialID)
     .catch(err => { throw err });
 
@@ -78,11 +108,6 @@ async function calculatePartEmission(req: any): Promise<Emission | null> {
   // Get minimal material emission
   const minMaterialEmission: MaterialEmission = await fetchMinimalMaterialCostForClient(clientID)
     .catch(err => { throw err });
-  
-  // Get maximal material emission
-  const maxMaterialEmission: MaterialEmission = await fetchMaximalMaterialCostForClient(clientID)
-    .catch(err => { throw err });
-
 
   // Calculate minimal material emission
   const minMaterialCost: EmissionCost = {
@@ -90,6 +115,10 @@ async function calculatePartEmission(req: any): Promise<Emission | null> {
     h2oAmount: minMaterialEmission.h2oAmountPerM3 * volume,
     priceInSEK: minMaterialEmission.pricePerM3 * volume
   }
+  
+  // Get maximal material emission
+  const maxMaterialEmission: MaterialEmission = await fetchMaximalMaterialCostForClient(clientID)
+    .catch(err => { throw err });
 
   // Calculate maximal material emission
   const maxMaterialCost: EmissionCost = {
@@ -100,7 +129,7 @@ async function calculatePartEmission(req: any): Promise<Emission | null> {
 
   
   
-  /* Surface Treatments */
+  /* Surface Treatment emissions */
 
   // Accumulator for all surface treatment emissions
   const totSurfaceTreatmentCost: EmissionCost = {
@@ -111,21 +140,23 @@ async function calculatePartEmission(req: any): Promise<Emission | null> {
 
   // Sum surface treatment emissions
   for(const surfaceTreatmentID of surfaceTreatmentIDs) {
-    const surfaceEmission: SurfaceTreatmentEmission | null = await fetchSurfaceTreatmentCostForClient(clientID, surfaceTreatmentID)
+    // Get the surface treatment cost
+    const surfaceTreatmentEmission: SurfaceTreatmentEmission | null = await fetchSurfaceTreatmentCostForClient(clientID, surfaceTreatmentID)
       .catch(err => { throw err });
 
-    if(surfaceEmission === null) {
+    if(surfaceTreatmentEmission === null) {
       logError(`Surface treatment with ID ${surfaceTreatmentID} not found for client with ID ${clientID}.`)
       return Promise.resolve(null);
     }
       
-    totSurfaceTreatmentCost.co2Amount += surfaceEmission.co2AmountPerM2 * area;
-    totSurfaceTreatmentCost.h2oAmount += surfaceEmission.h2oAmountPerM2 * area;
-    totSurfaceTreatmentCost.priceInSEK += surfaceEmission.pricePerM2 * area;
+    // Add the surface treatment emission to the total
+    totSurfaceTreatmentCost.co2Amount += surfaceTreatmentEmission.co2AmountPerM2 * area;
+    totSurfaceTreatmentCost.h2oAmount += surfaceTreatmentEmission.h2oAmountPerM2 * area;
+    totSurfaceTreatmentCost.priceInSEK += surfaceTreatmentEmission.pricePerM2 * area;
   };
 
   // Get minimal surface treatment emission
-  const minSurfaceEmission: SurfaceTreatmentEmission = await fetchMinimalSurfaceTreatmentCostForClient(clientID)
+  const minSurfaceEmission: SurfaceTreatmentEmission = await fetchMinimalSurfaceTreatmentCost()
       .catch(err => { throw err });
 
   // Get maximal surface treatment emission
@@ -163,29 +194,22 @@ async function calculatePartEmission(req: any): Promise<Emission | null> {
   return Promise.resolve(response);
 }
 
-async function getClients(): Promise<Client[]> {
-  return fetchClients();
-}
-
-async function getMaterials(): Promise<Material[]> {
-  return fetchMaterials();
-}
-
-async function getSurfaceTreatments(): Promise<SurfaceTreatment[]> {
-  return fetchSurfaceTreatments();
-}
-
+// Gets all models from the database
 async function getModels(req: any): Promise<Model[]> {
-  // fetches all models from database
+  // Get the model metadata themselves
   const modelsDatabase: ModelDatabaseEntry[] = await fetchModels();
 
-  // transforms ModelDatabaseEntry[] to Model[]
+  // For each model, get the individual parts it consists of from the database
   const models: Model[] = await Promise.all(modelsDatabase.map(async (modelDatabaseEntry: ModelDatabaseEntry) => {
-    // transforms partIDs into ModelPart[]
-    const parts: ModelPart[] = await Promise.all(modelDatabaseEntry.partIDs.map(async (id: number) => {
-      return await getPart(req, id).catch(err => { throw err });
+    // Get the parts from the database
+    const parts: ModelPart[] = [];
+    await Promise.all(modelDatabaseEntry.partIDs.map(async (id: number) => {
+      const part = await getPart(req, id).catch(err => { throw err });
+      if(part !== null)
+        parts.push(part);
     })).catch(err => { throw err });
 
+    // Create the model
     const model: Model = {
       id: modelDatabaseEntry.id,
       name: modelDatabaseEntry.name,
@@ -198,21 +222,28 @@ async function getModels(req: any): Promise<Model[]> {
   return Promise.resolve(models);
 }
 
-async function getPart(req: any, partID: number): Promise<ModelPart> {
-  // fetches database for specific part
-  const partDatabaseEntry: ModelPartDatabaseEntry = await fetchPart(partID);
-  const materials: Material[] = await fetchMaterials().catch(err => {throw err});
-  // finds the parts specified material
-  const material: Material | undefined = materials.find((material: Material) => material.id == partDatabaseEntry.materialID)
-  if (material == undefined) {
-    throw new Error('Material not found');
-  }
+
+// Gets a specific model part from the database
+async function getPart(req: any, partID: number): Promise<ModelPart | null> {
+  // Get the part metadata from the database
+  const partDatabaseEntry: ModelPartDatabaseEntry | null = await fetchPart(partID);
+  if(partDatabaseEntry === null)
+    return Promise.resolve(null);
+
+  // Get the part's specified material
+  const material: Material | null = await fetchMaterial(partDatabaseEntry.materialID).catch(err => { throw err });
+  if (material === null)
+    throw new DatabaseQueryResultError('Material not found');
+
+  // Get all surface treatments from the database
   const surfaceTreatments: SurfaceTreatment[] = await fetchSurfaceTreatments().catch(err => {throw err});
-  // filters the parts specified surface treatments
+  
+  // Filters the surface treatments to only include the ones that are specified for the part
   const filteredSurfaceTreatments: SurfaceTreatment[] = surfaceTreatments.filter(
     (surfaceTreatment: SurfaceTreatment) => partDatabaseEntry.surfaceTreatmentIDs.includes(surfaceTreatment.id)
   );
-
+  
+  // Create the response
   const part: ModelPart = {
     id: partDatabaseEntry.id,
     name: partDatabaseEntry.name,

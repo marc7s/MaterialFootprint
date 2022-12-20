@@ -6,9 +6,6 @@ import { GLTFExporter } from 'three/examples/jsm/exporters/GLTFExporter.js';
 /* Shared */
 
 
-
-
-  
 interface GLBObjectMapping {
     name: string, // The name of the model
     offset: number, // The offset to use when assigning the partIDs as the IDs are incremented by 1 for each part, regardless of the model it belongs to

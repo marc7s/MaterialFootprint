@@ -2,12 +2,13 @@
 import { ApiRequestMalformedError } from 'server/errors';
 import { Response, NextFunction } from 'express';
 
-// validates the input for the emissions endpoint
+// Validates the request for the `/emissions` endpoint
 export function validateEmissionsInput(req: any, res: Response, next: NextFunction): void {
-    // TODO remove hardcoded checks, make general function
+    // Check if parameters are missing
     if(!req.body.partName || !req.body.clientID || !req.body.area || !req.body.volume || !req.body.materialID || !req.body.surfaceTreatmentIDs)
         return next(new ApiRequestMalformedError('Missing required parameters. Required parameters: partName, clientID, area, volume, materialID, surfaceTreatmentIDs'));
 
+    // Check if parameters are of the correct type
     if (isNaN(req.body.clientID))
         return next(new ApiRequestMalformedError('clientID must be a number'));
     if (isNaN(req.body.area))
@@ -34,6 +35,7 @@ export function validateEmissionsInput(req: any, res: Response, next: NextFuncti
     if (!allPositive) 
         return next(new ApiRequestMalformedError('surfaceTreatmentIDs must be a list of positive numbers'));
 
+    // Checks passed, move the parameters from the body directly to the request object
     req.partName = req.body.partName;
     req.clientID = req.body.clientID;
     req.area = req.body.area;
@@ -43,6 +45,7 @@ export function validateEmissionsInput(req: any, res: Response, next: NextFuncti
     next();
 }
 
+// Validates the request for the `/model` endpoint
 export function validateModelInput(req: any, res: Response, next: NextFunction): void {
     const modelID = req.query.modelID;
     if (!modelID)

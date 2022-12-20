@@ -11,7 +11,7 @@ import {
     MaterialDatabaseEntry
 } from './interfaces';
 
-export const materials: Material[] = [
+export const MOCK_MATERIALS: Material[] = [
     { 
         id: 1, 
         name: 'Plastic', 
@@ -58,7 +58,7 @@ export const materials: Material[] = [
     }
 ];
 
-export const materialDatabaseEntry: MaterialDatabaseEntry[] = [
+export const MOCK_MATERIAL_DATABASE_ENTRIES: MaterialDatabaseEntry[] = [
     { 
         id: 1, 
         name: 'Plastic', 
@@ -98,7 +98,7 @@ export const materialDatabaseEntry: MaterialDatabaseEntry[] = [
 ];
 
 
-export const surfaceTreatments: SurfaceTreatment[] = [
+export const MOCK_SURFACE_TREATMENTS: SurfaceTreatment[] = [
     { 
         id: 1, 
         name: 'Laquer'
@@ -120,7 +120,7 @@ export const clients: Client[] = [
     }
 ];
 
-export const modelpartsDatabaseEntry: ModelPartDatabaseEntry[] = [
+export const MOCK_MODEL_PART_DATABASE_ENTRIES: ModelPartDatabaseEntry[] = [
     {
         id: 1,
         name: "Aero",
@@ -179,7 +179,7 @@ export const modelpartsDatabaseEntry: ModelPartDatabaseEntry[] = [
     }
 ];
 
-export const modelsDataBaseEntry: ModelDatabaseEntry[] = [
+export const MOCK_MODEL_DATABASE_ENTRIES: ModelDatabaseEntry[] = [
     {
         id: 1,
         name: "Koenigsegg",
@@ -192,13 +192,13 @@ export const modelsDataBaseEntry: ModelDatabaseEntry[] = [
     }
 ];
 
-export const modelParts: ModelPart[] = [
+export const MOCK_MODEL_PARTS: ModelPart[] = [
     {
         id: 1,
         name: 'Aero',
         area: 3,
         volume: 0.09,
-        material: materials[1],
+        material: MOCK_MATERIALS[1],
         surfaceTreatments: []
     },
     {
@@ -206,23 +206,23 @@ export const modelParts: ModelPart[] = [
         name: 'Intakes',
         area: 0.8,
         volume: 0.02,
-        material: materials[0],
-        surfaceTreatments: [surfaceTreatments[1]]
+        material: MOCK_MATERIALS[0],
+        surfaceTreatments: [MOCK_SURFACE_TREATMENTS[1]]
     },
     {
         id: 4,
         name: 'Body',
         area: 20,
         volume: 0.5,
-        material: materials[3],
-        surfaceTreatments: [surfaceTreatments[0], surfaceTreatments[1]]
+        material: MOCK_MATERIALS[3],
+        surfaceTreatments: [MOCK_SURFACE_TREATMENTS[0], MOCK_SURFACE_TREATMENTS[1]]
     },
     {
         id: 5,
         name: 'Seat',
         area: 1.5,
         volume: 0.015,
-        material: materials[1],
+        material: MOCK_MATERIALS[1],
         surfaceTreatments: []
     },
     {
@@ -230,43 +230,43 @@ export const modelParts: ModelPart[] = [
         name: 'Front legs',
         area: 0.1,
         volume: 0.001,
-        material: materials[0],
-        surfaceTreatments: [surfaceTreatments[1]]
+        material: MOCK_MATERIALS[0],
+        surfaceTreatments: [MOCK_SURFACE_TREATMENTS[1]]
     },
     {
         id: 7,
         name: 'Back legs',
         area: 0.1,
         volume: 0.001,
-        material: materials[2],
-        surfaceTreatments: [surfaceTreatments[0]]
+        material: MOCK_MATERIALS[2],
+        surfaceTreatments: [MOCK_SURFACE_TREATMENTS[0]]
     },
     {
         id: 8,
         name: 'Backrest',
         area: 2,
         volume: 0.02,
-        material: materials[3],
+        material: MOCK_MATERIALS[3],
         surfaceTreatments: []
     }
 ];
 
-export const models: Model[] = [
+export const MOCK_MODELS: Model[] = [
     {
         id: 1,
         name: 'Koenigsegg',
         url: 'model-objects/koenigsegg.glb',
-        parts: [modelParts[0], modelParts[2], modelParts[3]]
+        parts: [MOCK_MODEL_PARTS[0], MOCK_MODEL_PARTS[2], MOCK_MODEL_PARTS[3]]
     },
     {
         id: 2,
         name: 'Chair',
         url: 'model-objects/chair.glb',
-        parts: [modelParts[4], modelParts[5], modelParts[6], modelParts[7]]
+        parts: [MOCK_MODEL_PARTS[4], MOCK_MODEL_PARTS[5], MOCK_MODEL_PARTS[6], MOCK_MODEL_PARTS[7]]
     }
 ];
 
-export const clientMaterialCosts: ClientMaterialCostDatabaseEntry[] = [
+export const MOCK_CLIENT_MATERIAL_COST_DATABASE_ENTRIES: ClientMaterialCostDatabaseEntry[] = [
     {
         clientID: 1,
         materialID: 1,
@@ -327,7 +327,7 @@ export const clientMaterialCosts: ClientMaterialCostDatabaseEntry[] = [
     }
 ];
 
-export const clientSurfaceTreatmentCosts: ClientSurfaceTreatmentCostDatabaseEntry[] = [
+export const MOCK_CLIENT_SURFACE_TREATMENT_COST_DATABASE_ENTRIES: ClientSurfaceTreatmentCostDatabaseEntry[] = [
     {
         clientID: 1,
         surfaceID: 1,
